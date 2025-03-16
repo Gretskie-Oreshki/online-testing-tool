@@ -7,3 +7,9 @@
 build
 
 .settings
+
+# Ignore java binaries files
+app/bin/
+
+# Ignore InteleJIdea folder
+.idea

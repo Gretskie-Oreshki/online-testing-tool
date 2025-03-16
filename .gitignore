@@ -11,5 +11,5 @@ build
 # Ignore java binaries files
 app/bin/
 
-# Ignore InteleJIdea folder
+# Ignore IntelliJIDEA folder
 .idea

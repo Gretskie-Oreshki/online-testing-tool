@@ -1,4 +1,4 @@
-plugins {
+чplugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
 
@@ -24,6 +24,9 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.49.1.0'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

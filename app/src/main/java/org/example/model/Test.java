@@ -1,17 +1,16 @@
 package org.example.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
 @Entity
+@Table(name="tests")
 public class Test implements Serializable {
 
     @Id
     @GeneratedValue
+    @OneToOne(mappedBy="test", cascade = CascadeType.ALL)
     private Long id;
 
     @Column(nullable = false)

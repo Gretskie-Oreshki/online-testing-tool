@@ -34,7 +34,7 @@ java {
 }
 
 application {
-    mainClass = 'org.example.App'
+    mainClass = 'org.testingTool.App'
 }
 
 tasks.named('test') {

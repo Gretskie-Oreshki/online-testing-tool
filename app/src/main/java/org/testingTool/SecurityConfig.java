@@ -1,4 +1,4 @@
-package org.example;
+package org.testingTool;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ public class SecurityConfig {
     return http
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/").permitAll()
-            .anyRequest().authenticated())
+            .anyRequest())
         .formLogin(form -> form
             .loginPage("/login")
             .permitAll())

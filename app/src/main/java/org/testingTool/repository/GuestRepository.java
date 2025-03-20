@@ -1,7 +1,7 @@
-package org.example.repository;
+package org.testingTool.repository;
 
-import org.example.model.Guest;
 import org.springframework.data.repository.CrudRepository;
+import org.testingTool.model.Guest;
 
 public interface GuestRepository extends CrudRepository<Guest, Long> {
 }

@@ -1,8 +1,12 @@
-package org.example.model;
-
-import jakarta.persistence.*;
+package org.testingTool.model;
 
 import java.io.Serializable;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name="tests")

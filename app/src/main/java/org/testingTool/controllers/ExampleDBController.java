@@ -1,14 +1,18 @@
-package org.example.controllers;
+package org.testingTool.controllers;
 
-import org.example.model.Guest;
-import org.example.model.Result;
-import org.example.model.TestEntity;
-import org.example.repository.GuestRepository;
-import org.example.repository.ResultRepository;
-import org.example.repository.TestRepository;
+import org.testingTool.model.Guest;
+import org.testingTool.model.Result;
+import org.testingTool.model.TestEntity;
+import org.testingTool.repository.GuestRepository;
+import org.testingTool.repository.ResultRepository;
+import org.testingTool.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *                       ЭТОТ КЛАСС ЯВЛЯЕТСЯ ПРИМЕРОМ И ПОДЛЕЖИТ УДАЛЕНИЮ.

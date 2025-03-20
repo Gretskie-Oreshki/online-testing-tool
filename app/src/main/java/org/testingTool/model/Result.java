@@ -1,4 +1,4 @@
-package org.example.model;
+package org.testingTool.model;
 
 import jakarta.persistence.*;
 

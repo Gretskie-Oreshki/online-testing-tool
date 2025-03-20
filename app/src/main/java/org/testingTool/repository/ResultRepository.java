@@ -1,7 +1,7 @@
-package org.example.repository;
+package org.testingTool.repository;
 
-import org.example.model.Result;
 import org.springframework.data.repository.CrudRepository;
+import org.testingTool.model.Result;
 
 public interface ResultRepository extends CrudRepository<Result, Long> {
 }

@@ -12,11 +12,7 @@ public class Guest implements Serializable {
     @GeneratedValue
     private Long guest_id;
 
-    /// Конструкторы
-
     public Guest() {}
-
-    /// Геттеры
 
     public Long getGuestID() {
         return guest_id;

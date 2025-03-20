@@ -10,8 +10,15 @@ public class Guest implements Serializable {
 
     @Id
     @GeneratedValue
-    @OneToOne(mappedBy = "guest", cascade = CascadeType.ALL)
-    private Long id;
+    private Long guest_id;
 
-    protected Guest() {}
+    /// Конструкторы
+
+    public Guest() {}
+
+    /// Геттеры
+
+    public Long getGuestID() {
+        return guest_id;
+    }
 }

@@ -7,16 +7,45 @@ import jakarta.persistence.*;
 public class Result {
 
     @Id
-    @OneToOne
-    @MapsId
-    @JoinColumn(name="guest_id")
-    private Long guest_id;
+    @GeneratedValue
+    private Long id;
+
+    @ManyToOne // Многие результаты для одного гостя
+    @JoinColumn(name = "guest_id", referencedColumnName = "guest_id")
+    Guest guest;
+
+    @ManyToOne // Многие результаты для одного теста
+    @JoinColumn(name = "test_id", referencedColumnName = "test_id")
+    TestEntity test;
 
     @Column
     private int result;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name="test_id")
-    private Long test_id;
+    /// Конструкторы
+
+    protected Result(){}
+
+    public Result(Guest guest, TestEntity test, int result){
+        this.guest = guest;
+        this.test = test;
+        this.result = result;
+    }
+
+    /// Геттеры
+
+    public Long getResultID() {
+        return id;
+    }
+
+    public Guest getGuest() {
+        return guest;
+    }
+
+    public TestEntity getTest() {
+        return test;
+    }
+
+    public int getResult() {
+        return result;
+    }
 }

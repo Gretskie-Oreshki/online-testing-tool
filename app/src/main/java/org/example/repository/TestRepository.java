@@ -1,7 +1,7 @@
 package org.example.repository;
 
-import org.example.model.Test;
+import org.example.model.TestEntity;
 import org.springframework.data.repository.CrudRepository;
 
-public interface TestRepository extends CrudRepository<Test, Long> {
+public interface TestRepository extends CrudRepository<TestEntity, Long> {
 }

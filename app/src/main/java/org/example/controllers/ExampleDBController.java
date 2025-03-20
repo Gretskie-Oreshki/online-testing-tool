@@ -1,4 +1,4 @@
-package org.example;
+package org.example.controllers;
 
 import org.example.model.Guest;
 import org.example.model.Result;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(path="/api")
-public class TestController {
+public class ExampleDBController {
 
     @Autowired
     private TestRepository testRepository;

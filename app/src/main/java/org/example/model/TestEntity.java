@@ -18,16 +18,12 @@ public class TestEntity implements Serializable {
     @Column
     private String structure;
 
-    /// Конструкторы
-
     protected TestEntity() {}
 
     public TestEntity(String name, String str) {
         this.name = name;
         this.structure = str;
     }
-
-    /// Геттеры
 
     public Long getTestID(){
         return test_id;

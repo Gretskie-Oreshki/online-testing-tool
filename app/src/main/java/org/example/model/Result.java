@@ -12,16 +12,14 @@ public class Result {
 
     @ManyToOne // Многие результаты для одного гостя
     @JoinColumn(name = "guest_id", referencedColumnName = "guest_id")
-    Guest guest;
+    private Guest guest;
 
     @ManyToOne // Многие результаты для одного теста
     @JoinColumn(name = "test_id", referencedColumnName = "test_id")
-    TestEntity test;
+    private TestEntity test;
 
     @Column
     private int result;
-
-    /// Конструкторы
 
     protected Result(){}
 
@@ -30,8 +28,6 @@ public class Result {
         this.test = test;
         this.result = result;
     }
-
-    /// Геттеры
 
     public Long getResultID() {
         return id;

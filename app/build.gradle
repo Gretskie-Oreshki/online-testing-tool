@@ -28,6 +28,9 @@ dependencies {
     // db
     implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.49.1.0'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation group: 'org.hibernate.orm', name: 'hibernate-community-dialects', version: '6.6.11.Final'
+
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

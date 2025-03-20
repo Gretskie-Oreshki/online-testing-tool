@@ -54,10 +54,9 @@ public class TestController {
     public @ResponseBody String createGuest() {
         Guest guest = new Guest();
         guestRepository.save(guest);
-        return "Saved"; // Перенаправление на страницу с гостями
+        return "Saved";
     }
 
-    // Метод для создания результата
     @PostMapping("/result")
     public @ResponseBody String createResult(@RequestParam Long guestId, @RequestParam Long testId, @RequestParam int resultValue) {
         Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new RuntimeException("Guest not found"));
@@ -66,6 +65,6 @@ public class TestController {
         Result result = new Result(guest, testEntity, resultValue);
         resultRepository.save(result);
 
-        return "redirect:/api/results"; // Перенаправление на страницу с результатами
+        return "Saved";
     }
 }

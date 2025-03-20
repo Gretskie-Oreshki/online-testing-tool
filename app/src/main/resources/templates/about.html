@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,8 +92,11 @@
           <button onclick="window.location.href='/contact' "type="button" class="btn btn-outline-secondary">Contact</button>
         </nav>
         <div class="auth">
-            <button onclick="window.location.href='/login'">Log In</button>
+        <nav class="d-flex justify-content-center gap-3">
+            <button sec:authorize="!isAuthenticated()" onclick="window.location.href='/login' "type="button" class="btn btn-outline-secondary">Log In</button>
+            <button sec:authorize="isAuthenticated()" onclick="window.location.href='/profile' "type="button" class="btn btn-outline-secondary">Profile</button>
             <input type="text" placeholder="Search...">
+        </nav>
         </div>
     </header>
     <section class="hero">

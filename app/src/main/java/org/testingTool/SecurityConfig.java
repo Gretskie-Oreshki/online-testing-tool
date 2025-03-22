@@ -12,7 +12,7 @@ public class SecurityConfig {
     return http
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/").permitAll()
-            .anyRequest())
+            .anyRequest().authenticated())
         .formLogin(form -> form
             .loginPage("/login")
             .permitAll())

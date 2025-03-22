@@ -31,7 +31,14 @@ public class Admin implements Serializable {
   protected Admin() {
   }
 
-  public Long getAdminID() {
+  public Admin(String name, String email, String phone_number, String password) {
+    this.name = name;
+    this.email = email;
+    this.phone_number = phone_number;
+    this.password = password;
+  }
+
+  public Long getID() {
     return admin_id;
   }
 

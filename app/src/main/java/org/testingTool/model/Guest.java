@@ -17,7 +17,7 @@ public class Guest implements Serializable {
 
     public Guest() {}
 
-    public Long getGuestID() {
+    public Long getID() {
         return guest_id;
     }
 }

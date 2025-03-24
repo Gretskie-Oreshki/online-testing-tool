@@ -5,6 +5,7 @@
 
 # Ignore our secrets :)
 .env
+app/src/main/resources/application.properties
 
 # Ignore Gradle build output directory
 build

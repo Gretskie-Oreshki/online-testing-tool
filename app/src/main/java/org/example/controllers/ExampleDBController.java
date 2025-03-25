@@ -1,7 +1,7 @@
 package org.example.controllers;
 
-import org.example.model.Guest;
-import org.example.model.Result;
+import org.example.model.GuestEntity;
+import org.example.model.ResultEntity;
 import org.example.model.TestEntity;
 import org.example.repository.GuestRepository;
 import org.example.repository.ResultRepository;
@@ -29,12 +29,12 @@ public class ExampleDBController {
     private ResultRepository resultRepository;
 
     @GetMapping("/results")
-    public @ResponseBody Iterable<Result> getAllResults() {
+    public @ResponseBody Iterable<ResultEntity> getAllResults() {
         return resultRepository.findAll();
     }
 
     @GetMapping("/guests")
-    public @ResponseBody Iterable<Guest> getAllGuests() {
+    public @ResponseBody Iterable<GuestEntity> getAllGuests() {
         return guestRepository.findAll();
     }
 
@@ -52,18 +52,18 @@ public class ExampleDBController {
 
     @PostMapping("/guest")
     public @ResponseBody String createGuest() {
-        Guest guest = new Guest();
-        guestRepository.save(guest);
+        GuestEntity guestEntity = new GuestEntity();
+        guestRepository.save(guestEntity);
         return "Saved";
     }
 
     @PostMapping("/result")
     public @ResponseBody String createResult(@RequestParam Long guestId, @RequestParam Long testId, @RequestParam int resultValue) {
-        Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new RuntimeException("Guest not found"));
+        GuestEntity guestEntity = guestRepository.findById(guestId).orElseThrow(() -> new RuntimeException("Guest not found"));
         TestEntity testEntity = testRepository.findById(testId).orElseThrow(() -> new RuntimeException("Test not found"));
 
-        Result result = new Result(guest, testEntity, resultValue);
-        resultRepository.save(result);
+        ResultEntity resultEntity = new ResultEntity(guestEntity, testEntity, resultValue);
+        resultRepository.save(resultEntity);
 
         return "Saved";
     }

@@ -6,13 +6,16 @@ import java.io.Serializable;
 
 @Entity
 @Table(name="guests")
-public class Guest implements Serializable {
+public class GuestEntity implements Serializable {
 
     @Id
     @GeneratedValue
     private Long guest_id;
 
-    public Guest() {}
+    @Column
+    private String password;
+
+    public GuestEntity() {}
 
     public Long getGuestID() {
         return guest_id;

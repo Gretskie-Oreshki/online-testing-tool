@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="results")
-public class Result {
+public class ResultEntity {
 
     @Id
     @GeneratedValue
@@ -12,7 +12,7 @@ public class Result {
 
     @ManyToOne // Многие результаты для одного гостя
     @JoinColumn(name = "guest_id", referencedColumnName = "guest_id")
-    private Guest guest;
+    private GuestEntity guestEntity;
 
     @ManyToOne // Многие результаты для одного теста
     @JoinColumn(name = "test_id", referencedColumnName = "test_id")
@@ -21,10 +21,10 @@ public class Result {
     @Column
     private int result;
 
-    protected Result(){}
+    protected ResultEntity(){}
 
-    public Result(Guest guest, TestEntity test, int result){
-        this.guest = guest;
+    public ResultEntity(GuestEntity guestEntity, TestEntity test, int result){
+        this.guestEntity = guestEntity;
         this.test = test;
         this.result = result;
     }
@@ -33,8 +33,8 @@ public class Result {
         return id;
     }
 
-    public Guest getGuest() {
-        return guest;
+    public GuestEntity getGuest() {
+        return guestEntity;
     }
 
     public TestEntity getTest() {

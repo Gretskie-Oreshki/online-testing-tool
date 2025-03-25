@@ -1,7 +1,7 @@
-package org.example.model;
+package org.testingTool.model;
 
 import jakarta.persistence.*;
-import org.example.security.PasswordManager;
+import org.testingTool.security.PasswordManager;
 
 import java.io.Serializable;
 

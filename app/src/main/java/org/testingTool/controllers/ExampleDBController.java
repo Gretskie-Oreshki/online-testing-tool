@@ -1,11 +1,11 @@
-package org.example.controllers;
+package org.testingTool.controllers;
 
-import org.example.model.GuestEntity;
-import org.example.model.ResultEntity;
-import org.example.model.TestEntity;
-import org.example.repository.GuestRepository;
-import org.example.repository.ResultRepository;
-import org.example.repository.TestRepository;
+import org.testingTool.model.GuestEntity;
+import org.testingTool.model.ResultEntity;
+import org.testingTool.model.TestEntity;
+import org.testingTool.repository.GuestRepository;
+import org.testingTool.repository.ResultRepository;
+import org.testingTool.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

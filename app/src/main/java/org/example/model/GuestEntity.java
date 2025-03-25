@@ -1,6 +1,7 @@
 package org.example.model;
 
 import jakarta.persistence.*;
+import org.example.security.PasswordManager;
 
 import java.io.Serializable;
 
@@ -15,7 +16,9 @@ public class GuestEntity implements Serializable {
     @Column
     private String password;
 
-    public GuestEntity() {}
+    public GuestEntity() {
+        this.password = PasswordManager.generateSecurePassword(8);
+    }
 
     public Long getGuestID() {
         return guest_id;

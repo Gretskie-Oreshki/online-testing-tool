@@ -16,9 +16,6 @@ public class AdminController {
   @GetMapping("/admin")
   public String admin(@RequestParam(value = "id") Long id, Model model) {
     Admin admin = adminRepository.findById(id).orElseThrow(() -> new RuntimeException("Admin does not exist"));
-    model.addAttribute("name", admin.getName());
-    model.addAttribute("email", admin.getEmail());
-    model.addAttribute("phone_number", admin.getPhoneNumber());
     return "admin";
   }
 }

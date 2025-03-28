@@ -2,10 +2,8 @@ package org.testingTool.model;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.testingTool.security.PasswordGenerator;
 
 @Entity
 @Table(name="guests")
@@ -15,9 +13,18 @@ public class GuestEntity implements Serializable {
     @GeneratedValue
     private Long guest_id;
 
-    public GuestEntity() {}
+    @Column
+    private String password;
+
+    public GuestEntity() {
+        this.password = PasswordGenerator.generateSecurePassword(8);
+    }
 
     public Long getGuestID() {
         return guest_id;
+    }
+
+    public String getPassword(){
+        return password;
     }
 }

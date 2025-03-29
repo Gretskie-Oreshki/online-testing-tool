@@ -8,9 +8,12 @@
 
 <body>
   <h1>Welcome!</h1>
-  <a th:href="@{/login}">Login</a>
-  <a th:href="@{/account}">Account</a>
-  <a th:href="@{/about}">About</a>
+  <p th:if="${name != null}">
+    this is index controller
+  </p>
+  <p th:if="${name == null}">
+    this is app-controller
+  </p>
 </body>
 
 </html>

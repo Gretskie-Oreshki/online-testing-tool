@@ -8,7 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import org.springframework.security.crypto.keygen.KeyGenerators;
+
 
 @Entity
 @Table(name = "admins")
@@ -21,10 +21,9 @@ public class AdminEntity implements Serializable {
   @Column
   private String password;
 
-  public AdminEntity() {
-    byte[] keyBytes = KeyGenerators.secureRandom(16).generateKey();
-    this.password = Base64.getEncoder().encodeToString(keyBytes);
-  }
+  private String roles = "ROLE_ADMIN";
+
+  public AdminEntity() {}
 
   public Long getID() {
     return admin_id;
@@ -32,5 +31,21 @@ public class AdminEntity implements Serializable {
 
   public String getPassword() {
     return password;
+  }
+
+  public String getRoles() {
+    return roles;
+  }
+
+  public void setID(Long id) {
+    this.admin_id = id;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public void setRoles(String roles) {
+    this.roles = roles;
   }
 }

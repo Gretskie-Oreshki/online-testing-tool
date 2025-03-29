@@ -1,6 +1,6 @@
 package org.testingTool.controllers;
 
-import org.testingTool.model.Guest;
+import org.testingTool.model.GuestEntity;
 import org.testingTool.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +14,9 @@ public class GuestController {
   private GuestRepository guestRepository;
 
   @GetMapping("/guest")
-  public String account(@RequestParam(value = "id") Long id, Model model) {
-    Guest guest = guestRepository.findById(id).orElseThrow(() -> new RuntimeException("Guest does not exist"));
-    model.addAttribute("name", guest.getID());
+  public String guest(@RequestParam(value = "id") Long id, Model model) {
+    GuestEntity guest = guestRepository.findById(id).orElseThrow(() -> new RuntimeException("Guest does not exist"));
+    model.addAttribute("name", guest.getGuestID());
     return "guest";
   }
 }

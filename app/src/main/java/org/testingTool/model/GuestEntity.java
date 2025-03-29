@@ -1,9 +1,10 @@
 package org.testingTool.model;
 
 import java.io.Serializable;
+import java.util.Base64;
 
 import jakarta.persistence.*;
-import org.testingTool.security.PasswordGenerator;
+import org.springframework.security.crypto.keygen.KeyGenerators;
 
 @Entity
 @Table(name="guests")
@@ -17,7 +18,8 @@ public class GuestEntity implements Serializable {
     private String password;
 
     public GuestEntity() {
-        this.password = PasswordGenerator.generateSecurePassword(8);
+        byte[] keyBytes = KeyGenerators.secureRandom(16).generateKey();
+        this.password = Base64.getEncoder().encodeToString(keyBytes);
     }
 
     public Long getGuestID() {

@@ -1,12 +1,14 @@
 package org.testingTool.model;
 
 import java.io.Serializable;
+import java.util.Base64;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.springframework.security.crypto.keygen.KeyGenerators;
 
 @Entity
 @Table(name = "admins")
@@ -19,7 +21,9 @@ public class AdminEntity implements Serializable {
   @Column
   private String password;
 
-  protected AdminEntity() {
+  public AdminEntity() {
+    byte[] keyBytes = KeyGenerators.secureRandom(16).generateKey();
+    this.password = Base64.getEncoder().encodeToString(keyBytes);
   }
 
   public Long getID() {

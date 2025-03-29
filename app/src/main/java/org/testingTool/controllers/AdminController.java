@@ -1,6 +1,6 @@
 package org.testingTool.controllers;
 
-import org.testingTool.model.Admin;
+import org.testingTool.model.AdminEntity;
 import org.testingTool.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ public class AdminController {
 
   @GetMapping("/admin")
   public String admin(@RequestParam(value = "id") Long id, Model model) {
-    Admin admin = adminRepository.findById(id).orElseThrow(() -> new RuntimeException("Admin does not exist"));
+    AdminEntity admin = adminRepository.findById(id).orElseThrow(() -> new RuntimeException("Admin does not exist"));
     return "admin";
   }
 }

@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "admins")
-public class Admin implements Serializable {
+public class AdminEntity implements Serializable {
 
   @Id
   @GeneratedValue
@@ -19,7 +19,7 @@ public class Admin implements Serializable {
   @Column
   private String password;
 
-  protected Admin() {
+  protected AdminEntity() {
   }
 
   public Long getID() {

@@ -5,21 +5,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.testingTool.model.AdminEntity;
-import org.testingTool.repository.AdminRepository;
-import org.testingTool.config.MyUserDetails;
+import org.testingTool.config.MyGuestDetails;
+import org.testingTool.model.GuestEntity;
+import org.testingTool.repository.GuestRepository;
 
 import java.util.Optional;
 
 @Service
-public class MyUserDetailsService implements UserDetailsService {
+public class MyGuestDetailsService implements UserDetailsService {
   @Autowired
-  private AdminRepository adminRepository;
+  private GuestRepository guestRepository;
 
   @Override
   public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-    Optional<AdminEntity> user = adminRepository.findById(Long.parseLong(id));
-    return user.map(MyUserDetails::new)
-        .orElseThrow(() -> new UsernameNotFoundException(id + " not found"));
+    Optional<GuestEntity> user = guestRepository.findById(Long.parseLong(id));
+    return user.map(MyGuestDetails::new)
+      .orElseThrow(() -> new UsernameNotFoundException(id + " not found"));
   }
 }

@@ -1,17 +1,11 @@
 package org.testingTool.model;
 
 import java.io.Serializable;
-import java.util.Base64;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "admins")
+@Table(name="admins")
 public class AdminEntity implements Serializable {
 
   @Id
@@ -21,11 +15,12 @@ public class AdminEntity implements Serializable {
   @Column
   private String password;
 
-  private String roles = "ROLE_ADMIN";
+  @Transient
+  private final String roles = "ROLE_ADMIN";
 
   public AdminEntity() {}
 
-  public Long getID() {
+  public Long getId() {
     return admin_id;
   }
 
@@ -33,19 +28,8 @@ public class AdminEntity implements Serializable {
     return password;
   }
 
-  public String getRoles() {
-    return roles;
-  }
-
-  public void setID(Long id) {
-    this.admin_id = id;
-  }
-
+  // это только на данном этапе разработки. используется в appservice для создания пользователя через post
   public void setPassword(String password) {
     this.password = password;
-  }
-
-  public void setRoles(String roles) {
-    this.roles = roles;
   }
 }

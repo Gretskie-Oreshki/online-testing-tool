@@ -3,33 +3,32 @@ package org.testingTool.config;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.testingTool.model.AdminEntity;
+import org.testingTool.model.GuestEntity;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.List;
 
-public class MyUserDetails implements UserDetails {
+public class MyGuestDetails implements UserDetails {
 
-  private AdminEntity admin;
+  private GuestEntity guest;
 
-  public MyUserDetails(AdminEntity admin) {
-    this.admin = admin;
+  public MyGuestDetails(GuestEntity guest) {
+    this.guest = guest;
   }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return Arrays.stream(admin.getRoles().split(", ")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    return List.of(new SimpleGrantedAuthority("ROLE_USER"));
   }
 
   @Override
   public String getPassword() {
-    return admin.getPassword();
+    return guest.getPassword();
   }
 
   @Override
   public String getUsername() {
-    return String.valueOf(admin.getID());
+    return String.valueOf(guest.getId());
   }
 
   @Override

@@ -8,6 +8,7 @@ import org.testingTool.model.AdminEntity;
 
 @Controller
 public class IndexController {
+
   @GetMapping("/")
   public String index(Model model) {
     model.addAttribute("name", "this is index controller");

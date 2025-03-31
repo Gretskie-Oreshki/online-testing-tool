@@ -1,5 +1,6 @@
 package org.testingTool.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.testingTool.model.GuestEntity;
 import org.testingTool.repository.GuestRepository;
@@ -11,18 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/guest")
+@PreAuthorize("hasAuthority('ROLE_USER')")
 public class GuestController {
+
   @Autowired
   private GuestRepository guestRepository;
 
   @GetMapping("/")
-  public String guest(@RequestParam(value = "id") Long id, Model model) {
-    GuestEntity guest = guestRepository.findById(id).orElse(null);
-    if (guest == null) {
-      model.addAttribute("message", "Guest not found");
-      return "guest_index";
-    }
-    model.addAttribute("name", guest.getGuestID());
+  public String guests() {
     return "guest_index";
   }
 }

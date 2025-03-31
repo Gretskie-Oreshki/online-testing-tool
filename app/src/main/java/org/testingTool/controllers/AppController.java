@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.testingTool.model.AdminEntity;
+import org.testingTool.model.GuestEntity;
 import org.testingTool.services.AppService;
 
 @Controller
@@ -27,5 +28,11 @@ public class AppController {
   public String addAdmin(@RequestBody AdminEntity admin) {
     service.addAdmin(admin);
     return "admin_added";
+  }
+
+  @PostMapping("/new-guest")
+  public String addGuest(@RequestBody GuestEntity guest) {
+    service.addGuest(guest);
+    return "guest_added";
   }
 }

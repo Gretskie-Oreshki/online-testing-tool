@@ -14,18 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/admin")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class AdminPanelController {
+
   @Autowired
   private AdminRepository adminRepository;
 
   @GetMapping("/")
-  public String admin(@RequestParam(value = "id") Long id, Model model) {
-    AdminEntity admin = adminRepository.findById(id).orElse(null);
-    if (admin == null) {
-      model.addAttribute("message", "Admin not found");
-      return "admin_panel_index";
-    }
-    model.addAttribute("admin", admin.getID());
+  public String admin() {
     return "admin_panel_index";
   }
-
 }

@@ -1,5 +1,7 @@
 package org.testingTool.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.testingTool.model.AdminEntity;
 import org.testingTool.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class AdminController {
+@RequestMapping("/admin")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+public class AdminPanelController {
+
   @Autowired
   private AdminRepository adminRepository;
 
-  @GetMapping("/admin")
-  public String admin(@RequestParam(value = "id") Long id, Model model) {
-    AdminEntity admin = adminRepository.findById(id).orElseThrow(() -> new RuntimeException("Admin does not exist"));
-    return "admin";
+  @GetMapping("/")
+  public String admin() {
+    return "admin_panel_index";
   }
 }

@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-
+<html lang="ru">
 <head>
-  <title>OOT - Please Log In</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход в систему</title>
 </head>
-
 <body>
-  <h1>Please Log In</h1>
-  <div th:if="${param.error}">
-    Invalid username and password.</div>
-  <div th:if="${param.logout}">
-    You have been logged out.</div>
-  <form th:action="@{/login}" method="post">
-    <div>
-      <input type="text" name="username" placeholder="Username" />
-    </div>
-    <div>
-      <input type="password" name="password" placeholder="Password" />
-    </div>
-    <input type="submit" value="Log in" />
-  </form>
-</body>
+<h2>Вход</h2>
+<form th:action="@{/login}" method="post">
+  <label for="username">ID:</label>
+  <input type="text" id="username" name="username" required>
 
+  <label for="password">Пароль:</label>
+  <input type="password" id="password" name="password" required>
+
+  <button type="submit">Войти</button>
+</form>
+
+<p th:if="${param.error}" style="color: red;">Неверный ID или пароль</p>
+<p th:if="${param.logout}" style="color: green;">Вы вышли из системы</p>
+</body>
 </html>

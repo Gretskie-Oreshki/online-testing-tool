@@ -1,32 +1,36 @@
 package org.testingTool.model;
 
 import java.io.Serializable;
-import java.util.Base64;
 
 import jakarta.persistence.*;
-import org.springframework.security.crypto.keygen.KeyGenerators;
 
 @Entity
 @Table(name="guests")
 public class GuestEntity implements Serializable {
 
-    @Id
-    @GeneratedValue
-    private Long guest_id;
+  @Id
+  @GeneratedValue
+  private Long guest_id;
 
-    @Column
-    private String password;
+  @Column
+  private String password;
 
-    public GuestEntity() {
-        byte[] keyBytes = KeyGenerators.secureRandom(16).generateKey();
-        this.password = Base64.getEncoder().encodeToString(keyBytes);
-    }
+  @Transient
+  private final String roles = "ROLE_USER";
 
-    public Long getGuestID() {
-        return guest_id;
-    }
+  public GuestEntity() {
+  }
 
-    public String getPassword(){
-        return password;
-    }
+  public Long getId() {
+    return guest_id;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  // это только на данном этапе разработки. используется в appservice для создания пользователя через post
+  public void setPassword(String password) {
+    this.password = password;
+  }
 }

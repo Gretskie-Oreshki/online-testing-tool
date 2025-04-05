@@ -1,5 +1,7 @@
 package org.testingTool.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.testingTool.model.GuestEntity;
 import org.testingTool.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("/guest")
+@PreAuthorize("hasAuthority('ROLE_USER')")
 public class GuestController {
+
   @Autowired
   private GuestRepository guestRepository;
 
-  @GetMapping("/guest")
-  public String guest(@RequestParam(value = "id") Long id, Model model) {
-    GuestEntity guest = guestRepository.findById(id).orElseThrow(() -> new RuntimeException("Guest does not exist"));
-    model.addAttribute("name", guest.getGuestID());
-    return "guest";
+  @GetMapping("/")
+  public String guests() {
+    return "guest_index";
   }
 }

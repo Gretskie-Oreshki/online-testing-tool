@@ -1,17 +1,11 @@
 package org.testingTool.model;
 
 import java.io.Serializable;
-import java.util.Base64;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import org.springframework.security.crypto.keygen.KeyGenerators;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "admins")
+@Table(name="admins")
 public class AdminEntity implements Serializable {
 
   @Id
@@ -21,16 +15,21 @@ public class AdminEntity implements Serializable {
   @Column
   private String password;
 
-  public AdminEntity() {
-    byte[] keyBytes = KeyGenerators.secureRandom(16).generateKey();
-    this.password = Base64.getEncoder().encodeToString(keyBytes);
-  }
+  @Transient
+  private final String roles = "ROLE_ADMIN";
 
-  public Long getID() {
+  public AdminEntity() {}
+
+  public Long getId() {
     return admin_id;
   }
 
   public String getPassword() {
     return password;
+  }
+
+  // это только на данном этапе разработки. используется в appservice для создания пользователя через post
+  public void setPassword(String password) {
+    this.password = password;
   }
 }

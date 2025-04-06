@@ -1,6 +1,7 @@
 package org.testingTool.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,16 +21,11 @@ public class TestEntity implements Serializable {
     private String name;
 
     @Column
-    private String structure;
+    private List<QuestionEntity> questions;
 
     protected TestEntity() {}
 
-    public TestEntity(String name, String str) {
-        this.name = name;
-        this.structure = str;
-    }
-
-    public Long getTestID(){
+    public Long getID(){
         return id;
     }
 
@@ -37,7 +33,15 @@ public class TestEntity implements Serializable {
         return name;
     }
 
-    public String getStructure(){
-        return structure;
+    public List<QuestionEntity> getStructure(){
+        return questions;
+    }
+
+    public void setName(String n) {
+        this.name = n;
+    }
+
+    public void setQuestions(List<QuestionEntity> q) {
+        this.questions = q;
     }
 }

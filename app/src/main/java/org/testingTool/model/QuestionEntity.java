@@ -35,7 +35,7 @@ public class QuestionEntity {
         this.name = n;
     }
 
-    public void setAnswers(List<AnswerEntity> answers) {
-        this.answers = answers;
+    public void setAnswers(List<AnswerEntity> answer) {
+        this.answers = answer;
     }
 }

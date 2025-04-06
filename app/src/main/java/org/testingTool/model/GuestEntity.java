@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.checkerframework.checker.units.qual.Temperature;
 
 @Entity
@@ -14,34 +16,25 @@ public class GuestEntity implements Serializable {
   @GeneratedValue
   private Long guest_id;
 
+  // это только на данном этапе разработки. используется в appservice для создания пользователя через post
+  @Setter
+  @Getter
   @Column
   private String password;
 
   @Transient
   private final String roles = "ROLE_USER";
 
+  @Getter
   @Column
-  @Temporal(TemporalType.TIMESTAMP)
   private LocalDateTime accountExpirationDate;
 
   public GuestEntity() {
-    this.accountExpirationDate = LocalDateTime.now().plusMinutes(1);
+    this.accountExpirationDate = LocalDateTime.now().plusMonths(1);
   }
 
   public Long getId() {
     return guest_id;
   }
 
-  public String getPassword() {
-    return password;
-  }
-
-  public LocalDateTime getAccountExpirationDate() {
-    return accountExpirationDate;
-  }
-
-  // это только на данном этапе разработки. используется в appservice для создания пользователя через post
-  public void setPassword(String password) {
-    this.password = password;
-  }
 }

@@ -8,7 +8,7 @@ import jakarta.persistence.Transient;
 public class AnswerEntity {
     @Id
     @GeneratedValue
-    private Long answer_id;
+    private Long id;
 
     @Column
     private String value;
@@ -19,7 +19,7 @@ public class AnswerEntity {
     protected AnswerEntity() {}
 
     public Long getID() {
-        return answer_id;
+        return id;
     }
 
     public String getValue() {

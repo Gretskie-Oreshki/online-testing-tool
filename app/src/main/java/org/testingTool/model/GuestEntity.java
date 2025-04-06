@@ -15,8 +15,8 @@ public class GuestEntity implements Serializable {
 
   private String password;
 
-  @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
-  private List<AnswerEntity> userAnswers;
+  @OneToMany(mappedBy = "guest")
+  private List<UserAnswerEntity> userAnswers;
 
   @Transient
   private final String roles = "ROLE_USER";

@@ -10,7 +10,7 @@ public class GuestEntity implements Serializable {
 
   @Id
   @GeneratedValue
-  private Long guest_id;
+  private Long id;
 
   @Column
   private String password;
@@ -22,7 +22,7 @@ public class GuestEntity implements Serializable {
   }
 
   public Long getId() {
-    return guest_id;
+    return id;
   }
 
   public String getPassword() {

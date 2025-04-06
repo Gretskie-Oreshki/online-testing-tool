@@ -10,7 +10,7 @@ public class AdminEntity implements Serializable {
 
   @Id
   @GeneratedValue
-  private Long admin_id;
+  private Long id;
 
   @Column
   private String password;
@@ -21,7 +21,7 @@ public class AdminEntity implements Serializable {
   public AdminEntity() {}
 
   public Long getId() {
-    return admin_id;
+    return id;
   }
 
   public String getPassword() {

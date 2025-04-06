@@ -14,7 +14,7 @@ public class TestEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    private Long test_id;
+    private Long id;
 
     @Column
     private String name;
@@ -30,7 +30,7 @@ public class TestEntity implements Serializable {
     }
 
     public Long getTestID(){
-        return test_id;
+        return id;
     }
 
     public String getName(){

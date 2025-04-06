@@ -3,11 +3,7 @@ package org.testingTool.model;
 import java.io.Serializable;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="tests")
@@ -17,10 +13,9 @@ public class TestEntity implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Column
     private String name;
 
-    @Column
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
     private List<QuestionEntity> questions;
 
     protected TestEntity() {}
@@ -33,7 +28,7 @@ public class TestEntity implements Serializable {
         return name;
     }
 
-    public List<QuestionEntity> getStructure(){
+    public List<QuestionEntity> getQuestions(){
         return questions;
     }
 

@@ -1,20 +1,20 @@
 package org.testingTool.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name="answers")
 public class AnswerEntity {
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column
     private String value;
-
-    @Column
     boolean isRight;
+
+    @ManyToOne
+    @JoinColumn(name = "question_id")
+    private QuestionEntity question;
 
     protected AnswerEntity() {}
 
@@ -30,11 +30,19 @@ public class AnswerEntity {
         return isRight;
     }
 
+    public QuestionEntity getQuestion() {
+        return question;
+    }
+
     public void setValue(String v) {
         this.value = v;
     }
 
     public void setIsRight(boolean r) {
         this.isRight = r;
+    }
+
+    public void setQuestion(QuestionEntity q) {
+        this.question = q;
     }
 }

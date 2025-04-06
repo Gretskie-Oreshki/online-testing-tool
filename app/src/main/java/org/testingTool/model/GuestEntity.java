@@ -1,6 +1,7 @@
 package org.testingTool.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -12,8 +13,10 @@ public class GuestEntity implements Serializable {
   @GeneratedValue
   private Long id;
 
-  @Column
   private String password;
+
+  @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
+  private List<AnswerEntity> userAnswers;
 
   @Transient
   private final String roles = "ROLE_USER";

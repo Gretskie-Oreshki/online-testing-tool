@@ -1,21 +1,24 @@
 package org.testingTool.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.List;
 
+@Entity
+@Table(name="questions")
 public class QuestionEntity {
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column
     private String name;
 
-    @Column
-    List<AnswerEntity> answers;
+    @ManyToOne
+    @JoinColumn(name = "test_id")
+    private TestEntity test;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    private List<AnswerEntity> answers;
 
     protected QuestionEntity() {}
 

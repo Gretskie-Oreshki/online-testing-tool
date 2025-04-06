@@ -17,7 +17,9 @@
         </div>
 
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form class="space-y-6" action="#" method="POST">
+          <form class="space-y-6" th:action="@{/login}" method="POST">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
             <div>
               <label for="guestId" class="block text-sm/6 font-medium text-gray-900">Идентификатор</label>
               <div class="mt-2">

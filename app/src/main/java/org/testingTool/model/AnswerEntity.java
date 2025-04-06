@@ -10,7 +10,7 @@ public class AnswerEntity {
     private Long id;
 
     private String value;
-    boolean isRight;
+    private boolean isRight;
 
     @ManyToOne
     @JoinColumn(name = "question_id")

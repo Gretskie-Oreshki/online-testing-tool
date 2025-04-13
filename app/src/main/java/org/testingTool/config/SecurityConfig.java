@@ -2,19 +2,17 @@ package org.testingTool.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.core.annotation.Order;
 import org.testingTool.services.MyAdminDetailsService;
 import org.testingTool.services.MyGuestDetailsService;
 
@@ -24,29 +22,42 @@ import org.testingTool.services.MyGuestDetailsService;
 public class SecurityConfig {
 
   @Bean
-  public UserDetailsService adminDetailsService() {
-    return new MyAdminDetailsService();
+  @Order(1)
+  public SecurityFilterChain internalSecurityFilterChain(HttpSecurity http) throws Exception {
+    return http
+        .csrf((csrf) -> csrf
+            .csrfTokenRepository(new HttpSessionCsrfTokenRepository())
+            .ignoringRequestMatchers("/app-controller/**"))
+        .securityMatcher("/admin/**")
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/app-controller/**").hasRole("ADMIN")
+            .anyRequest().hasRole("ADMIN"))
+        .formLogin(login -> login
+            .loginPage("/admin/login")
+            .loginProcessingUrl("/admin/login")
+            .defaultSuccessUrl("/admin/")
+            .permitAll())
+        .authenticationProvider(adminAuthenticationProvider())
+        .build();
   }
 
   @Bean
-  public UserDetailsService guestDetailsService() {
-    return new MyGuestDetailsService();
-  }
-
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http.csrf(AbstractHttpConfigurer::disable)
-      .authorizeHttpRequests(auth -> auth.requestMatchers("/**").permitAll()
-        .requestMatchers("/app-controller/**").permitAll()
-        .requestMatchers("/guest/**").hasRole("USER")
-        .requestMatchers("/admin/**").hasRole("ADMIN")
-        .anyRequest().authenticated()
-      )
-      .formLogin(login -> login
-        .loginPage("/login")
-        .permitAll()
-      )
-      .build();
+  @Order(2)
+  public SecurityFilterChain externalFilterChain(HttpSecurity http) throws Exception {
+    return http
+        .csrf((csrf) -> csrf
+            .csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/guest/**").hasRole("USER")
+            .requestMatchers("/**").permitAll()
+            .anyRequest().authenticated())
+        .formLogin(login -> login
+            .loginPage("/login")
+            .loginProcessingUrl("/login")
+            .defaultSuccessUrl("/guest/")
+            .permitAll())
+        .authenticationProvider(guestAuthenticationProvider())
+        .build();
   }
 
   @Bean
@@ -66,11 +77,13 @@ public class SecurityConfig {
   }
 
   @Bean
-  public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-    return http.getSharedObject(AuthenticationManagerBuilder.class)
-      .authenticationProvider(adminAuthenticationProvider())
-      .authenticationProvider(guestAuthenticationProvider())
-      .build();
+  public UserDetailsService adminDetailsService() {
+    return new MyAdminDetailsService();
+  }
+
+  @Bean
+  public UserDetailsService guestDetailsService() {
+    return new MyGuestDetailsService();
   }
 
   @Bean

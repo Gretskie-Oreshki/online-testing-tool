@@ -1,6 +1,5 @@
 package org.testingTool.model;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
@@ -9,7 +8,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name="guests")
-public class GuestEntity implements Serializable {
+public class GuestEntity {
 
   @Id
   @GeneratedValue

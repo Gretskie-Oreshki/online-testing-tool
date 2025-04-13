@@ -1,6 +1,5 @@
 package org.testingTool.model;
 
-import java.io.Serializable;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +7,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name="admins")
-public class AdminEntity implements Serializable {
+public class AdminEntity {
 
   @Id
   @GeneratedValue

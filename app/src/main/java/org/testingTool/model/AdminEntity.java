@@ -1,17 +1,22 @@
 package org.testingTool.model;
 
-import java.io.Serializable;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name="admins")
-public class AdminEntity implements Serializable {
+public class AdminEntity {
 
+  @Getter
   @Id
   @GeneratedValue
   private Long admin_id;
 
+  // это только на данном этапе разработки. используется в appservice для создания пользователя через post
+  @Setter
+  @Getter
   @Column
   private String password;
 
@@ -20,16 +25,4 @@ public class AdminEntity implements Serializable {
 
   public AdminEntity() {}
 
-  public Long getId() {
-    return admin_id;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  // это только на данном этапе разработки. используется в appservice для создания пользователя через post
-  public void setPassword(String password) {
-    this.password = password;
-  }
 }

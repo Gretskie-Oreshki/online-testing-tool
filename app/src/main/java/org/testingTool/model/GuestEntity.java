@@ -29,7 +29,7 @@ public class GuestEntity {
   private LocalDateTime accountExpirationDate;
 
   public GuestEntity() {
-    this.accountExpirationDate = LocalDateTime.now().plusMinutes(1);
+    this.accountExpirationDate = LocalDateTime.now().plusMonths(1);
   }
 
 }

@@ -23,7 +23,6 @@ public class GuestCleanupSchedulerService {
     List<GuestEntity> expiredGuests = guestRepository.findExpired(now);
 
     guestRepository.deleteAll(expiredGuests);
-    System.out.println("удалил " + expiredGuests.size() + " гостей.");
   }
 
 }

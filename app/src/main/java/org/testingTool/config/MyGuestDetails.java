@@ -29,7 +29,7 @@ public class MyGuestDetails implements UserDetails {
 
   @Override
   public String getUsername() {
-    return String.valueOf(guest.getId());
+    return String.valueOf(guest.getGuest_id());
   }
 
   @Override

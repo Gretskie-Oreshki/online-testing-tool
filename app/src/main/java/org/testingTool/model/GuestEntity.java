@@ -10,6 +10,7 @@ import lombok.Setter;
 @Table(name="guests")
 public class GuestEntity {
 
+  @Getter
   @Id
   @GeneratedValue
   private Long guest_id;
@@ -28,11 +29,7 @@ public class GuestEntity {
   private LocalDateTime accountExpirationDate;
 
   public GuestEntity() {
-    this.accountExpirationDate = LocalDateTime.now().plusMonths(1);
-  }
-
-  public Long getId() {
-    return guest_id;
+    this.accountExpirationDate = LocalDateTime.now().plusMinutes(1);
   }
 
 }

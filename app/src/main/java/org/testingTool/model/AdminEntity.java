@@ -9,6 +9,7 @@ import lombok.Setter;
 @Table(name="admins")
 public class AdminEntity {
 
+  @Getter
   @Id
   @GeneratedValue
   private Long admin_id;
@@ -23,9 +24,5 @@ public class AdminEntity {
   private final String roles = "ROLE_ADMIN";
 
   public AdminEntity() {}
-
-  public Long getId() {
-    return admin_id;
-  }
 
 }

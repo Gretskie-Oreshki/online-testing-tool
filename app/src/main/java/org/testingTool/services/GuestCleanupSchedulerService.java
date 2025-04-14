@@ -17,7 +17,7 @@ public class GuestCleanupSchedulerService {
     this.guestRepository = guestRepository;
   }
 
-  @Scheduled(fixedRate = 3600000)
+  @Scheduled(cron = "0 0 12 * * *")
   public void cleanupGuests() {
     LocalDateTime now = LocalDateTime.now();
     List<GuestEntity> expiredGuests = guestRepository.findExpired(now);

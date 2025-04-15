@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name="guests")
@@ -11,12 +13,12 @@ public class GuestEntity implements Serializable {
 
   @Id
   @GeneratedValue
-  private Long id;
+  @Getter private Long id;
 
-  private String password;
+  @Getter @Setter private String password;
 
   @OneToMany(mappedBy = "guest")
-  private List<UserAnswerEntity> userAnswers;
+  @Getter @Setter private List<UserAnswerEntity> userAnswers;
 
   @Transient
   private final String roles = "ROLE_USER";
@@ -24,16 +26,4 @@ public class GuestEntity implements Serializable {
   public GuestEntity() {
   }
 
-  public Long getId() {
-    return id;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  // это только на данном этапе разработки. используется в appservice для создания пользователя через post
-  public void setPassword(String password) {
-    this.password = password;
-  }
 }

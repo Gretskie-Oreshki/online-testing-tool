@@ -20,7 +20,7 @@ public class AnswerEntity {
 
     protected AnswerEntity() {}
 
-    public boolean checkIfRight() {
+    public boolean isRight() {
         return isRight;
     }
 }

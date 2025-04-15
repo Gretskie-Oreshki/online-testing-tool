@@ -18,7 +18,7 @@ public class QuestionEntity {
 
     @ManyToOne
     @JoinColumn(name = "test_id")
-    private TestEntity test;
+    @Getter @Setter private TestEntity test;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Getter @Setter List<AnswerEntity> answers;

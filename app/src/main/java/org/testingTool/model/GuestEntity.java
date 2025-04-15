@@ -23,7 +23,6 @@ public class GuestEntity implements Serializable {
   @Transient
   private final String roles = "ROLE_USER";
 
-  public GuestEntity() {
-  }
+  public GuestEntity() {}
 
 }

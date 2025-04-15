@@ -16,3 +16,4 @@ app/bin/
 
 # Ignore IntelliJIDEA folder
 .idea
+*.db

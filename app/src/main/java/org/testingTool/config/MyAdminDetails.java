@@ -28,7 +28,7 @@ public class MyAdminDetails implements UserDetails {
 
   @Override
   public String getUsername() {
-    return String.valueOf(admin.getId());
+    return String.valueOf(admin.getAdmin_id());
   }
 
   @Override

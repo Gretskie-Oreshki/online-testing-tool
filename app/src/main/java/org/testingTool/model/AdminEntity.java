@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="admins")
+@Table(name = "admins")
 @NoArgsConstructor
 public class AdminEntity {
 
@@ -18,7 +18,8 @@ public class AdminEntity {
   private Long id;
 
   @Column
-  @Getter @Setter
+  @Getter
+  @Setter
   private
   String password;
 

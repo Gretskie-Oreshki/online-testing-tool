@@ -10,23 +10,33 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserAnswerEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "test_id")
-    @Getter @Setter private TestEntity test;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Getter
+  private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "question_id")
-    @Getter @Setter private QuestionEntity question;
+  @ManyToOne
+  @JoinColumn(name = "test_id")
+  @Getter
+  @Setter
+  private TestEntity test;
 
-    @ManyToOne
-    @JoinColumn(name = "answer_id")
-    @Getter @Setter private AnswerEntity answer;
+  @ManyToOne
+  @JoinColumn(name = "question_id")
+  @Getter
+  @Setter
+  private QuestionEntity question;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @Getter @Setter private GuestEntity guest;
+  @ManyToOne
+  @JoinColumn(name = "answer_id")
+  @Getter
+  @Setter
+  private AnswerEntity answer;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  @Getter
+  @Setter
+  private GuestEntity guest;
 }

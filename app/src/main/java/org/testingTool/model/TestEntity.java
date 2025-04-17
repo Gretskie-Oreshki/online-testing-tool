@@ -1,9 +1,7 @@
 package org.testingTool.model;
 
-import java.io.Serializable;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -11,21 +9,21 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="tests")
+@Table(name = "tests")
 @NoArgsConstructor
 public class TestEntity {
 
-    @Id
-    @GeneratedValue
-    @Getter
-    private Long id;
+  @Id
+  @GeneratedValue
+  @Getter
+  private Long id;
 
-    @Getter
-    @Setter
-    private String name;
+  @Getter
+  @Setter
+  private String name;
 
-    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
-    @Getter
-    @Setter
-    private List<QuestionEntity> questions;
+  @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
+  @Getter
+  @Setter
+  private List<QuestionEntity> questions;
 }

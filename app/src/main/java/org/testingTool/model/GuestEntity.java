@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="guests")
+@Table(name = "guests")
 public class GuestEntity implements Serializable {
 
   @Id

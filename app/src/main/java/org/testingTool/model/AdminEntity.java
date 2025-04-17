@@ -14,11 +14,13 @@ public class AdminEntity {
 
   @Id
   @GeneratedValue
-  @Getter private Long id;
+  @Getter
+  private Long id;
 
   @Column
   @Getter @Setter
-  private String password;
+  private
+  String password;
 
   @Transient
   private final String roles = "ROLE_ADMIN";

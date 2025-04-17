@@ -14,14 +14,21 @@ import lombok.Setter;
 public class QuestionEntity {
     @Id
     @GeneratedValue
-    @Getter private Long id;
+    @Getter
+    private Long id;
 
-    @Getter @Setter private String name;
+    @Getter
+    @Setter
+    private String name;
 
     @ManyToOne
     @JoinColumn(name = "test_id")
-    @Getter @Setter private TestEntity test;
+    @Getter
+    @Setter
+    private TestEntity test;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    @Getter @Setter List<AnswerEntity> answers;
+    @Getter
+    @Setter
+    private List<AnswerEntity> answers;
 }

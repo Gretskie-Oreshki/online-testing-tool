@@ -15,12 +15,17 @@ public class GuestEntity implements Serializable {
 
   @Id
   @GeneratedValue
-  @Getter private Long id;
+  @Getter
+  private Long id;
 
-  @Getter @Setter private String password;
+  @Getter
+  @Setter
+  private String password;
 
   @OneToMany(mappedBy = "guest")
-  @Getter @Setter private List<UserAnswerEntity> userAnswers;
+  @Getter
+  @Setter
+  private List<UserAnswerEntity> userAnswers;
 
   @Transient
   private final String roles = "ROLE_USER";

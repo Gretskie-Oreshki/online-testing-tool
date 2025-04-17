@@ -11,12 +11,20 @@ import lombok.Setter;
 public class AnswerEntity {
     @Id
     @GeneratedValue
-    @Getter private Long id;
+    @Getter
+    private Long id;
 
-    @Getter @Setter private String value;
-    @Getter @Setter private boolean isRight;
+    @Getter
+    @Setter
+    private String value;
+
+    @Getter
+    @Setter
+    private boolean isRight;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
-    @Getter @Setter private QuestionEntity question;
+    @Getter
+    @Setter
+    private QuestionEntity question;
 }

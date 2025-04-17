@@ -32,7 +32,7 @@ public class GuestEntity implements Serializable {
 
   @Getter
   @Column
-  private LocalDateTime accountExpirationDate;
+  private final LocalDateTime accountExpirationDate;
 
   public GuestEntity() {
     this.accountExpirationDate = LocalDateTime.now().plusMonths(1);

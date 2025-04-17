@@ -11,9 +11,9 @@ import org.testingTool.repository.GuestRepository;
 @Service
 public class AppService {
 
-  private GuestRepository guestRepository;
-  private AdminRepository adminRepository;
-  private PasswordEncoder passwordEncoder;
+  private final GuestRepository guestRepository;
+  private final AdminRepository adminRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Autowired
   public AppService(AdminRepository adminRepository, PasswordEncoder passwordEncoder, GuestRepository guestRepository) {

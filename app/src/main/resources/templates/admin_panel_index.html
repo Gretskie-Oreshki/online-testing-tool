@@ -9,11 +9,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Панель администратора</title>
   </head>
-  <body>
-    <h1>Панель администратора</h1>
-
-    <div>
-      <p>This page can See only admins!...</p>
-    </div>
-  </body>
+  <section
+    layout:fragment="content"
+    class="min-h-screen w-full flex items-start"
+  >
+    <body>
+      <div class="mx-auto max-w-3xl w-full h-screen shadow-md">
+        <div class="mx-auto max-w-2xl w-full h-max">
+          <div class="mt-5 mb-5">
+            <h1
+              class="text-left text-3xl font-bold tracking-tight text-gray-900"
+            >
+              Панель администратора
+            </h1>
+          </div>
+          <div class="mt-5 rounded-md shadow-md p-3 overflow-auto">
+            <table class="mx-auto max-w-2xl w-full h-max">
+              <caption class="p-3">
+                <h2
+                  class="text-left text-2xl/9 font-bold tracking-tight text-gray-900"
+                >
+                  Тесты
+                </h2>
+                <p class="text-left text-sm">
+                  Список всех созданных вами тестов
+                </p>
+              </caption>
+              <thead
+                class="font-bold text-base text-center text-gray-900 bg-gray-200"
+              >
+                <tr>
+                  <th class="px-3 py-1.5">ID</th>
+                  <th class="px-3 py-1.5">Название</th>
+                  <th class="px-3 py-1.5">Действия</th>
+                </tr>
+              </thead>
+              <tbody class="font-medium text-sm text-center text-gray-900">
+                <tr
+                  class="border-b border-gray-200 hover:bg-gray-100"
+                  th:each="test : ${tests}"
+                >
+                  <td class="px-3 py-1.5" th:text="${test.getTestID()}"></td>
+                  <td class="px-3 py-1.5" th:text="${test.getName()}"></td>
+                  <td class="px-3 py-1.5">
+                    <a href="#">Изменить</a>
+                    <a href="#">Удалить</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-10 rounded-md shadow-md p-3 overflow-auto">
+            <table class="mx-auto max-w-2xl w-full h-max">
+              <caption class="p-3">
+                <h2
+                  class="text-left text-2xl/9 font-bold tracking-tight text-gray-900"
+                >
+                  Пользователи
+                </h2>
+                <p class="text-left text-sm">
+                  Список всех пользователей и закреплённых за ними тестов
+                </p>
+              </caption>
+              <thead
+                class="font-bold text-base text-center text-gray-900 bg-gray-200"
+              >
+                <tr>
+                  <th class="px-3 py-1.5">ID</th>
+                  <th class="px-3 py-1.5">Пароль</th>
+                  <th class="px-3 py-1.5">Действия</th>
+                </tr>
+              </thead>
+              <tbody class="font-medium text-sm text-center text-gray-900">
+                <tr
+                  class="border-b border-gray-200 hover:bg-gray-100"
+                  th:each="guest : ${guests}"
+                >
+                  <td
+                    class="px-3 py-1.5 sticky left-0"
+                    th:text="${guest.getId()}"
+                  ></td>
+                  <td class="px-3 py-1.5" th:text="${guest.getPassword()}"></td>
+                  <td class="px-3 py-1.5">
+                    <a href="#">Изменить</a>
+                    <a href="#">Удалить</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </body>
+  </section>
 </html>

@@ -9,6 +9,7 @@ import lombok.Setter;
 @Table(name = "answers")
 @NoArgsConstructor
 public class AnswerEntity {
+
   @Id
   @GeneratedValue
   @Getter

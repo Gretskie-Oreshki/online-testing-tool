@@ -20,8 +20,7 @@ public class AdminEntity {
   @Column
   @Getter
   @Setter
-  private
-  String password;
+  private String password;
 
   @Transient
   private final String roles = "ROLE_ADMIN";

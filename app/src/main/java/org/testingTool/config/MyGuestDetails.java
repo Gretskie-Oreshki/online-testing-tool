@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MyGuestDetails implements UserDetails {
 
-  private GuestEntity guest;
+  private final GuestEntity guest;
 
   public MyGuestDetails(GuestEntity guest) {
     this.guest = guest;

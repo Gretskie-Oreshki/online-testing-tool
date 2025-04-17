@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MyAdminDetails implements UserDetails {
 
-  private AdminEntity admin;
+  private final AdminEntity admin;
 
   public MyAdminDetails(AdminEntity admin) {
     this.admin = admin;

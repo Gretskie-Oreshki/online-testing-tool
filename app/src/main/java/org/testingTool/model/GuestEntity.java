@@ -1,6 +1,7 @@
 package org.testingTool.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -10,7 +11,6 @@ import lombok.Setter;
 
 @Entity
 @Table(name="guests")
-@NoArgsConstructor
 public class GuestEntity implements Serializable {
 
   @Id
@@ -24,4 +24,12 @@ public class GuestEntity implements Serializable {
 
   @Transient
   private final String roles = "ROLE_USER";
+
+  @Getter
+  @Column
+  private LocalDateTime accountExpirationDate;
+
+  public GuestEntity() {
+    this.accountExpirationDate = LocalDateTime.now().plusMonths(1);
+  }
 }

@@ -2,10 +2,12 @@ package org.testingTool.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name="answers")
+@NoArgsConstructor
 public class AnswerEntity {
     @Id
     @GeneratedValue
@@ -17,10 +19,4 @@ public class AnswerEntity {
     @ManyToOne
     @JoinColumn(name = "question_id")
     @Getter @Setter private QuestionEntity question;
-
-    protected AnswerEntity() {}
-
-    public boolean isRight() {
-        return isRight;
-    }
 }

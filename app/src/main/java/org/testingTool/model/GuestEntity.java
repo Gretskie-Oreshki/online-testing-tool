@@ -5,10 +5,12 @@ import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name="guests")
+@NoArgsConstructor
 public class GuestEntity implements Serializable {
 
   @Id
@@ -22,7 +24,4 @@ public class GuestEntity implements Serializable {
 
   @Transient
   private final String roles = "ROLE_USER";
-
-  public GuestEntity() {}
-
 }

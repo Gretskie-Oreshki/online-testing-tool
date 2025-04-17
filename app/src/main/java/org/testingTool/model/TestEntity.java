@@ -5,12 +5,14 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="tests")
-public class TestEntity implements Serializable {
+@NoArgsConstructor
+public class TestEntity {
 
     @Id
     @GeneratedValue
@@ -20,6 +22,4 @@ public class TestEntity implements Serializable {
 
     @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
     @Getter @Setter private List<QuestionEntity> questions;
-
-    protected TestEntity() {}
 }

@@ -5,10 +5,12 @@ import jakarta.persistence.*;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name="questions")
+@NoArgsConstructor
 public class QuestionEntity {
     @Id
     @GeneratedValue
@@ -22,6 +24,4 @@ public class QuestionEntity {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     @Getter @Setter List<AnswerEntity> answers;
-
-    protected QuestionEntity() {}
 }

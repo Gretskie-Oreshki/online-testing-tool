@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,25 +12,21 @@ import lombok.Setter;
 @Entity
 @Table(name = "questions")
 @NoArgsConstructor
+@Setter
+@Getter
 public class QuestionEntity {
 
   @Id
   @GeneratedValue
-  @Getter
+  @Setter(AccessLevel.NONE)
   private Long id;
 
-  @Getter
-  @Setter
   private String name;
 
   @ManyToOne
   @JoinColumn(name = "test_id")
-  @Getter
-  @Setter
   private TestEntity test;
 
   @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-  @Getter
-  @Setter
   private List<AnswerEntity> answers;
 }

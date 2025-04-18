@@ -1,25 +1,24 @@
 package org.testingTool.model;
 
-import java.io.Serializable;
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Setter;
 
 @Entity
 @Table(name = "admins")
 @NoArgsConstructor
+@Getter
+@Setter
 public class AdminEntity {
 
   @Id
   @GeneratedValue
-  @Getter
+  @Setter(AccessLevel.NONE)
   private Long id;
 
   @Column
-  @Getter
-  @Setter
   private String password;
 
   @Transient

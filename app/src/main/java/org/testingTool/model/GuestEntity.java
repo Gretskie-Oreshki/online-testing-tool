@@ -6,32 +6,30 @@ import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Setter;
 
 @Entity
 @Table(name = "guests")
+@Getter
+@Setter
 public class GuestEntity {
 
   @Id
   @GeneratedValue
-  @Getter
+  @Setter(AccessLevel.NONE)
   private Long id;
 
-  @Getter
-  @Setter
   private String password;
 
   @OneToMany(mappedBy = "guest")
-  @Getter
-  @Setter
   private List<UserAnswerEntity> userAnswers;
 
   @Transient
   private final String roles = "ROLE_USER";
 
-  @Getter
   @Column
+  @Setter(AccessLevel.NONE)
   private final LocalDateTime accountExpirationDate;
 
   public GuestEntity() {

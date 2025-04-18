@@ -1,5 +1,6 @@
 package org.testingTool.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,18 +10,17 @@ import org.testingTool.repository.AdminRepository;
 import org.testingTool.repository.GuestRepository;
 
 @Service
+@RequiredArgsConstructor
 public class AppService {
 
-  private final GuestRepository guestRepository;
-  private final AdminRepository adminRepository;
-  private final PasswordEncoder passwordEncoder;
+  @Autowired
+  private GuestRepository guestRepository;
 
   @Autowired
-  public AppService(AdminRepository adminRepository, PasswordEncoder passwordEncoder, GuestRepository guestRepository) {
-    this.adminRepository = adminRepository;
-    this.passwordEncoder = passwordEncoder;
-    this.guestRepository = guestRepository;
-  }
+  private AdminRepository adminRepository;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   public void addAdmin(AdminEntity admin) {
     admin.setPassword(passwordEncoder.encode(admin.getPassword()));

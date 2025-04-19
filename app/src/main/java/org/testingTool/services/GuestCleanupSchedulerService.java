@@ -1,12 +1,11 @@
 package org.testingTool.services;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.testingTool.model.GuestEntity;
 import org.testingTool.repository.GuestRepository;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Component
 public class GuestCleanupSchedulerService {
@@ -24,5 +23,4 @@ public class GuestCleanupSchedulerService {
 
     guestRepository.deleteAll(expiredGuests);
   }
-
 }

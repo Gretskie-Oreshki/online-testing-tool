@@ -1,13 +1,12 @@
 package org.testingTool.config;
 
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.testingTool.model.GuestEntity;
-
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
 
 public class MyGuestDetails implements UserDetails {
 

@@ -1,31 +1,35 @@
 package org.testingTool.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "guests")
-public class GuestEntity implements Serializable {
+@Table(name="guests")
+public class GuestEntity {
 
-  @Id @GeneratedValue private Long guest_id;
+  @Getter
+  @Id
+  @GeneratedValue
+  private Long guest_id;
 
-  @Column private String password;
+  // это только на данном этапе разработки. используется в appservice для создания пользователя через post
+  @Setter
+  @Getter
+  @Column
+  private String password;
 
-  @Transient private final String roles = "ROLE_USER";
+  @Transient
+  private final String roles = "ROLE_USER";
 
-  public GuestEntity() {}
+  @Getter
+  @Column
+  private LocalDateTime accountExpirationDate;
 
-  public Long getId() {
-    return guest_id;
+  public GuestEntity() {
+    this.accountExpirationDate = LocalDateTime.now().plusMonths(1);
   }
 
-  public String getPassword() {
-    return password;
-  }
-
-  // это только на данном этапе разработки. используется в appservice для создания пользователя
-  // через post
-  public void setPassword(String password) {
-    this.password = password;
-  }
 }

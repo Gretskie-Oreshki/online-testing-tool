@@ -3,7 +3,14 @@ package org.testingTool.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
+import jakarta.persistence.Column;
+
 import lombok.Getter;
 import lombok.AccessLevel;
 import lombok.Setter;

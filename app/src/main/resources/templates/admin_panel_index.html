@@ -11,88 +11,124 @@
   </head>
   <section
     layout:fragment="content"
-    class="min-h-screen w-full flex items-start"
+    class="flex min-h-screen w-full items-start"
   >
     <body>
-      <div class="mx-auto max-w-3xl w-full h-screen shadow-md">
-        <div class="mx-auto max-w-2xl w-full h-max">
-          <div class="mt-5 mb-5">
+      <div class="mx-auto h-screen w-full max-w-3xl shadow-md">
+        <div class="mx-auto h-max w-full max-w-2xl">
+          <div class="mb-5 mt-5">
             <h1
               class="text-left text-3xl font-bold tracking-tight text-gray-900"
             >
               Панель администратора
             </h1>
           </div>
-          <div class="mt-5 rounded-md shadow-md p-3 overflow-auto">
-            <table class="mx-auto max-w-2xl w-full h-max">
-              <caption class="p-3">
-                <h2
-                  class="text-left text-2xl/9 font-bold tracking-tight text-gray-900"
-                >
+          <div class="relative mt-5 overflow-x-auto rounded-md p-3 shadow-md">
+            <div class="flex items-center justify-between p-3">
+              <div>
+                <h2 class="text-2xl/9 font-bold tracking-tight text-gray-900">
                   Тесты
                 </h2>
-                <p class="text-left text-sm">
-                  Список всех созданных вами тестов
-                </p>
-              </caption>
-              <thead
-                class="font-bold text-base text-center text-gray-900 bg-gray-200"
-              >
+                <p class="text-sm/6">Список всех созданных вами тестов</p>
+              </div>
+              <div>
+                <a
+                  href="#"
+                  class="block w-full cursor-pointer rounded-md bg-black px-3 py-1.5 text-sm/6 font-semibold text-white shadow-md hover:bg-gray-800"
+                >
+                  Добавить
+                </a>
+              </div>
+            </div>
+            <table class="h-full w-full table-fixed text-left">
+              <thead class="bg-gray-200 text-base font-bold text-gray-900">
                 <tr>
-                  <th class="px-3 py-1.5">ID</th>
-                  <th class="px-3 py-1.5">Название</th>
-                  <th class="px-3 py-1.5">Действия</th>
+                  <th scope="col" class="w-1/10 px-3 py-1.5">ID</th>
+                  <th scope="col" class="w-4/6 px-3 py-1.5">Название</th>
+                  <th scope="col" class="w-1/6 px-3 py-1.5">
+                    <span class="sr-only">Действия</span>
+                  </th>
                 </tr>
               </thead>
-              <tbody class="font-medium text-sm text-center text-gray-900">
+              <tbody class="text-sm font-medium text-gray-900">
                 <tr
                   class="border-b border-gray-200 hover:bg-gray-100"
                   th:each="test : ${tests}"
                 >
                   <td class="px-3 py-1.5" th:text="${test.getTestID()}"></td>
                   <td class="px-3 py-1.5" th:text="${test.getName()}"></td>
-                  <td class="px-3 py-1.5">
-                    <a href="#">Изменить</a>
-                    <a href="#">Удалить</a>
+                  <td class="flex justify-end gap-x-3 px-3 py-1.5">
+                    <a
+                      href="#"
+                      class="block flex w-full cursor-pointer justify-center rounded-md bg-blue-600 px-1.5 py-1.5 text-white shadow-md hover:bg-blue-500"
+                    >
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="block flex w-full cursor-pointer justify-center rounded-md bg-red-600 px-1.5 py-1.5 text-white shadow-md hover:bg-red-500"
+                    >
+                      <i class="fa-solid fa-trash-can"></i>
+                    </a>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div class="mt-10 rounded-md shadow-md p-3 overflow-auto">
-            <table class="mx-auto max-w-2xl w-full h-max">
-              <caption class="p-3">
+          <div class="mt-10 overflow-x-auto rounded-md p-3 shadow-md">
+            <div class="flex items-center justify-between p-3">
+              <div>
                 <h2
-                  class="text-left text-2xl/9 font-bold tracking-tight text-gray-900"
+                  class="text-2xl/9 font-semibold tracking-tight text-gray-900"
                 >
                   Пользователи
                 </h2>
-                <p class="text-left text-sm">
+                <p class="text-sm/6">
                   Список всех пользователей и закреплённых за ними тестов
                 </p>
-              </caption>
-              <thead
-                class="font-bold text-base text-center text-gray-900 bg-gray-200"
-              >
+              </div>
+              <div>
+                <a
+                  href="#"
+                  class="block w-full cursor-pointer rounded-md bg-black px-3 py-1.5 text-sm/6 font-semibold text-white shadow-md hover:bg-gray-800"
+                >
+                  Добавить
+                </a>
+              </div>
+            </div>
+            <table class="h-full w-full table-fixed text-left">
+              <thead class="bg-gray-200 text-base font-semibold text-gray-900">
                 <tr>
-                  <th class="px-3 py-1.5">ID</th>
-                  <th class="px-3 py-1.5">Пароль</th>
-                  <th class="px-3 py-1.5">Действия</th>
+                  <th scope="col" class="w-1/10 px-3 py-1.5">ID</th>
+                  <th scope="col" class="w-4/6 px-3 py-1.5">Пароль</th>
+                  <th scope="col" class="w-1/6 px-3 py-1.5">
+                    <span class="sr-only">Действия</span>
+                  </th>
                 </tr>
               </thead>
-              <tbody class="font-medium text-sm text-center text-gray-900">
+              <tbody class="text-sm font-medium text-gray-900">
                 <tr
                   class="border-b border-gray-200 hover:bg-gray-100"
                   th:each="guest : ${guests}"
                 >
                   <td
-                    class="px-3 py-1.5 sticky left-0"
+                    class="sticky left-0 px-3 py-1.5"
                     th:text="${guest.getId()}"
                   ></td>
                   <td class="px-3 py-1.5" th:text="${guest.getPassword()}"></td>
-                  <td class="px-3 py-1.5">
-                    <a href="#">Изменить</a>
-                    <a href="#">Удалить</a>
+                  <td class="flex justify-end gap-x-3 px-3 py-1.5">
+                    <a
+                      href="#"
+                      class="block flex w-full cursor-pointer justify-center rounded-md bg-blue-600 px-1.5 py-1.5 text-white shadow-md hover:bg-blue-500"
+                    >
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <a
+                      href="#"
+                      class="block flex w-full cursor-pointer justify-center rounded-md bg-red-600 px-1.5 py-1.5 text-white shadow-md hover:bg-red-500"
+                    >
+                      <i class="fa-solid fa-trash-can"></i>
+                    </a>
                   </td>
                 </tr>
               </tbody>

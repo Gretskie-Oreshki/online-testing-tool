@@ -1,43 +1,38 @@
 package org.testingTool.model;
 
-import java.io.Serializable;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 
 @Entity
-@Table(name="tests")
+@Table(name = "tests")
 public class TestEntity implements Serializable {
 
-    @Id
-    @GeneratedValue
-    private Long test_id;
+  @Id @GeneratedValue private Long test_id;
 
-    @Column
-    private String name;
+  @Column private String name;
 
-    @Column
-    private String structure;
+  @Column private String structure;
 
-    protected TestEntity() {}
+  protected TestEntity() {}
 
-    public TestEntity(String name, String str) {
-        this.name = name;
-        this.structure = str;
-    }
+  public TestEntity(String name, String str) {
+    this.name = name;
+    this.structure = str;
+  }
 
-    public Long getTestID(){
-        return test_id;
-    }
+  public Long getTestID() {
+    return test_id;
+  }
 
-    public String getName(){
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getStructure(){
-        return structure;
-    }
+  public String getStructure() {
+    return structure;
+  }
 }

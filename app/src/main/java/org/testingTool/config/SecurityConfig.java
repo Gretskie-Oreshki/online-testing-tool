@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,17 +35,20 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.csrf(AbstractHttpConfigurer::disable)
-      .authorizeHttpRequests(auth -> auth.requestMatchers("/**").permitAll()
-        .requestMatchers("/app-controller/**").permitAll()
-        .requestMatchers("/guest/**").hasRole("USER")
-        .requestMatchers("/admin/**").hasRole("ADMIN")
-        .anyRequest().authenticated()
-      )
-      .formLogin(login -> login
-        .loginPage("/login")
-        .permitAll()
-      )
-      .build();
+        .authorizeHttpRequests(
+            auth ->
+                auth.requestMatchers("/**")
+                    .permitAll()
+                    .requestMatchers("/app-controller/**")
+                    .permitAll()
+                    .requestMatchers("/guest/**")
+                    .hasRole("USER")
+                    .requestMatchers("/admin/**")
+                    .hasRole("ADMIN")
+                    .anyRequest()
+                    .authenticated())
+        .formLogin(login -> login.loginPage("/login").permitAll())
+        .build();
   }
 
   @Bean
@@ -68,9 +70,9 @@ public class SecurityConfig {
   @Bean
   public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
     return http.getSharedObject(AuthenticationManagerBuilder.class)
-      .authenticationProvider(adminAuthenticationProvider())
-      .authenticationProvider(guestAuthenticationProvider())
-      .build();
+        .authenticationProvider(adminAuthenticationProvider())
+        .authenticationProvider(guestAuthenticationProvider())
+        .build();
   }
 
   @Bean

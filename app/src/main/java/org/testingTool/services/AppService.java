@@ -16,7 +16,10 @@ public class AppService {
   private PasswordEncoder passwordEncoder;
 
   @Autowired
-  public AppService(AdminRepository adminRepository, PasswordEncoder passwordEncoder, GuestRepository guestRepository) {
+  public AppService(
+      AdminRepository adminRepository,
+      PasswordEncoder passwordEncoder,
+      GuestRepository guestRepository) {
     this.adminRepository = adminRepository;
     this.passwordEncoder = passwordEncoder;
     this.guestRepository = guestRepository;

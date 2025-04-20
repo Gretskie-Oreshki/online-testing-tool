@@ -1,43 +1,33 @@
 package org.testingTool.model;
 
-import java.io.Serializable;
+import java.util.List;
 
-import jakarta.persistence.Column;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 
 @Entity
-@Table(name="tests")
-public class TestEntity implements Serializable {
+@Table(name = "tests")
+@NoArgsConstructor
+@Getter
+@Setter
+public class TestEntity {
 
-    @Id
-    @GeneratedValue
-    private Long test_id;
+  @Id
+  @GeneratedValue
+  @Setter(AccessLevel.NONE)
+  private Long id;
 
-    @Column
-    private String name;
+  private String name;
 
-    @Column
-    private String structure;
-
-    protected TestEntity() {}
-
-    public TestEntity(String name, String str) {
-        this.name = name;
-        this.structure = str;
-    }
-
-    public Long getTestID(){
-        return test_id;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public String getStructure(){
-        return structure;
-    }
+  @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
+  private List<QuestionEntity> questions;
 }

@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 >>>>>>> c970b3f (feat: update controllers, security config, renamed user field in user answer entity)
 =======
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
 >>>>>>> a2824b4 (chore: remove field injections, reformat code)
 import org.springframework.beans.factory.annotation.Autowired;
+=======
+>>>>>>> cf25b3c (chore: spotlessApply)
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

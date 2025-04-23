@@ -1,40 +1,42 @@
 package org.testingTool.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.testingTool.model.GuestEntity;
+import org.testingTool.model.Role;
+import org.testingTool.model.UserEntity;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
-public class MyGuestDetails implements UserDetails {
+@RequiredArgsConstructor
+public class MyUserDetails implements UserDetails {
 
-  private final GuestEntity guest;
-
-  public MyGuestDetails(GuestEntity guest) {
-    this.guest = guest;
-  }
+  private final UserEntity user;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
   }
 
   @Override
   public String getPassword() {
-    return guest.getPassword();
+    return user.getPassword();
   }
 
   @Override
   public String getUsername() {
-    return String.valueOf(guest.getId());
+    return String.valueOf(user.getUid());
   }
 
   @Override
   public boolean isAccountNonExpired() {
-    return !LocalDateTime.now().isAfter(guest.getAccountExpirationDate());
+    if (user.getRole() == Role.ADMIN) {
+      return true;
+    }
+    return user.getCreatedAt().isAfter(LocalDateTime.now().minusMonths(1));
   }
 
   @Override

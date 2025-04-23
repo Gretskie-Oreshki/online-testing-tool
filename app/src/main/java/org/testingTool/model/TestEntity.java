@@ -1,18 +1,16 @@
 package org.testingTool.model;
 
-import java.util.List;
-
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
+import java.util.List;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "tests")

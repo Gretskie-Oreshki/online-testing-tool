@@ -1,5 +1,6 @@
 package org.testingTool.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +13,10 @@ import org.testingTool.services.UserService;
 
 @Controller
 @RequestMapping("/app-controller")
+@RequiredArgsConstructor
 public class AppController {
 
-  @Autowired
-  private UserService service;
+  private final UserService service;
 
   @GetMapping("/")
   public String index(Model model) {

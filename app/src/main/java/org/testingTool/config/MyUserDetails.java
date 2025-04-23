@@ -1,15 +1,14 @@
 package org.testingTool.config;
 
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.testingTool.model.Role;
 import org.testingTool.model.UserEntity;
-
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class MyUserDetails implements UserDetails {

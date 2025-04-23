@@ -1,13 +1,12 @@
 package org.testingTool.services;
 
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.testingTool.model.Role;
 import org.testingTool.model.UserEntity;
 import org.testingTool.repository.UserRepository;
-
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor

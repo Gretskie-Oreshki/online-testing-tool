@@ -1,5 +1,6 @@
 package org.testingTool.services;
 
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,8 +9,6 @@ import org.springframework.stereotype.Service;
 import org.testingTool.config.MyUserDetails;
 import org.testingTool.model.UserEntity;
 import org.testingTool.repository.UserRepository;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

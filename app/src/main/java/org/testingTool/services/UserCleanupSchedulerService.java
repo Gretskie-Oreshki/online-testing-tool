@@ -1,14 +1,13 @@
 package org.testingTool.services;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.testingTool.model.Role;
 import org.testingTool.model.UserEntity;
 import org.testingTool.repository.UserRepository;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -23,5 +22,4 @@ public class UserCleanupSchedulerService {
 
     userRepository.deleteAll(expiredUsers);
   }
-
 }

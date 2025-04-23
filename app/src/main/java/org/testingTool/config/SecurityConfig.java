@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -55,6 +54,7 @@ public class SecurityConfig {
   public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
     return http.getSharedObject(AuthenticationManagerBuilder.class)
 <<<<<<< HEAD
+<<<<<<< HEAD
         .authenticationProvider(adminAuthenticationProvider())
         .authenticationProvider(guestAuthenticationProvider())
         .build();
@@ -62,6 +62,10 @@ public class SecurityConfig {
       .authenticationProvider(userAuthenticationProvider())
       .build();
 >>>>>>> c970b3f (feat: update controllers, security config, renamed user field in user answer entity)
+=======
+        .authenticationProvider(userAuthenticationProvider())
+        .build();
+>>>>>>> a2824b4 (chore: remove field injections, reformat code)
   }
 
   @Bean

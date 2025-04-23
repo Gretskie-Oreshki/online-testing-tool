@@ -10,7 +10,7 @@ import org.testingTool.model.GuestEntity;
 
 public class MyGuestDetails implements UserDetails {
 
-  private GuestEntity guest;
+  private final GuestEntity guest;
 
   public MyGuestDetails(GuestEntity guest) {
     this.guest = guest;
@@ -28,7 +28,7 @@ public class MyGuestDetails implements UserDetails {
 
   @Override
   public String getUsername() {
-    return String.valueOf(guest.getGuest_id());
+    return String.valueOf(guest.getId());
   }
 
   @Override

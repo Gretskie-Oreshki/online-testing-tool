@@ -1,23 +1,42 @@
 package org.testingTool.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Transient;
+import jakarta.persistence.Column;
+
 import lombok.Getter;
+import lombok.AccessLevel;
 import lombok.Setter;
 
 @Entity
 @Table(name = "guests")
+@Getter
+@Setter
 public class GuestEntity {
 
-  @Getter @Id @GeneratedValue private Long guest_id;
+  @Id
+  @GeneratedValue
+  @Setter(AccessLevel.NONE)
+  private Long id;
 
-  // это только на данном этапе разработки. используется в appservice для создания пользователя
-  // через post
-  @Setter @Getter @Column private String password;
+  private String password;
 
-  @Transient private final String roles = "ROLE_USER";
+  @OneToMany(mappedBy = "guest")
+  private List<UserAnswerEntity> userAnswers;
 
-  @Getter @Column private LocalDateTime accountExpirationDate;
+  @Transient
+  private final String roles = "ROLE_USER";
+
+  @Column
+  @Setter(AccessLevel.NONE)
+  private final LocalDateTime accountExpirationDate;
 
   public GuestEntity() {
     this.accountExpirationDate = LocalDateTime.now().plusMonths(1);

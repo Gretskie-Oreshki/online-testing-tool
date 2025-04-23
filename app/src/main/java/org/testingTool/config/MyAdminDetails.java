@@ -9,7 +9,7 @@ import org.testingTool.model.AdminEntity;
 
 public class MyAdminDetails implements UserDetails {
 
-  private AdminEntity admin;
+  private final AdminEntity admin;
 
   public MyAdminDetails(AdminEntity admin) {
     this.admin = admin;
@@ -27,7 +27,7 @@ public class MyAdminDetails implements UserDetails {
 
   @Override
   public String getUsername() {
-    return String.valueOf(admin.getAdmin_id());
+    return String.valueOf(admin.getId());
   }
 
   @Override

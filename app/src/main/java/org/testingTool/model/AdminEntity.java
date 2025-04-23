@@ -1,20 +1,32 @@
 package org.testingTool.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Transient;
+
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.AccessLevel;
 import lombok.Setter;
 
 @Entity
 @Table(name = "admins")
+@NoArgsConstructor
+@Getter
+@Setter
 public class AdminEntity {
 
-  @Getter @Id @GeneratedValue private Long admin_id;
+  @Id
+  @GeneratedValue
+  @Setter(AccessLevel.NONE)
+  private Long id;
 
-  // это только на данном этапе разработки. используется в appservice для создания пользователя
-  // через post
-  @Setter @Getter @Column private String password;
+  @Column
+  private String password;
 
-  @Transient private final String roles = "ROLE_ADMIN";
-
-  public AdminEntity() {}
+  @Transient
+  private final String roles = "ROLE_ADMIN";
 }

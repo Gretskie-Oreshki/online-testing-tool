@@ -39,5 +39,5 @@ public class UserAnswerEntity {
 
   @ManyToOne
   @JoinColumn(name = "user_id")
-  private GuestEntity guest;
+  private UserEntity user;
 }

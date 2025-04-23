@@ -1,5 +1,6 @@
 package org.testingTool.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,23 +14,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.testingTool.services.MyAdminDetailsService;
-import org.testingTool.services.MyGuestDetailsService;
+import org.testingTool.services.MyUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-  @Bean
-  public UserDetailsService adminDetailsService() {
-    return new MyAdminDetailsService();
-  }
-
-  @Bean
-  public UserDetailsService guestDetailsService() {
-    return new MyGuestDetailsService();
-  }
+  private final MyUserDetailsService myUserDetailsService;
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -51,17 +44,9 @@ public class SecurityConfig {
   }
 
   @Bean
-  public AuthenticationProvider adminAuthenticationProvider() {
+  public AuthenticationProvider userAuthenticationProvider() {
     DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-    provider.setUserDetailsService(adminDetailsService());
-    provider.setPasswordEncoder(passwordEncoder());
-    return provider;
-  }
-
-  @Bean
-  public AuthenticationProvider guestAuthenticationProvider() {
-    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-    provider.setUserDetailsService(guestDetailsService());
+    provider.setUserDetailsService(myUserDetailsService);
     provider.setPasswordEncoder(passwordEncoder());
     return provider;
   }
@@ -69,8 +54,7 @@ public class SecurityConfig {
   @Bean
   public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
     return http.getSharedObject(AuthenticationManagerBuilder.class)
-      .authenticationProvider(adminAuthenticationProvider())
-      .authenticationProvider(guestAuthenticationProvider())
+      .authenticationProvider(userAuthenticationProvider())
       .build();
   }
 

@@ -13,6 +13,8 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
+  boolean existsByUid(String uid);
+
   @Query("SELECT u FROM UserEntity u WHERE u.role = :role AND u.createdAt < :expirationDate")
   List<UserEntity> findExpired(@Param("role") Role role, @Param("expirationDate") LocalDateTime expirationDate);
 }

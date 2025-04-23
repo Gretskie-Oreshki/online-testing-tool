@@ -7,15 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.testingTool.model.AdminEntity;
-import org.testingTool.model.GuestEntity;
-import org.testingTool.services.AppService;
+import org.testingTool.model.UserEntity;
+import org.testingTool.services.UserService;
 
 @Controller
 @RequestMapping("/app-controller")
 public class AppController {
 
+<<<<<<< HEAD
   @Autowired private AppService service;
+=======
+  @Autowired
+  private UserService service;
+>>>>>>> c970b3f (feat: update controllers, security config, renamed user field in user answer entity)
 
   @GetMapping("/")
   public String index(Model model) {
@@ -23,15 +27,9 @@ public class AppController {
     return "index";
   }
 
-  @PostMapping("/new-admin")
-  public String addAdmin(@RequestBody AdminEntity admin) {
-    service.addAdmin(admin);
-    return "admin_added";
-  }
-
-  @PostMapping("/new-guest")
-  public String addGuest(@RequestBody GuestEntity guest) {
-    service.addGuest(guest);
-    return "guest_added";
+  @PostMapping("/user")
+  public String addUser(@RequestBody UserEntity user) {
+    service.addUser(user);
+    return "admin_added"; // TODO: rename html
   }
 }

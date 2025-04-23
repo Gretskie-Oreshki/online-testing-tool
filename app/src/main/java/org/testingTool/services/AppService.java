@@ -13,14 +13,11 @@ import org.testingTool.repository.GuestRepository;
 @RequiredArgsConstructor
 public class AppService {
 
-  @Autowired
-  private GuestRepository guestRepository;
+  @Autowired private GuestRepository guestRepository;
 
-  @Autowired
-  private AdminRepository adminRepository;
+  @Autowired private AdminRepository adminRepository;
 
-  @Autowired
-  private PasswordEncoder passwordEncoder;
+  @Autowired private PasswordEncoder passwordEncoder;
 
   public void addAdmin(AdminEntity admin) {
     admin.setPassword(passwordEncoder.encode(admin.getPassword()));

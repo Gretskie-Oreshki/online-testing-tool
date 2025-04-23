@@ -1,15 +1,14 @@
 package org.testingTool.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.AccessLevel;
 import lombok.Setter;
 
 @Entity
@@ -24,9 +23,7 @@ public class AdminEntity {
   @Setter(AccessLevel.NONE)
   private Long id;
 
-  @Column
-  private String password;
+  @Column private String password;
 
-  @Transient
-  private final String roles = "ROLE_ADMIN";
+  @Transient private final String roles = "ROLE_ADMIN";
 }

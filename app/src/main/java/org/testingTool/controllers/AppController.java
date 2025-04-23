@@ -15,8 +15,7 @@ import org.testingTool.services.AppService;
 @RequestMapping("/app-controller")
 public class AppController {
 
-  @Autowired
-  private AppService service;
+  @Autowired private AppService service;
 
   @GetMapping("/")
   public String index(Model model) {

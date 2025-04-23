@@ -33,21 +33,21 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http
-      .csrf(csrf -> csrf
-        .ignoringRequestMatchers("/app-controller/**"))
-      .authorizeHttpRequests(auth -> auth
-        .requestMatchers("/**").permitAll()
-        .requestMatchers("/app-controller/**").permitAll()
-        .requestMatchers("/guest/**").hasRole("USER")
-        .requestMatchers("/admin/**").hasRole("ADMIN")
-        .anyRequest().authenticated()
-      )
-      .formLogin(login -> login
-        .loginPage("/login")
-        .permitAll()
-      )
-      .build();
+    return http.csrf(csrf -> csrf.ignoringRequestMatchers("/app-controller/**"))
+        .authorizeHttpRequests(
+            auth ->
+                auth.requestMatchers("/**")
+                    .permitAll()
+                    .requestMatchers("/app-controller/**")
+                    .permitAll()
+                    .requestMatchers("/guest/**")
+                    .hasRole("USER")
+                    .requestMatchers("/admin/**")
+                    .hasRole("ADMIN")
+                    .anyRequest()
+                    .authenticated())
+        .formLogin(login -> login.loginPage("/login").permitAll())
+        .build();
   }
 
   @Bean
@@ -69,9 +69,9 @@ public class SecurityConfig {
   @Bean
   public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
     return http.getSharedObject(AuthenticationManagerBuilder.class)
-      .authenticationProvider(adminAuthenticationProvider())
-      .authenticationProvider(guestAuthenticationProvider())
-      .build();
+        .authenticationProvider(adminAuthenticationProvider())
+        .authenticationProvider(guestAuthenticationProvider())
+        .build();
   }
 
   @Bean

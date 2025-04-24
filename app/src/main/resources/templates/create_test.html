@@ -6,6 +6,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-white text-gray-900">
+
+<-Header->
 <header class="flex justify-between items-center px-6 py-4 bg-gray-100">
     <div class="font-bold text-lg">Logo</div>
     <nav class="space-x-4">
@@ -16,6 +18,7 @@
     </a>
 </header>
 
+<-Main->
 <main class="max-w-4xl mx-auto py-8 px-4">
     <form method="post" th:action="@{/test/constructor}" th:object="${test}">
         <div class="text-center mb-6">
@@ -32,6 +35,7 @@
             </p>
         </div>
 
+        <- Additional materials ->
         <div class="mb-6">
             <p class="text-center font-medium mb-2">для прохождения теста необходимо изучить дополнительный материал:</p>
             <div id="materials" class="space-y-2">
@@ -44,14 +48,15 @@
             <button type="button" onclick="addMaterial()" class="mt-2 text-blue-500">+ Добавить материал</button>
         </div>
 
+        <- Questions ->
         <div class="my-8 text-center">
             <button type="button" onclick="addQuestion()" class="bg-gray-200 px-6 py-2 rounded hover:bg-gray-300">
                 Добавить вопрос
             </button>
         </div>
 
+        <- Questions ->
         <div id="questions" class="space-y-8">
-            <!-- Один вопрос -->
             <div class="border p-4 rounded">
                 <div class="flex items-center space-x-4 mb-2">
                     <input type="text" name="questions[0].name" placeholder="Название вопроса"
@@ -79,6 +84,7 @@
     </form>
 </main>
 
+<-Footer->
 <footer class="flex justify-between items-center px-6 py-4 bg-gray-100 mt-12">
     <div class="font-bold">Logo</div>
     <nav class="space-x-4">
@@ -139,7 +145,6 @@
         updateDurationAndCounter();
     }
 
-
     function addAnswer(button) {
         const qIdx = button.dataset.qidx;
         const container = document.getElementById(`answers-${qIdx}`);
@@ -158,7 +163,6 @@
 
         container.appendChild(answerDiv);
     }
-
 
 </script>
 </body>

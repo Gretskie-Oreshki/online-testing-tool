@@ -35,29 +35,29 @@ public class TestCreationController {
 
   @PostMapping
   public String saveTest(@ModelAttribute("test") TestDTO testDTO) {
-    TestEntity test = new TestEntity();
-    test.setName(testDTO.getTestName());
+    TestEntity testEntity = new TestEntity();
+    testEntity.setName(testDTO.getTestName());
 
     List<QuestionEntity> questions = new ArrayList<>();
 
     for (QuestionDTO qDTO : testDTO.getQuestions()) {
-      QuestionEntity question = new QuestionEntity();
-      question.setName(qDTO.getQuestionName());
+      QuestionEntity questionEntity = new QuestionEntity();
+      questionEntity.setName(qDTO.getQuestionName());
 
       List<AnswerEntity> answers = new ArrayList<>();
       for (AnswerDTO aDTO : qDTO.getAnswers()) {
         AnswerEntity answer = new AnswerEntity();
         answer.setValue(aDTO.getValue());
         answer.setRight(aDTO.isCorrect());
-        answer.setQuestion(question);
+        answer.setQuestion(questionEntity);
         answers.add(answer);
       }
-      question.setAnswers(answers);
-      question.setTest(test);
-      questions.add(question);
+      questionEntity.setAnswers(answers);
+      questionEntity.setTest(testEntity);
+      questions.add(questionEntity);
     }
-    test.setQuestions(questions);
-    testRepository.save(test);
+    testEntity.setQuestions(questions);
+    testRepository.save(testEntity);
     return "redirect:/test/constructor/success";
   }
 

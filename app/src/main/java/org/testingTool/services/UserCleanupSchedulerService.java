@@ -18,7 +18,7 @@ public class UserCleanupSchedulerService {
   @Scheduled(cron = "0 0 12 * * *")
   public void cleanupUsers() {
     LocalDateTime expirationDate = LocalDateTime.now().minusMonths(1);
-    List<UserEntity> expiredUsers = userRepository.findExpired(Role.USER, expirationDate);
+    List<UserEntity> expiredUsers = userRepository.findExpired(Role.GUEST, expirationDate);
 
     userRepository.deleteAll(expiredUsers);
   }

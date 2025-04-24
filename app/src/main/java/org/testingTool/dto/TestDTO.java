@@ -1,16 +1,15 @@
-package org.testingTool.dataTransferObjects;
+package org.testingTool.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.testingTool.model.QuestionEntity;
 
 @Setter
 @Getter
-public class TestDataTransferObject {
+public class TestDTO {
   private String testName;
   //  private List<AdditionalMaterialsEntity> listOfAdditionalMaterial; // now just for example, how
   // this can be
-  private List<QuestionEntity> listOfQuestions = new ArrayList<>();
+  private List<QuestionDTO> questions = new ArrayList<>();
 }

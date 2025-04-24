@@ -7,7 +7,7 @@
 </head>
 <body class="bg-white text-gray-900">
 
-<-Header->
+<!--Header-->
 <header class="flex justify-between items-center px-6 py-4 bg-gray-100">
     <div class="font-bold text-lg">Logo</div>
     <nav class="space-x-4">
@@ -18,10 +18,11 @@
     </a>
 </header>
 
-<-Main->
+<!--Main-->
 <main class="max-w-4xl mx-auto py-8 px-4">
     <form method="post" th:action="@{/test/constructor}" th:object="${test}">
         <div class="text-center mb-6">
+<!--            Название теста-->
             <input th:field="*{testName}" placeholder="Название теста"
                    class="text-3xl font-bold text-center border-b-2 border-dashed focus:outline-none" />
         </div>
@@ -35,7 +36,7 @@
             </p>
         </div>
 
-        <- Additional materials ->
+<!--        Additional materials-->
         <div class="mb-6">
             <p class="text-center font-medium mb-2">для прохождения теста необходимо изучить дополнительный материал:</p>
             <div id="materials" class="space-y-2">
@@ -48,18 +49,18 @@
             <button type="button" onclick="addMaterial()" class="mt-2 text-blue-500">+ Добавить материал</button>
         </div>
 
-        <- Questions ->
+<!--        Questions-->
         <div class="my-8 text-center">
             <button type="button" onclick="addQuestion()" class="bg-gray-200 px-6 py-2 rounded hover:bg-gray-300">
                 Добавить вопрос
             </button>
         </div>
 
-        <- Questions ->
+<!--        Questions-->
         <div id="questions" class="space-y-8">
             <div class="border p-4 rounded">
                 <div class="flex items-center space-x-4 mb-2">
-                    <input type="text" name="questions[0].name" placeholder="Название вопроса"
+                    <input type="text" name="questions[0].questionName" placeholder="Название вопроса"
                            class="flex-1 border-b border-dashed focus:outline-none" />
                     <button type="button" class="text-red-500">✖</button>
                     <button type="button" onclick="addAnswer(this)" data-qidx="0"
@@ -70,7 +71,7 @@
 
                 <div class="grid grid-cols-2 gap-2" id="answers-0">
                     <div class="flex items-center space-x-2">
-                        <input type="checkbox" name="questions[0].answers[0].isRight" />
+                        <input type="checkbox" name="questions[0].answers[0].isCorrect" value="false"/>
                         <input type="text" name="questions[0].answers[0].value"
                                placeholder="Вариант ответа" class="flex-1 border-b border-dashed focus:outline-none" />
                     </div>
@@ -84,7 +85,7 @@
     </form>
 </main>
 
-<-Footer->
+<!--Footer-->
 <footer class="flex justify-between items-center px-6 py-4 bg-gray-100 mt-12">
     <div class="font-bold">Logo</div>
     <nav class="space-x-4">
@@ -154,12 +155,13 @@
         answerDiv.className = "flex items-center space-x-2";
 
         answerDiv.innerHTML = `
-        <input type="checkbox" name="questions[${qIdx}].answers[${count}].isRight" />
-        <input type="text" name="questions[${qIdx}].answers[${count}].value"
-               placeholder="Вариант ответа"
-               class="flex-1 border-b border-dashed focus:outline-none" />
-        <button type="button" class="text-red-500" onclick="this.parentElement.remove()">✖</button>
-    `;
+    <input type="checkbox" name="questions[${qIdx}].answers[${count}].isRight" value="true" />
+    <input type="text" name="questions[${qIdx}].answers[${count}].value"
+           placeholder="Вариант ответа"
+           class="flex-1 border-b border-dashed focus:outline-none" />
+    <button type="button" class="text-red-500" onclick="this.parentElement.remove()">✖</button>
+`;
+
 
         container.appendChild(answerDiv);
     }

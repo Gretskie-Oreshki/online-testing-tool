@@ -20,7 +20,7 @@ public class UserService {
     return String.format("%04d-%04d", random.nextInt(10000), random.nextInt(10000));
   }
 
-  public void addUser(UserEntity user) {
+  public void addUser(UserEntity user, Role role) {
     String uid = generateUid();
 
     while (userRepository.existsByUid(uid)) {
@@ -28,7 +28,7 @@ public class UserService {
     }
 
     user.setUid(uid);
-    user.setRole(Role.GUEST);
+    user.setRole(role);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     userRepository.save(user);
   }

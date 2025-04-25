@@ -25,12 +25,14 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http.csrf(csrf -> csrf.ignoringRequestMatchers("/app-controller/**"))
+    return http.csrf(csrf -> csrf.ignoringRequestMatchers("/app-controller/**").ignoringRequestMatchers("/materials/**"))
         .authorizeHttpRequests(
             auth ->
                 auth.requestMatchers("/**")
                     .permitAll()
                     .requestMatchers("/app-controller/**")
+                    .permitAll()
+                    .requestMatchers("/materials/**")
                     .permitAll()
                     .requestMatchers("/guest/**")
                     .hasRole("USER")

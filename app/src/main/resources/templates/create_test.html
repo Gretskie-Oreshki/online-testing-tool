@@ -20,11 +20,14 @@
 
 <!--Main-->
 <main class="max-w-4xl mx-auto py-8 px-4">
+    <div th:if="${error}" class="text-red-600 text-sm mb-2">
+        <p th:text="${error}"></p>
+    </div>
     <form method="post" th:action="@{/test/constructor}" th:object="${test}">
         <div class="text-center mb-6">
 <!--            Название теста-->
             <input th:field="*{testName}" placeholder="Название теста"
-                   class="text-3xl font-bold text-center border-b-2 border-dashed focus:outline-none" />
+                   class="text-3xl font-bold text-center border-b-2 border-dashed focus:outline-none" required />
         </div>
 
         <div class="text-center mb-4">
@@ -43,7 +46,7 @@
                 <div class="flex items-center border rounded px-4 py-2">
                     <input type="text" name="materials" placeholder="название теор материала"
                            class="flex-1 focus:outline-none border-b border-dashed" />
-                    <button type="button" class="ml-2 text-red-500">✖</button>
+                    <button type="button" class="ml-2 text-red-500">×</button>
                 </div>
             </div>
             <button type="button" onclick="addMaterial()" class="mt-2 text-blue-500">+ Добавить материал</button>
@@ -58,28 +61,9 @@
 
 <!--        Questions-->
         <div id="questions" class="space-y-8">
-            <div class="border p-4 rounded">
-                <div class="flex items-center space-x-4 mb-2">
-                    <input type="text" name="questions[0].questionName" placeholder="Название вопроса"
-                           class="flex-1 border-b border-dashed focus:outline-none" />
-                    <button type="button" class="text-red-500">✖</button>
-                    <button type="button" onclick="addAnswer(this)" data-qidx="0"
-                            class="text-sm text-blue-500 border px-2 py-1 rounded">
-                        Добавить вариант ответа
-                    </button>
-                </div>
 
-                <div class="grid grid-cols-2 gap-2" id="answers-0">
-                    <div class="flex items-center space-x-2">
-                        <input type="hidden" name="questions[0].answers[0].correct" value="false" />
-                        <input type="checkbox" name="questions[0].answers[0].correct" value="true"/>
-                        <input type="text" name="questions[0].answers[0].value"
-                               placeholder="Вариант ответа" class="flex-1 border-b border-dashed focus:outline-none" />
-                    </div>
-                </div>
-            </div>
         </div>
-
+        <div id="form-error" class="text-red-600 text-sm mb-4 text-center hidden"></div>
         <div class="text-center mt-8">
             <button type="submit" class="bg-gray-200 px-6 py-2 rounded hover:bg-gray-300">Сохранить</button>
         </div>
@@ -105,7 +89,7 @@
         div.className = "flex items-center border rounded px-4 py-2 mt-2";
         div.innerHTML = `<input type="text" name="materials" placeholder="название теор материала"
                             class="flex-1 focus:outline-none border-b border-dashed" />
-                       <button type="button" class="ml-2 text-red-500" onclick="this.parentElement.remove()">✖</button>`;
+                       <button type="button" class="ml-2 text-red-500" onclick="this.parentElement.remove()">×</button>`;
         document.getElementById("materials").appendChild(div);
     }
 
@@ -115,8 +99,17 @@
         qDiv.innerHTML = `
         <div class="flex items-center space-x-4 mb-2">
           <input type="text" name="questions[${questionIndex}].questionName" placeholder="Название вопроса"
-                 class="flex-1 border-b border-dashed focus:outline-none" />
-          <button type="button" class="text-red-500" onclick="removeQuestion(this)">✖</button>
+                 class="flex-1 border-b border-dashed focus:outline-none" required />
+          <button type="button" class="text-red-500" onclick="removeQuestion(this)"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="14" height="14" viewBox="0 0 256 256" xml:space="preserve">
+<g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+\t<path d="M 67.692 90 H 22.308 c -3.042 0 -5.518 -2.476 -5.518 -5.518 v -61 c 0 -1.104 0.896 -2 2 -2 h 52.42 c 1.104 0 2 0.896 2 2 v 61 C 73.21 87.524 70.734 90 67.692 90 z M 20.79 25.482 v 59 c 0 0.837 0.681 1.518 1.518 1.518 h 45.385 c 0.837 0 1.518 -0.681 1.518 -1.518 v -59 H 20.79 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+\t<path d="M 73.196 25.482 H 16.804 c -3.042 0 -5.518 -2.475 -5.518 -5.518 v -4.335 c 0 -3.042 2.475 -5.518 5.518 -5.518 h 56.393 c 3.042 0 5.518 2.475 5.518 5.518 v 4.335 C 78.714 23.007 76.238 25.482 73.196 25.482 z M 16.804 14.112 c -0.837 0 -1.518 0.681 -1.518 1.518 v 4.335 c 0 0.837 0.681 1.518 1.518 1.518 h 56.393 c 0.837 0 1.518 -0.681 1.518 -1.518 v -4.335 c 0 -0.837 -0.681 -1.518 -1.518 -1.518 H 16.804 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+\t<path d="M 57.197 14.112 H 32.803 c -1.104 0 -2 -0.896 -2 -2 V 5.518 C 30.803 2.476 33.278 0 36.321 0 h 17.358 c 3.043 0 5.519 2.476 5.519 5.518 v 6.594 C 59.197 13.216 58.302 14.112 57.197 14.112 z M 34.803 10.112 h 20.395 V 5.518 C 55.197 4.681 54.516 4 53.679 4 H 36.321 c -0.837 0 -1.518 0.681 -1.518 1.518 V 10.112 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+\t<path d="M 45 78.624 c -1.104 0 -2 -0.896 -2 -2 V 34.856 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 41.768 C 47 77.729 46.104 78.624 45 78.624 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+\t<path d="M 58.222 78.624 c -1.104 0 -2 -0.896 -2 -2 V 34.856 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 41.768 C 60.222 77.729 59.326 78.624 58.222 78.624 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+\t<path d="M 31.779 78.624 c -1.104 0 -2 -0.896 -2 -2 V 34.856 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 41.768 C 33.779 77.729 32.883 78.624 31.779 78.624 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+</g>
+</svg></button>
           <button type="button" onclick="addAnswer(this)" data-qidx="${questionIndex}"
                   class="text-sm text-blue-500 border px-2 py-1 rounded">
             Добавить вариант ответа
@@ -126,8 +119,12 @@
           <div class="flex items-center space-x-2">
             <input type="checkbox" name="questions[${questionIndex}].answers[0].correct" />
             <input type="text" name="questions[${questionIndex}].answers[0].value"
-                   placeholder="Вариант ответа" class="flex-1 border-b border-dashed focus:outline-none" />
-            <button type="button" class="text-red-500" onclick="this.parentElement.remove()">✖</button>
+                   placeholder="Вариант ответа" class="flex-1 border-b border-dashed focus:outline-none" required />
+          </div>
+          <div class="flex items-center space-x-2">
+            <input type="checkbox" name="questions[${questionIndex}].answers[1].correct" />
+            <input type="text" name="questions[${questionIndex}].answers[1].value"
+                   placeholder="Вариант ответа" class="flex-1 border-b border-dashed focus:outline-none" required />
           </div>
         </div>`;
         document.getElementById("questions").appendChild(qDiv);
@@ -159,13 +156,53 @@
     <input type="checkbox" name="questions[${qIdx}].answers[${count}].correct" value="true" />
     <input type="text" name="questions[${qIdx}].answers[${count}].value"
            placeholder="Вариант ответа"
-           class="flex-1 border-b border-dashed focus:outline-none" />
-    <button type="button" class="text-red-500" onclick="this.parentElement.remove()">✖</button>
+           class="flex-1 border-b border-dashed focus:outline-none" required />
+    <button type="button" class="text-red-500" onclick="this.parentElement.remove()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="14" height="14" viewBox="0 0 256 256" xml:space="preserve">
+<g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+\t<path d="M 67.692 90 H 22.308 c -3.042 0 -5.518 -2.476 -5.518 -5.518 v -61 c 0 -1.104 0.896 -2 2 -2 h 52.42 c 1.104 0 2 0.896 2 2 v 61 C 73.21 87.524 70.734 90 67.692 90 z M 20.79 25.482 v 59 c 0 0.837 0.681 1.518 1.518 1.518 h 45.385 c 0.837 0 1.518 -0.681 1.518 -1.518 v -59 H 20.79 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+\t<path d="M 73.196 25.482 H 16.804 c -3.042 0 -5.518 -2.475 -5.518 -5.518 v -4.335 c 0 -3.042 2.475 -5.518 5.518 -5.518 h 56.393 c 3.042 0 5.518 2.475 5.518 5.518 v 4.335 C 78.714 23.007 76.238 25.482 73.196 25.482 z M 16.804 14.112 c -0.837 0 -1.518 0.681 -1.518 1.518 v 4.335 c 0 0.837 0.681 1.518 1.518 1.518 h 56.393 c 0.837 0 1.518 -0.681 1.518 -1.518 v -4.335 c 0 -0.837 -0.681 -1.518 -1.518 -1.518 H 16.804 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+\t<path d="M 57.197 14.112 H 32.803 c -1.104 0 -2 -0.896 -2 -2 V 5.518 C 30.803 2.476 33.278 0 36.321 0 h 17.358 c 3.043 0 5.519 2.476 5.519 5.518 v 6.594 C 59.197 13.216 58.302 14.112 57.197 14.112 z M 34.803 10.112 h 20.395 V 5.518 C 55.197 4.681 54.516 4 53.679 4 H 36.321 c -0.837 0 -1.518 0.681 -1.518 1.518 V 10.112 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+\t<path d="M 45 78.624 c -1.104 0 -2 -0.896 -2 -2 V 34.856 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 41.768 C 47 77.729 46.104 78.624 45 78.624 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+\t<path d="M 58.222 78.624 c -1.104 0 -2 -0.896 -2 -2 V 34.856 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 41.768 C 60.222 77.729 59.326 78.624 58.222 78.624 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+\t<path d="M 31.779 78.624 c -1.104 0 -2 -0.896 -2 -2 V 34.856 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 41.768 C 33.779 77.729 32.883 78.624 31.779 78.624 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+</g>
+</svg></button>
 `;
 
 
         container.appendChild(answerDiv);
     }
+
+    document.querySelector("form").addEventListener("submit", function (e) {
+        const errorBox = document.getElementById("form-error");
+        errorBox.classList.add("hidden");
+        errorBox.textContent = "";
+
+        let isValid = true;
+        const questionBlocks = document.querySelectorAll("#questions > .border");
+
+        questionBlocks.forEach((question, index) => {
+            const checkboxes = question.querySelectorAll("input[type='checkbox'][name*='correct']");
+            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+            question.querySelectorAll(".question-error").forEach(el => el.remove());
+
+            if (checkedCount !== 1) {
+                isValid = false;
+
+                const errorMsg = document.createElement("div");
+                errorMsg.textContent = "Должен быть выбран ровно один правильный ответ.";
+                errorMsg.className = "question-error text-red-500 text-sm mt-2";
+                question.appendChild(errorMsg);
+            }
+        });
+
+        if (!isValid) {
+            e.preventDefault();
+            errorBox.textContent = "Пожалуйста, исправьте ошибки в каждом вопросе.";
+            errorBox.classList.remove("hidden");
+        }
+    });
 
 </script>
 </body>

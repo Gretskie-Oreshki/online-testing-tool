@@ -2,6 +2,8 @@ package org.testingTool.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +22,8 @@ import org.testingTool.repository.TestRepository;
 @RequestMapping("/test/constructor")
 // @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class TestCreationController {
-  private final TestRepository testRepository;
 
-  public TestCreationController(TestRepository testRepository) {
-    this.testRepository = testRepository;
-  }
+  @Autowired private TestRepository testRepository;
 
   @GetMapping
   public String showConstructor(Model model) {

@@ -1,25 +1,16 @@
 package org.testingTool.controllers;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/materials")
@@ -35,10 +26,11 @@ public class AdditionalMaterialsPageController {
       Files.createDirectories(uploadPath);
     }
 
-    List<String> files = Files.list(uploadPath)
-      .filter(Files::isRegularFile)
-      .map(p -> p.getFileName().toString())
-      .toList();
+    List<String> files =
+        Files.list(uploadPath)
+            .filter(Files::isRegularFile)
+            .map(p -> p.getFileName().toString())
+            .toList();
 
     model.addAttribute("files", files);
     return "add_additional_materials";

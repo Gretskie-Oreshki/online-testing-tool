@@ -9,5 +9,6 @@ import lombok.Setter;
 @Getter
 public class QuestionDTO {
   private String questionName;
+  private int rightAnswer;
   private List<AnswerDTO> answers = new ArrayList<>();
 }

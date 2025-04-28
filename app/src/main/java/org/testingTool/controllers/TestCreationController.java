@@ -40,15 +40,17 @@ public class TestCreationController {
     for (QuestionDTO qDTO : testDTO.getQuestions()) {
       QuestionEntity questionEntity = new QuestionEntity();
       questionEntity.setName(qDTO.getQuestionName());
+      int rightAnswer = qDTO.getRightAnswer();
 
       List<AnswerEntity> answers = new ArrayList<>();
       for (AnswerDTO aDTO : qDTO.getAnswers()) {
         AnswerEntity answer = new AnswerEntity();
         answer.setValue(aDTO.getValue());
-        answer.setRight(aDTO.isCorrect());
+        answer.setRight(false);
         answer.setQuestion(questionEntity);
         answers.add(answer);
       }
+      answers.get(rightAnswer).setRight(true);
       questionEntity.setAnswers(answers);
       questionEntity.setTest(testEntity);
       questions.add(questionEntity);

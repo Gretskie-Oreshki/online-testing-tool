@@ -1,7 +1,6 @@
 package org.testingTool.model;
 
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
@@ -28,9 +27,8 @@ public class TestEntity {
 
   @ManyToMany
   @JoinTable(
-    name = "test_material",
-    joinColumns = @JoinColumn(name = "test_id"),
-    inverseJoinColumns = @JoinColumn(name = "material_id")
-  )
+      name = "test_material",
+      joinColumns = @JoinColumn(name = "test_id"),
+      inverseJoinColumns = @JoinColumn(name = "material_id"))
   private List<MaterialEntity> materials = new ArrayList<>();
 }

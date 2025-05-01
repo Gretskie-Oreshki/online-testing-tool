@@ -37,16 +37,40 @@
         </div>
 
         <!--        Additional materials-->
-        <div class="mb-6">
-            <p class="text-center font-medium mb-2">для прохождения теста необходимо изучить дополнительный материал:</p>
-            <div id="materials" class="space-y-2">
-                <div class="flex items-center border rounded px-4 py-2">
-                    <input type="text" name="materials" placeholder="название теор материала"
-                           class="flex-1 focus:outline-none border-b border-dashed" />
-                    <button type="button" class="ml-2 text-red-500">×</button>
-                </div>
-            </div>
+<!--        <div class="mb-6">-->
+<!--            <p class="text-center font-medium mb-2">для прохождения теста необходимо изучить дополнительный материал:</p>-->
+<!--            <div id="materials" class="space-y-2">-->
+<!--                <div class="flex items-center border rounded px-4 py-2">-->
+<!--                    <input type="text" name="materials" placeholder="название теор материала"-->
+<!--                           class="flex-1 focus:outline-none border-b border-dashed" />-->
+<!--                    <button type="button" class="ml-2 text-red-500">×</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <button type="button" onclick="addMaterial()" class="mt-2 text-blue-500">+ Добавить материал</button>-->
+<!--        </div>-->
+        <div class="text-center mb-6">
+            <p class="text-center mb-2">для прохождения теста необходимо изучить дополнительный материал:</p>
+            <button id="customSelectBtn" type="button"
+                    class="flex justify-between items-center w-full p-2 border rounded-md shadow-sm bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <span id="selectedValue">Выберите...</span>
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+
+            <ul id="customSelectOptions"
+                class="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-lg max-h-60 overflow-auto hidden text-sm">
+                <li th:each="mat : ${materials}"
+                    th:data-id="${mat.id}"
+                    th:data-name="${mat.fileName}"
+                    class="px-3 py-2 hover:bg-indigo-100 cursor-pointer">
+                    <span th:text="${mat.fileName}"></span>
+                </li>
+            </ul>
+
             <button type="button" onclick="addMaterial()" class="mt-2 text-blue-500">+ Добавить материал</button>
+            <!-- Hidden input to hold selected value -->
+            <input type="hidden" name="materialId" id="selectedMaterialId">
         </div>
 
         <!--        Questions-->
@@ -168,6 +192,31 @@
 
         container.appendChild(answerDiv);
     }
+
+    const btn = document.getElementById('customSelectBtn');
+    const options = document.getElementById('customSelectOptions');
+    const selectedValue = document.getElementById('selectedValue');
+    const selectedInput = document.getElementById('selectedMaterialId');
+
+    btn.addEventListener('click', () => {
+        options.classList.toggle('hidden');
+    });
+
+    options.addEventListener('click', (e) => {
+        if (e.target.tagName === 'LI') {
+            const name = e.target.dataset.name;
+            const id = e.target.dataset.id;
+            selectedValue.textContent = name;
+            selectedInput.value = id;
+            options.classList.add('hidden');
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!btn.contains(e.target) && !options.contains(e.target)) {
+            options.classList.add('hidden');
+        }
+    });
 </script>
 </body>
 </html>

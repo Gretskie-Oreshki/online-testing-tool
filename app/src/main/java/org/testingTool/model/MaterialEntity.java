@@ -21,8 +21,9 @@ public class MaterialEntity {
   private Long id;
 
   private String fileName; // человеческое имя файла cg.pdf
-  private String
-      filePath; // путь к файлу с уже измененным названием через uuid asdasdasdadsasda.pdf
+
+  // путь к файлу с уже измененным названием через uuid asdasdasdadsasda.pdf
+  private String filePath;
 
   @ManyToMany(mappedBy = "materials")
   private List<TestEntity> tests = new ArrayList<>();

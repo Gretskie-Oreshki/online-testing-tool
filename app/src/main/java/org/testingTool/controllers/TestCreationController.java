@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.testingTool.dto.AnswerDTO;
-import org.testingTool.dto.MaterialDTO;
 import org.testingTool.dto.QuestionDTO;
 import org.testingTool.dto.TestDTO;
 import org.testingTool.model.AnswerEntity;
 import org.testingTool.model.QuestionEntity;
 import org.testingTool.model.TestEntity;
+import org.testingTool.repository.MaterialRepository;
 import org.testingTool.repository.TestRepository;
 
 @Controller
@@ -24,11 +24,12 @@ import org.testingTool.repository.TestRepository;
 public class TestCreationController {
 
   @Autowired private TestRepository testRepository;
+  @Autowired private MaterialRepository materialRepository;
 
   @GetMapping
   public String showConstructor(Model model) {
     model.addAttribute("test", new TestDTO());
-    model.addAttribute("materials", new MaterialDTO());
+    model.addAttribute("materials", materialRepository.findAll());
     return "create_test";
   }
 

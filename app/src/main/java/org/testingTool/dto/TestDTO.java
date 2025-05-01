@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 public class TestDTO {
   private String testName;
-  //  private List<AdditionalMaterialsEntity> listOfAdditionalMaterial; // now just for example, how
-  // this can be
   private List<QuestionDTO> questions = new ArrayList<>();
+//  private List<MaterialDTO> materials = new ArrayList<>();
 }

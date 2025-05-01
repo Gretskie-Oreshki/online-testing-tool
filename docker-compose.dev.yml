@@ -1,0 +1,11 @@
+services:
+  app:
+    image: eclipse-temurin:21
+    working_dir: /app
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    command: ./gradlew bootRun

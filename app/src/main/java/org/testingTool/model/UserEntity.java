@@ -28,8 +28,7 @@ public class UserEntity {
   @Column(nullable = false)
   private Role role;
 
-  @Column
-  private String email;
+  @Column private String email;
 
   @Column(nullable = false, updatable = false)
   private LocalDateTime createdAt;

@@ -28,7 +28,7 @@ public class UserEntity {
   @Column(nullable = false)
   private Role role;
 
-  @Column(nullable = true)
+  @Column
   private String email;
 
   @Column(nullable = false, updatable = false)

@@ -31,4 +31,9 @@ public class MaterialEntity {
 
   @ManyToMany(mappedBy = "materials")
   private List<TestEntity> tests = new ArrayList<>();
+
+  @Override
+  public String toString() {
+    return fileName;
+  }
 }

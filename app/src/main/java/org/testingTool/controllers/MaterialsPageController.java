@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.UUID;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,21 +21,20 @@ import org.testingTool.repository.MaterialRepository;
 
 @Controller
 @RequestMapping("/materials")
-public class AdditionalMaterialsPageController {
+@RequiredArgsConstructor
+public class MaterialsPageController {
 
   @Value("${upload.dir}")
   private String uploadDir;
+
   private final MaterialRepository materialRepository;
 
-  public AdditionalMaterialsPageController(MaterialRepository materialRepository) {
-    this.materialRepository = materialRepository;
-  }
-
   @GetMapping()
-  public String listMaterials(@RequestParam(defaultValue = "0") int page,
-                              @RequestParam(defaultValue = "1") int size,
-                              @RequestParam(required = false) String query,
-                              Model model) {
+  public String listMaterials(
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "1") int size,
+      @RequestParam(required = false) String query,
+      Model model) {
     Pageable pageable = PageRequest.of(page, size);
     Page<MaterialEntity> materials;
 
@@ -52,7 +52,9 @@ public class AdditionalMaterialsPageController {
   @PostMapping("/upload")
   public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
     String originalFilename = file.getOriginalFilename();
-    String extension = Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf("."));
+    String extension =
+        Objects.requireNonNull(file.getOriginalFilename())
+            .substring(file.getOriginalFilename().lastIndexOf("."));
     String storedName = UUID.randomUUID() + extension;
 
     Path path = Paths.get(uploadDir).resolve(storedName);

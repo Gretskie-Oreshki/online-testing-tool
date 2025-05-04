@@ -8,9 +8,13 @@ import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +35,7 @@ public class MaterialsPageController {
   @GetMapping()
   public String listMaterials(
       @RequestParam(defaultValue = "0") int page,
-      @RequestParam(defaultValue = "1") int size,
+      @RequestParam(defaultValue = "10") int size,
       @RequestParam(required = false) String query,
       Model model) {
     Pageable pageable = PageRequest.of(page, size);
@@ -40,7 +44,7 @@ public class MaterialsPageController {
     if (query != null && !query.isBlank()) {
       materials = materialRepository.findByFileNameContainingIgnoreCase(query, pageable);
     } else {
-      materials = materialRepository.findAll(pageable);
+      materials = materialRepository.findAllBy(pageable);
     }
 
     model.addAttribute("materialsPage", materials);
@@ -67,5 +71,18 @@ public class MaterialsPageController {
     materialRepository.save(material);
 
     return "redirect:/materials";
+  }
+
+  @GetMapping("/download/{id}")
+  public ResponseEntity<Resource> serveFile(@PathVariable Long id) {
+    MaterialEntity material = materialRepository.findById(id).get();
+    Resource res =
+        new FileSystemResource(Objects.requireNonNull(uploadDir + "/" + material.getFilePath()));
+
+    return ResponseEntity.ok()
+        .header(
+            HttpHeaders.CONTENT_DISPOSITION,
+            "attachment; filename=\"" + material.getFileName() + "\"")
+        .body(res);
   }
 }

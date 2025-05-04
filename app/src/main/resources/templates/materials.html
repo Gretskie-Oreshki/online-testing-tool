@@ -6,7 +6,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="min-h-screen flex flex-col">
 <!--Header-->
 <header class="flex justify-between items-center px-6 py-4 bg-gray-100">
     <div class="font-bold text-lg">Logo</div>
@@ -19,7 +19,7 @@
 </header>
 
 <!--Main-->
-<main class="max-w-4xl mx-auto py-8 px-4">
+<main class="flex-grow max-w-4xl mx-auto py-8 px-4">
     <div id="page-name" class="text-center mb-6">
         <a class="text-3xl font-bold text-center border-b-2">
             Список доступного теортетического материала
@@ -28,7 +28,7 @@
 <!--    Search field-->
     <form th:action="@{/materials}" method="get" class="mb-4 flex gap-2">
         <input type="text" name="query" th:value="${query}" placeholder="Поиск материалов"
-               class="rounded-md border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm w-full" />
+               class="w-full rounded-md border border-gray-200 px-3 py-2 shadow-sm sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
         <button type="submit"
                 class="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 text-sm">Поиск</button>
     </form>
@@ -36,17 +36,40 @@
     <div class="mx-auto max-w-none">
         <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg border border-gray-200">
             <ul id="material-list" role="list" class="divide-y divide-gray-200">
-                <li th:each="material : ${materialsPage.getContent}" class="flex items-center justify-between py-4 pr-5 pl-4 text-sm/6">
-                    <div class="flex w-0 flex-1 items-center">
-                        <svg class="size-5 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                            <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 0 0-4.242 0l-7 7a3 3 0 0 0 4.241 4.243h.001l.497-.5a.75.75 0 0 1 1.064 1.057l-.498.501-.002.002a4.5 4.5 0 0 1-6.364-6.364l7-7a4.5 4.5 0 0 1 6.368 6.36l-3.455 3.553A2.625 2.625 0 1 1 9.52 9.52l3.45-3.451a.75.75 0 1 1 1.061 1.06l-3.45 3.451a1.125 1.125 0 0 0 1.587 1.595l3.454-3.553a3 3 0 0 0 0-4.242Z" clip-rule="evenodd"></path>
-                        </svg>
-                        <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                            <span th:text="${material.getFileName()}" class="truncate font-medium"/>
+                <li th:each="material, iter: ${materialsPage.getContent}">
+                    <div class="flex items-center justify-stretch py-4 pr-5 pl-4 text-sm/6">
+                        <div class="flex w-0 flex-1 items-center">
+                            <svg class="size-5 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 0 0-4.242 0l-7 7a3 3 0 0 0 4.241 4.243h.001l.497-.5a.75.75 0 0 1 1.064 1.057l-.498.501-.002.002a4.5 4.5 0 0 1-6.364-6.364l7-7a4.5 4.5 0 0 1 6.368 6.36l-3.455 3.553A2.625 2.625 0 1 1 9.52 9.52l3.45-3.451a.75.75 0 1 1 1.061 1.06l-3.45 3.451a1.125 1.125 0 0 0 1.587 1.595l3.454-3.553a3 3 0 0 0 0-4.242Z" clip-rule="evenodd"></path>
+                            </svg>
+                            <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                <a  th:text="${material.getFileName()}" class="truncate font-medium"/>
+                            </div>
+                        </div>
+                        <div class="ml-4 shrink-0">
+                            <button type="button"
+                                    th:onclick="|toggleDivider('divider-${iter.index}', this)|"
+                                    class="font-medium text-indigo-600 hover:text-indigo-500">
+                                Показать детали
+                            </button>
+                        </div>
+                        <div class="ml-4 shrink-0">
+                            <a th:href="@{/materials/download/{id}(id=${material.getId()})}" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
                         </div>
                     </div>
-                    <div class="ml-4 shrink-0">
-                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
+                    <div th:id="'divider-'+ ${iter.index}" class="border-t border-gray-200 mx-4 hidden"></div>
+                    <div th:id="'details-'+${iter.index}" class="flex flex-row justify-between items-start py-4 pr-5 pl-4 text-sm/6 hidden">
+                        <div class="flex flex-col flex-1 text-center">
+                            <p class="text-gray-500 mb-2">Прикреплен к тестам:</p>
+                            <ul role="list">
+                                <li th:each="test : ${material.getTests()}">
+                                    <a th:text="${test.getName()}" class="text-gray-500"></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="flex flex-1 items-center justify-center text-center">
+                            <span class="text-gray-500" th:text="'Файл добавлен ' + ${material.getAddedAt()}"></span>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -122,7 +145,7 @@
 </main>
 
 <!--Footer-->
-<footer class="flex justify-between items-center px-6 py-4 bg-gray-100 mt-12">
+<footer class="flex justify-between items-center px-6 py-4 bg-gray-100">
     <div class="font-bold">Logo</div>
     <nav class="space-x-4">
         <a href="/" class="text-gray-600 hover:text-black">Home</a>
@@ -131,6 +154,7 @@
         <option>Dropdown</option>
     </select>
 </footer>
+</body>
 
 <script>
     function addMaterialLoadField() {
@@ -186,6 +210,16 @@
         newDropArea.addEventListener('click', () => {
             fileInput.click();
         });
+    }
+
+    function toggleDivider(dividerId, button) {
+        const divider = document.getElementById(dividerId);
+        const details = divider.nextElementSibling;
+
+        divider.classList.toggle("hidden");
+        details.classList.toggle("hidden");
+
+        button.textContent = divider.classList.contains("hidden") ? "Показать детали" : "Скрыть детали";
     }
 </script>
 </body>

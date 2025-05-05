@@ -10,47 +10,42 @@
     <title th:text="${test.name}">Тест</title>
 </head>
 <body>
-<section layout:fragment="content" class="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-3xl mx-auto bg-white shadow-xl rounded-2xl p-8 border border-gray-200">
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2" th:text="${test.name}">Название теста</h1>
-            <p class="text-gray-500 text-sm">Ответьте на все вопросы ниже</p>
-        </div>
+<section layout:fragment="content" class="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12">
+    <div class="w-full max-w-2xl bg-white p-10 rounded-2xl shadow-md border border-gray-200">
+        <h1 class="text-3xl font-bold text-gray-900 text-center mb-6" th:text="${test.name}">Название теста</h1>
+        <p class="text-center text-gray-500 text-sm mb-8">Ответьте на все вопросы ниже</p>
 
-        <form method="post" th:action="@{/tests/submit}" class="space-y-8">
-
+        <form method="post" th:action="@{'/tests/' + ${test.id}}" class="space-y-8">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <input type="hidden" name="testId" th:value="${test.id}" />
-            <input type="hidden" name="userUid" th:value="${#authentication.name}" />
 
-            <div
-                    th:each="question, qStat : ${test.questions}"
-                    class="border border-gray-200 p-6 rounded-xl shadow-sm bg-gray-50"
-            >
-                <h2 class="text-lg font-medium text-gray-800 mb-4" th:text="${question.name}">Вопрос</h2>
-
+            <div th:each="question, qStat : ${test.questions}" class="space-y-4">
+                <h2 class="text-lg font-medium text-gray-800" th:text="${question.name}">Вопрос</h2>
                 <input type="hidden" th:name="${'answers[' + qStat.index + '].questionId'}" th:value="${question.id}" />
 
-                <div class="space-y-3">
-                    <div th:each="answer : ${question.answers}" class="flex items-start gap-3">
+                <div class="space-y-2">
+                    <div th:each="answer : ${question.answers}" class="flex items-center gap-3">
                         <input
                                 type="radio"
                                 th:name="${'answers[' + qStat.index + '].answerId'}"
                                 th:value="${answer.id}"
                                 th:id="${'answer__' + answer.id}"
-                                class="mt-1 h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
                                 required
                         />
-                        <label th:for="${'answer__' + answer.id}" class="text-gray-700 text-base" th:text="${answer.value}">
+                        <label th:for="${'answer__' + answer.id}" class="text-gray-700 text-sm" th:text="${answer.value}">
                             Ответ
                         </label>
                     </div>
                 </div>
+
+                <hr class="border-t border-gray-200 mt-6" />
             </div>
 
-            <div class="flex justify-end">
+            <div class="pt-4">
                 <button
                         type="submit"
-                        class="inline-flex items-center px-6 py-3 rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition-all text-lg font-semibold shadow"
+                        class="flex w-full justify-center rounded-md bg-blue-600 px-6 py-3 text-white text-sm font-semibold hover:bg-blue-700 transition cursor-pointer"
                 >
                     Отправить ответы
                 </button>

@@ -27,9 +27,8 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.csrf(csrf -> csrf.ignoringRequestMatchers("/app-controller/**"))
         .authorizeHttpRequests(
-            auth ->
-                auth.requestMatchers("/**")
-                    .permitAll()
+            auth -> auth
+                    .requestMatchers("/tests/**").authenticated()
                     .requestMatchers("/app-controller/**")
                     .permitAll()
                     .requestMatchers("/guest/**")

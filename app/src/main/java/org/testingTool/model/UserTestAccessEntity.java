@@ -2,6 +2,7 @@ package org.testingTool.model;
 
 import jakarta.persistence.*;
 
+import javax.annotation.Nullable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,5 +20,6 @@ public class UserTestAccessEntity {
 
   private boolean isPassed;
 
+  @Nullable
   private LocalDateTime datePassed;
 }

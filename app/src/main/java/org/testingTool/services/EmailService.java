@@ -1,7 +1,7 @@
 package org.testingTool.services;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,8 +9,9 @@ import org.springframework.stereotype.Service;
 import org.testingTool.model.UserAnswerEntity;
 
 @Service
+@RequiredArgsConstructor
 public class EmailService {
-  @Autowired private JavaMailSender mailSender;
+  private JavaMailSender mailSender;
 
   @Value("${EMAIL_ADDRESS}")
   private String senderEmailAddress;
@@ -25,16 +26,21 @@ public class EmailService {
     msg.setTo(toEmail);
     msg.setSubject(String.format(emailSubjectTemplate, userUid, testName));
 
-    long answersAmount = userAnswers.size();
-    long rightAnswersAmount =
-        userAnswers.stream().filter(userAnswer -> userAnswer.getAnswer().isRight()).count();
-
     int maxPercent = 100;
-    int rightAnswersPercent = Math.round(((float) rightAnswersAmount / answersAmount) * maxPercent);
+    int rightAnswersPercent = calculateRightAnswersPercentage(userAnswers, maxPercent);
 
     msg.setText(
         String.format(emailTextTemplate, userUid, testName, rightAnswersPercent, maxPercent));
 
     mailSender.send(msg);
+  }
+
+  private int calculateRightAnswersPercentage(List<UserAnswerEntity> userAnswers, int maxPercent) {
+    long answersAmount = userAnswers.size();
+    long rightAnswersAmount =
+        userAnswers.stream().filter(userAnswer -> userAnswer.getAnswer().isRight()).count();
+
+    int rightAnswersPercent = Math.round(((float) rightAnswersAmount / answersAmount) * maxPercent);
+    return rightAnswersPercent;
   }
 }

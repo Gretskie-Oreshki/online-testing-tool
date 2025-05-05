@@ -1,11 +1,11 @@
 package org.testingTool.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "user_test_access")
 public class UserTestAccessEntity {
   @Id
   @GeneratedValue

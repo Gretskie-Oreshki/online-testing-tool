@@ -14,6 +14,8 @@ public class AnswerMapperResolver {
 
   @Named("answerById")
   public AnswerEntity resolve(Long id) {
-    return answerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Answer not found: " + id));
+    return answerRepository
+        .findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Answer not found: " + id));
   }
 }

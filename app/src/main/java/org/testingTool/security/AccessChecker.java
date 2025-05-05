@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.testingTool.repository.UserRepository;
 import org.testingTool.repository.UserTestAccessRepository;
 
-
 @Component("accessChecker")
 @RequiredArgsConstructor
 public class AccessChecker {
@@ -13,7 +12,8 @@ public class AccessChecker {
   private final UserRepository userRepository;
 
   public boolean canPassTest(String userUid, Long testId) {
-    return userRepository.findByUid(userUid)
+    return userRepository
+        .findByUid(userUid)
         .map(user -> userTestAccessRepository.hasAccess(user.getId(), testId))
         .orElse(false);
   }

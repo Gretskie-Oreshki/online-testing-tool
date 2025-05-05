@@ -12,9 +12,10 @@ public class UserTestAccessService {
   private final UserTestAccessRepository userTestAccessRepository;
 
   public UserTestAccessEntity getAccessOrThrow(Long userId, TestEntity test) {
-    UserTestAccessEntity access = userTestAccessRepository
-        .findByUser_IdAndTest_Id(userId, test.getId())
-        .orElseThrow(() -> new IllegalArgumentException("Нет доступа к тесту"));
+    UserTestAccessEntity access =
+        userTestAccessRepository
+            .findByUser_IdAndTest_Id(userId, test.getId())
+            .orElseThrow(() -> new IllegalArgumentException("Нет доступа к тесту"));
 
     if (Boolean.TRUE.equals(access.getIsPassed())) {
       throw new IllegalStateException("Тест уже был пройден");

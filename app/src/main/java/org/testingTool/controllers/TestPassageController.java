@@ -10,13 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.testingTool.dto.UserAnswerFormDto;
 import org.testingTool.model.TestEntity;
-
 import org.testingTool.model.UserEntity;
 import org.testingTool.repository.UserRepository;
 import org.testingTool.services.TestService;
 import org.testingTool.services.UserAnswerService;
-import org.testingTool.services.UserService;
-
 
 @Controller
 @RequiredArgsConstructor
@@ -37,11 +34,14 @@ public class TestPassageController {
 
   @PreAuthorize("@accessChecker.canPassTest(principal.username, #id)")
   @PostMapping("/{id}")
-  public String submitPassage(@PathVariable Long id, @ModelAttribute UserAnswerFormDto formDto,
-                              @AuthenticationPrincipal UserDetails userDetails) {
-    UserEntity user = userRepository
-        .findByUid(userDetails.getUsername())
-        .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
+  public String submitPassage(
+      @PathVariable Long id,
+      @ModelAttribute UserAnswerFormDto formDto,
+      @AuthenticationPrincipal UserDetails userDetails) {
+    UserEntity user =
+        userRepository
+            .findByUid(userDetails.getUsername())
+            .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
     userAnswerService.saveAnswers(formDto, user.getId());
 
     return "redirect:/tests/success";

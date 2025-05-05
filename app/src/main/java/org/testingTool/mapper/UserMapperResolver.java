@@ -14,6 +14,8 @@ public class UserMapperResolver {
 
   @Named("userById")
   public UserEntity resolve(Long id) {
-    return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
+    return userRepository
+        .findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
   }
 }

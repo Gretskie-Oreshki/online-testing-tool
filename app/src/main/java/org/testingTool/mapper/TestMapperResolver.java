@@ -14,6 +14,8 @@ public class TestMapperResolver {
 
   @Named("testById")
   public TestEntity resolve(Long id) {
-    return testRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Test not found: " + id));
+    return testRepository
+        .findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Test not found: " + id));
   }
 }

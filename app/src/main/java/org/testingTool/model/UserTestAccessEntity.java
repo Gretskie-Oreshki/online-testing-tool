@@ -1,12 +1,11 @@
 package org.testingTool.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import javax.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.annotation.Nullable;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -18,14 +17,11 @@ public class UserTestAccessEntity {
   @Setter(AccessLevel.NONE)
   private Long id;
 
-  @ManyToOne
-  private UserEntity user;
+  @ManyToOne private UserEntity user;
 
-  @ManyToOne
-  private TestEntity test;
+  @ManyToOne private TestEntity test;
 
   private Boolean isPassed;
 
-  @Nullable
-  private LocalDateTime datePassed;
+  @Nullable private LocalDateTime datePassed;
 }

@@ -1,6 +1,9 @@
 package org.testingTool.services;
 
 import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.testingTool.dto.UserAnswerDto;
@@ -9,10 +12,6 @@ import org.testingTool.mapper.UserAnswerMapper;
 import org.testingTool.model.*;
 import org.testingTool.repository.UserAnswerRepository;
 import org.testingTool.repository.UserTestAccessRepository;
-
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,10 +33,11 @@ public class UserAnswerService {
 
     validateAnswersAgainstTest(test, answers);
 
-    answers.forEach(answer -> {
-      answer.setUserId(userId);
-      answer.setTestId(testId);
-    });
+    answers.forEach(
+        answer -> {
+          answer.setUserId(userId);
+          answer.setTestId(testId);
+        });
 
     List<UserAnswerEntity> entities = userAnswerMapper.toEntityList(answers);
     userAnswerRepository.saveAll(entities);
@@ -47,28 +47,26 @@ public class UserAnswerService {
     userTestAccessRepository.save(access);
   }
 
-
-
   private void validateAnswersAgainstTest(TestEntity test, List<UserAnswerDto> answers) {
-    Set<Long> testQuestionIds = test.getQuestions().stream()
-        .map(QuestionEntity::getId)
-        .collect(Collectors.toSet());
+    Set<Long> testQuestionIds =
+        test.getQuestions().stream().map(QuestionEntity::getId).collect(Collectors.toSet());
 
-    Set<Long> answeredQuestionIds = answers.stream()
-        .map(UserAnswerDto::getQuestionId)
-        .collect(Collectors.toSet());
+    Set<Long> answeredQuestionIds =
+        answers.stream().map(UserAnswerDto::getQuestionId).collect(Collectors.toSet());
 
     if (!answeredQuestionIds.containsAll(testQuestionIds)) {
       throw new IllegalArgumentException("Вы ответили не на все вопросы теста");
     }
 
-    Map<Long, Set<Long>> questionToAnswerIds = test.getQuestions().stream()
-        .collect(Collectors.toMap(
-            QuestionEntity::getId,
-            q -> q.getAnswers().stream()
-                .map(AnswerEntity::getId)
-                .collect(Collectors.toSet())
-        ));
+    Map<Long, Set<Long>> questionToAnswerIds =
+        test.getQuestions().stream()
+            .collect(
+                Collectors.toMap(
+                    QuestionEntity::getId,
+                    q ->
+                        q.getAnswers().stream()
+                            .map(AnswerEntity::getId)
+                            .collect(Collectors.toSet())));
 
     for (UserAnswerDto answer : answers) {
       Long questionId = answer.getQuestionId();
@@ -79,9 +77,9 @@ public class UserAnswerService {
       }
 
       if (!questionToAnswerIds.get(questionId).contains(answerId)) {
-        throw new IllegalArgumentException("Ответ #" + answerId + " не принадлежит вопросу #" + questionId);
+        throw new IllegalArgumentException(
+            "Ответ #" + answerId + " не принадлежит вопросу #" + questionId);
       }
     }
   }
-
 }

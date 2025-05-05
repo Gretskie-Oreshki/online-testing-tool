@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import org.testingTool.model.TestEntity;
 import org.testingTool.repository.TestRepository;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class TestService {

@@ -4,7 +4,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.testingTool.dto.UserAnswerDto;
-import org.testingTool.model.*;
+import org.testingTool.model.UserAnswerEntity;
 
 @Mapper(
     componentModel = "spring",

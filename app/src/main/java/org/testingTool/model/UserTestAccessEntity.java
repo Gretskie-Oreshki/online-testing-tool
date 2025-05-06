@@ -1,8 +1,13 @@
 package org.testingTool.model;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import javax.annotation.Nullable;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

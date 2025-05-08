@@ -5,14 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.testingTool.dto.AnswerDTO;
 import org.testingTool.dto.QuestionDTO;
 import org.testingTool.dto.TestDTO;
 import org.testingTool.model.AnswerEntity;
+import org.testingTool.model.MaterialEntity;
 import org.testingTool.model.QuestionEntity;
 import org.testingTool.model.TestEntity;
 import org.testingTool.repository.MaterialRepository;
@@ -34,7 +32,9 @@ public class TestCreationController {
   }
 
   @PostMapping
-  public String saveTest(@ModelAttribute("test") TestDTO testDTO) {
+  public String saveTest(@ModelAttribute("test") TestDTO testDTO,
+                         @RequestParam("materialIds") List<Long> materialsIds
+  ) {
     TestEntity testEntity = new TestEntity();
     testEntity.setName(testDTO.getTestName());
 
@@ -59,6 +59,11 @@ public class TestCreationController {
       questions.add(questionEntity);
     }
     testEntity.setQuestions(questions);
+    List<MaterialEntity> materials = new ArrayList<>();
+    for (Long materialId : materialsIds) {
+      materials.add(materialRepository.findById(materialId).get());
+    }
+    testEntity.setMaterials(materials);
     testRepository.save(testEntity);
     return "redirect:/test/constructor/success";
   }

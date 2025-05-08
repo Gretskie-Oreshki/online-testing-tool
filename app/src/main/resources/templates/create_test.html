@@ -7,59 +7,51 @@
 </head>
 <body class="bg-white text-gray-900">
 
-<!--Header-->
+<!-- Header -->
 <header class="flex justify-between items-center px-6 py-4 bg-gray-100">
     <div class="font-bold text-lg">Logo</div>
     <nav class="space-x-4">
         <a href="/" class="text-gray-600 hover:text-black">Home</a>
     </nav>
-    <a href="/logout" class="px-4 py-1 border border-gray-300 rounded hover:bg-gray-200 inline-block text-center">
+    <a href="/logout"
+       class="px-4 py-1 border border-gray-300 rounded hover:bg-gray-200 inline-block text-center">
         LOG OUT
     </a>
 </header>
 
-<!--Main-->
+<!-- Main -->
 <main class="max-w-4xl mx-auto py-8 px-4">
     <form method="post" th:action="@{/test/constructor}" th:object="${test}">
+        <!-- Название теста -->
         <div class="text-center mb-6">
-            <!--            Название теста-->
-            <input th:field="*{testName}" placeholder="Название теста"
-                   class="text-3xl font-bold text-center border-b-2 border-dashed focus:outline-none" required />
+            <input th:field="*{testName}"
+                   placeholder="Название теста"
+                   class="text-3xl font-bold text-center border-b-2 border-dashed focus:outline-none"
+                   required />
         </div>
 
+        <!-- Счётчик вопросов и времени -->
         <div class="text-center mb-4">
-            <p>количество вопросов:
-                <span id="count-of-questions">1</span>
-            </p>
-            <p>примерное время прохождения теста:
-                <span id="duration-minutes">1</span> мин.
-            </p>
+            <p>Количество вопросов: <span id="count-of-questions">0</span></p>
+            <p>Примерное время: <span id="duration-minutes">0</span> мин.</p>
         </div>
 
-        <!--        Additional materials-->
-<!--        <div class="mb-6">-->
-<!--            <p class="text-center font-medium mb-2">для прохождения теста необходимо изучить дополнительный материал:</p>-->
-<!--            <div id="materials" class="space-y-2">-->
-<!--                <div class="flex items-center border rounded px-4 py-2">-->
-<!--                    <input type="text" name="materials" placeholder="название теор материала"-->
-<!--                           class="flex-1 focus:outline-none border-b border-dashed" />-->
-<!--                    <button type="button" class="ml-2 text-red-500">×</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <button type="button" onclick="addMaterial()" class="mt-2 text-blue-500">+ Добавить материал</button>-->
-<!--        </div>-->
-        <div class="text-center mb-6">
-            <p class="text-center mb-2">для прохождения теста необходимо изучить дополнительный материал:</p>
+        <!-- Выбор дополнительного материала -->
+        <div class="mb-6 relative">
+            <p class="text-center font-medium mb-2">
+                Выберите материал, который необходимо изучить перед прохождением теста:
+            </p>
             <button id="customSelectBtn" type="button"
-                    class="flex justify-between items-center w-full p-2 border rounded-md shadow-sm bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                <span id="selectedValue">Выберите...</span>
-                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    class="flex justify-between items-center w-full p-2 border rounded-md shadow-sm bg-white text-sm text-gray-700 focus:outline-none">
+                <span id="selectedValue">Выберите материал</span>
+                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
+                     viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M19 9l-7 7-7-7" />
                 </svg>
             </button>
-
             <ul id="customSelectOptions"
-                class="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-lg max-h-60 overflow-auto hidden text-sm">
+                class="absolute left-0 right-0 mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto hidden text-sm z-10">
                 <li th:each="mat : ${materials}"
                     th:data-id="${mat.id}"
                     th:data-name="${mat.fileName}"
@@ -68,30 +60,38 @@
                 </li>
             </ul>
 
-            <button type="button" onclick="addMaterial()" class="mt-2 text-blue-500">+ Добавить материал</button>
-            <!-- Hidden input to hold selected value -->
-            <input type="hidden" name="materialId" id="selectedMaterialId">
+            <!-- Показывать выбранные -->
+            <div id="selectedMaterialsList" class="mt-2 text-sm text-gray-700"></div>
+
+            <!-- Скрытые поля для отправки -->
+            <div id="hiddenMaterialInputs"></div>
         </div>
 
-        <!--        Questions-->
+        <!-- Кнопка добавить вопрос -->
         <div class="my-8 text-center">
-            <button type="button" onclick="addQuestion()" class="bg-gray-200 px-6 py-2 rounded hover:bg-gray-300">
+            <button type="button" onclick="addQuestion()"
+                    class="bg-gray-200 px-6 py-2 rounded hover:bg-gray-300">
                 Добавить вопрос
             </button>
         </div>
 
-        <!--        Questions-->
-        <div id="questions" class="space-y-8">
+        <!-- Контейнер вопросов -->
+        <div id="questions" class="space-y-8"></div>
 
-        </div>
+        <!-- Ошибка формы -->
         <div id="form-error" class="text-red-600 text-sm mb-4 text-center hidden"></div>
+
+        <!-- Сохранить -->
         <div class="text-center mt-8">
-            <button type="submit" class="bg-gray-200 px-6 py-2 rounded hover:bg-gray-300">Сохранить</button>
+            <button type="submit"
+                    class="bg-gray-200 px-6 py-2 rounded hover:bg-gray-300">
+                Сохранить
+            </button>
         </div>
     </form>
 </main>
 
-<!--Footer-->
+<!-- Footer -->
 <footer class="flex justify-between items-center px-6 py-4 bg-gray-100 mt-12">
     <div class="font-bold">Logo</div>
     <nav class="space-x-4">
@@ -105,118 +105,144 @@
 <script>
     let questionIndex = 0;
 
-    function addMaterial() {
-        const div = document.createElement("div");
-        div.className = "flex items-center border rounded px-4 py-2 mt-2";
-        div.innerHTML = `
-        <input type="text" name="materials" placeholder="название теор материала"
-            class="flex-1 focus:outline-none border-b border-dashed" />
-        <button type="button" class="ml-2 text-red-500" onclick="this.parentElement.remove()">×</button>`;
-        document.getElementById("materials").appendChild(div);
-    }
-
-    function addQuestion() {
-        const qDiv = document.createElement("div");
-        qDiv.className = "border p-4 rounded";
-        qDiv.innerHTML = `
-        <div class="flex items-center space-x-4 mb-2">
-            <input type="text" name="questions[${questionIndex}].questionName" placeholder="Название вопроса"
-                 class="flex-1 border-b border-dashed focus:outline-none" required />
-            <button type="button" class="text-red-500" onclick="removeQuestion(this)"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="14" height="14" viewBox="0 0 256 256" xml:space="preserve">
-            <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-                \t<path d="M 67.692 90 H 22.308 c -3.042 0 -5.518 -2.476 -5.518 -5.518 v -61 c 0 -1.104 0.896 -2 2 -2 h 52.42 c 1.104 0 2 0.896 2 2 v 61 C 73.21 87.524 70.734 90 67.692 90 z M 20.79 25.482 v 59 c 0 0.837 0.681 1.518 1.518 1.518 h 45.385 c 0.837 0 1.518 -0.681 1.518 -1.518 v -59 H 20.79 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-                \t<path d="M 73.196 25.482 H 16.804 c -3.042 0 -5.518 -2.475 -5.518 -5.518 v -4.335 c 0 -3.042 2.475 -5.518 5.518 -5.518 h 56.393 c 3.042 0 5.518 2.475 5.518 5.518 v 4.335 C 78.714 23.007 76.238 25.482 73.196 25.482 z M 16.804 14.112 c -0.837 0 -1.518 0.681 -1.518 1.518 v 4.335 c 0 0.837 0.681 1.518 1.518 1.518 h 56.393 c 0.837 0 1.518 -0.681 1.518 -1.518 v -4.335 c 0 -0.837 -0.681 -1.518 -1.518 -1.518 H 16.804 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-                \t<path d="M 57.197 14.112 H 32.803 c -1.104 0 -2 -0.896 -2 -2 V 5.518 C 30.803 2.476 33.278 0 36.321 0 h 17.358 c 3.043 0 5.519 2.476 5.519 5.518 v 6.594 C 59.197 13.216 58.302 14.112 57.197 14.112 z M 34.803 10.112 h 20.395 V 5.518 C 55.197 4.681 54.516 4 53.679 4 H 36.321 c -0.837 0 -1.518 0.681 -1.518 1.518 V 10.112 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-                \t<path d="M 45 78.624 c -1.104 0 -2 -0.896 -2 -2 V 34.856 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 41.768 C 47 77.729 46.104 78.624 45 78.624 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-                \t<path d="M 58.222 78.624 c -1.104 0 -2 -0.896 -2 -2 V 34.856 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 41.768 C 60.222 77.729 59.326 78.624 58.222 78.624 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-                \t<path d="M 31.779 78.624 c -1.104 0 -2 -0.896 -2 -2 V 34.856 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 41.768 C 33.779 77.729 32.883 78.624 31.779 78.624 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-            </g></svg>
-            </button>
-            <button type="button" onclick="addAnswer(this)" data-qidx="${questionIndex}"
-                  class="text-sm text-blue-500 border px-2 py-1 rounded">
-                Добавить вариант ответа
-            </button>
-        </div>
-        <div id="answers-${questionIndex}" class="grid grid-cols-2 gap-2">
-            <div class="flex items-center space-x-2">
-                <input type="radio" name="questions[${questionIndex}].rightAnswer" value="0" required/>
-                <input type="text" name="questions[${questionIndex}].answers[0].value"
-                   placeholder="Вариант ответа" class="flex-1 border-b border-dashed focus:outline-none" required />
-            </div>
-            <div class="flex items-center space-x-2">
-                <input type="radio" name="questions[${questionIndex}].rightAnswer" value="1" required/>
-                <input type="text" name="questions[${questionIndex}].answers[1].value"
-                   placeholder="Вариант ответа" class="flex-1 border-b border-dashed focus:outline-none" required />
-            </div>
-        </div>`;
-        document.getElementById("questions").appendChild(qDiv);
-        questionIndex++;
-
-        updateDurationAndCounter();
-    }
-
-    function updateDurationAndCounter() {
-        const questionCount = document.querySelectorAll("#questions > .border").length;
-        document.getElementById("duration-minutes").textContent = questionCount;
-        document.getElementById("count-of-questions").textContent = questionCount;
-    }
-
-    function removeQuestion(button) {
-        button.closest(".border").remove();
-        updateDurationAndCounter();
-    }
-
-    function addAnswer(button) {
-        const qIdx = button.dataset.qidx;
-        const container = document.getElementById(`answers-${qIdx}`);
-        const count = container.children.length;
-
-        const answerDiv = document.createElement("div");
-        answerDiv.className = "flex items-center space-x-2";
-
-        answerDiv.innerHTML = `
-        <input type="radio" name="questions[${qIdx}].rightAnswer" value="${count}" required/>
-        <input type="text" name="questions[${qIdx}].answers[${count}].value"
-            placeholder="Вариант ответа"
-            class="flex-1 border-b border-dashed focus:outline-none" required />
-        <button type="button" class="text-red-500" onclick="this.parentElement.remove()"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="14" height="14" viewBox="0 0 256 256" xml:space="preserve">
-        <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-            \t<path d="M 67.692 90 H 22.308 c -3.042 0 -5.518 -2.476 -5.518 -5.518 v -61 c 0 -1.104 0.896 -2 2 -2 h 52.42 c 1.104 0 2 0.896 2 2 v 61 C 73.21 87.524 70.734 90 67.692 90 z M 20.79 25.482 v 59 c 0 0.837 0.681 1.518 1.518 1.518 h 45.385 c 0.837 0 1.518 -0.681 1.518 -1.518 v -59 H 20.79 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-            \t<path d="M 73.196 25.482 H 16.804 c -3.042 0 -5.518 -2.475 -5.518 -5.518 v -4.335 c 0 -3.042 2.475 -5.518 5.518 -5.518 h 56.393 c 3.042 0 5.518 2.475 5.518 5.518 v 4.335 C 78.714 23.007 76.238 25.482 73.196 25.482 z M 16.804 14.112 c -0.837 0 -1.518 0.681 -1.518 1.518 v 4.335 c 0 0.837 0.681 1.518 1.518 1.518 h 56.393 c 0.837 0 1.518 -0.681 1.518 -1.518 v -4.335 c 0 -0.837 -0.681 -1.518 -1.518 -1.518 H 16.804 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-            \t<path d="M 57.197 14.112 H 32.803 c -1.104 0 -2 -0.896 -2 -2 V 5.518 C 30.803 2.476 33.278 0 36.321 0 h 17.358 c 3.043 0 5.519 2.476 5.519 5.518 v 6.594 C 59.197 13.216 58.302 14.112 57.197 14.112 z M 34.803 10.112 h 20.395 V 5.518 C 55.197 4.681 54.516 4 53.679 4 H 36.321 c -0.837 0 -1.518 0.681 -1.518 1.518 V 10.112 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-            \t<path d="M 45 78.624 c -1.104 0 -2 -0.896 -2 -2 V 34.856 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 41.768 C 47 77.729 46.104 78.624 45 78.624 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-            \t<path d="M 58.222 78.624 c -1.104 0 -2 -0.896 -2 -2 V 34.856 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 41.768 C 60.222 77.729 59.326 78.624 58.222 78.624 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-            \t<path d="M 31.779 78.624 c -1.104 0 -2 -0.896 -2 -2 V 34.856 c 0 -1.104 0.896 -2 2 -2 s 2 0.896 2 2 v 41.768 C 33.779 77.729 32.883 78.624 31.779 78.624 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
-        </g></svg>
-        </button>`;
-
-        container.appendChild(answerDiv);
-    }
-
     const btn = document.getElementById('customSelectBtn');
     const options = document.getElementById('customSelectOptions');
-    const selectedValue = document.getElementById('selectedValue');
-    const selectedInput = document.getElementById('selectedMaterialId');
+    const selectedList = document.getElementById('selectedMaterialsList');
+    const hiddenInputs = document.getElementById('hiddenMaterialInputs');
+
+    let selectedMaterials = new Map();
 
     btn.addEventListener('click', () => {
         options.classList.toggle('hidden');
     });
 
-    options.addEventListener('click', (e) => {
-        if (e.target.tagName === 'LI') {
-            const name = e.target.dataset.name;
-            const id = e.target.dataset.id;
-            selectedValue.textContent = name;
-            selectedInput.value = id;
-            options.classList.add('hidden');
-        }
+    options.querySelectorAll('li').forEach(li => {
+        li.addEventListener('click', () => {
+            const id = li.dataset.id;
+            const name = li.dataset.name;
+
+            if (!selectedMaterials.has(id)) {
+                selectedMaterials.set(id, name);
+                updateSelectedMaterials();
+            }
+        });
     });
+
+    function updateSelectedMaterials() {
+        selectedList.innerHTML = '';
+        hiddenInputs.innerHTML = '';
+
+        selectedMaterials.forEach((name, id) => {
+            const wrapper = document.createElement('span');
+            wrapper.className = 'inline-flex items-center mr-2 mb-1 px-2 py-1 bg-indigo-100 rounded';
+
+            const text = document.createElement('span');
+            text.textContent = name;
+
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = '×';
+            removeBtn.className = 'ml-1 text-red-500 hover:text-red-700 font-bold';
+            removeBtn.onclick = () => {
+                selectedMaterials.delete(id);
+                updateSelectedMaterials();
+            };
+
+            wrapper.appendChild(text);
+            wrapper.appendChild(removeBtn);
+            selectedList.appendChild(wrapper);
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'materialIds';
+            input.value = id;
+            hiddenInputs.appendChild(input);
+        });
+    }
 
     document.addEventListener('click', (e) => {
         if (!btn.contains(e.target) && !options.contains(e.target)) {
             options.classList.add('hidden');
         }
     });
+
+    function addQuestion() {
+        const container = document.getElementById('questions');
+        const qDiv = document.createElement('div');
+        qDiv.className = 'border p-4 rounded';
+        qDiv.innerHTML = `
+        <div class="flex items-center space-x-4 mb-2">
+          <input type="text"
+                 name="questions[${questionIndex}].questionName"
+                 placeholder="Название вопроса"
+                 class="flex-1 border-b border-dashed focus:outline-none"
+                 required />
+          <button type="button" onclick="removeQuestion(this)"
+                  class="text-red-500">&times;</button>
+        </div>
+        <div id="answers-${questionIndex}" class="grid grid-cols-2 gap-2">
+          <div class="flex items-center space-x-2">
+            <input type="radio"
+                   name="questions[${questionIndex}].rightAnswer"
+                   value="0" required />
+            <input type="text"
+                   name="questions[${questionIndex}].answers[0].value"
+                   placeholder="Вариант ответа"
+                   class="flex-1 border-b border-dashed focus:outline-none"
+                   required />
+          </div>
+          <div class="flex items-center space-x-2">
+            <input type="radio"
+                   name="questions[${questionIndex}].rightAnswer"
+                   value="1" required />
+            <input type="text"
+                   name="questions[${questionIndex}].answers[1].value"
+                   placeholder="Вариант ответа"
+                   class="flex-1 border-b border-dashed focus:outline-none"
+                   required />
+          </div>
+        </div>
+        <div class="mt-2 text-right">
+          <button type="button"
+                  onclick="addAnswer(${questionIndex})"
+                  class="text-sm text-blue-500 border px-2 py-1 rounded">
+            + Вариант ответа
+          </button>
+        </div>`;
+        container.appendChild(qDiv);
+        updateDurationAndCounter();
+        questionIndex++;
+    }
+
+    function removeQuestion(btn) {
+        btn.closest('.border').remove();
+        updateDurationAndCounter();
+    }
+
+    function addAnswer(qIdx) {
+        const container = document.getElementById(`answers-${qIdx}`);
+        const count = container.children.length;
+        const answerDiv = document.createElement('div');
+        answerDiv.className = 'flex items-center space-x-2';
+        answerDiv.innerHTML = `
+        <input type="radio"
+               name="questions[${qIdx}].rightAnswer"
+               value="${count}" required />
+        <input type="text"
+               name="questions[${qIdx}].answers[${count}].value"
+               placeholder="Вариант ответа"
+               class="flex-1 border-b border-dashed focus:outline-none"
+               required />
+        <button type="button"
+                class="text-red-500"
+                onclick="this.parentElement.remove()">&times;</button>`;
+        container.appendChild(answerDiv);
+    }
+
+    function updateDurationAndCounter() {
+        const cnt = document.querySelectorAll('#questions > .border').length;
+        document.getElementById('count-of-questions').textContent = cnt;
+        document.getElementById('duration-minutes').textContent = cnt;
+    }
 </script>
 </body>
 </html>

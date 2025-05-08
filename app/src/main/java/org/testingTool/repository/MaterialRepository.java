@@ -8,5 +8,5 @@ import org.testingTool.model.MaterialEntity;
 public interface MaterialRepository extends CrudRepository<MaterialEntity, Long> {
   Page<MaterialEntity> findByFileNameContainingIgnoreCase(String fileName, Pageable pageable);
 
-  Page<MaterialEntity> findAllBy(Pageable pageable);
+  Page<MaterialEntity> findAll(Pageable pageable);
 }

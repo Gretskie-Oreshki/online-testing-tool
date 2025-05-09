@@ -19,7 +19,7 @@ public class EmailService {
   private String emailSubjectTemplate = "\"%s\" прошел \"%s\"";
   private String emailTextTemplate = "Пользователь \"%s\" прошел тест \"%s\"\n\nРезультат: %d/%d";
 
-  public void sendResultsMail(
+  public void sendUserResultsToMail(
       String toEmail, String userUid, String testName, List<UserAnswerEntity> userAnswers) {
     SimpleMailMessage msg = new SimpleMailMessage();
     msg.setFrom(senderEmailAddress);

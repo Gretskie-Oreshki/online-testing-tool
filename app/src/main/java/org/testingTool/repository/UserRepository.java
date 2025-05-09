@@ -2,6 +2,7 @@ package org.testingTool.repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,6 +14,8 @@ import org.testingTool.model.UserEntity;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
   boolean existsByUid(String uid);
+
+  Optional<UserEntity> findByUid(String uid);
 
   @Query("SELECT u FROM UserEntity u WHERE u.role = :role AND u.createdAt < :expirationDate")
   List<UserEntity> findExpired(

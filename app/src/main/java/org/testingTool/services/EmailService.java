@@ -35,6 +35,10 @@ public class EmailService {
     mailSender.send(msg);
   }
 
+  private int calculateRightAnswersPercentage(List<UserAnswerEntity> userAnswers) {
+    return calculateRightAnswersPercentage(userAnswers, 100);
+  }
+
   private int calculateRightAnswersPercentage(List<UserAnswerEntity> userAnswers, int maxPercent) {
     long answersAmount = userAnswers.size();
     long rightAnswersAmount =

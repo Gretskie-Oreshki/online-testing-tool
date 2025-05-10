@@ -15,4 +15,6 @@ public interface UserTestAccessRepository extends CrudRepository<UserTestAccessE
   boolean hasAccess(@Param("userId") Long userId, @Param("testId") Long testId);
 
   Optional<UserTestAccessEntity> findByUser_IdAndTest_Id(Long userId, Long testId);
+
+  Optional<UserTestAccessEntity> findByUserId(Long userId);
 }

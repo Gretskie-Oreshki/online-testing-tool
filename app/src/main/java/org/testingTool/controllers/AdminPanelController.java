@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.testingTool.dto.UserFormDto;
@@ -73,6 +74,21 @@ public class AdminPanelController {
         userRepository.findByUid(guest.getUid()).orElseThrow(() -> new IllegalArgumentException());
 
     userTestAccessService.grantAccess(guest, test);
+
+    return "redirect:/admin/";
+  }
+
+  @PostMapping("/delete-guest/{uid}")
+  public String deleteGuest(@PathVariable String uid) {
+    UserEntity guest =
+        userRepository.findByUid(uid).orElseThrow(() -> new IllegalArgumentException());
+    UserTestAccessEntity access =
+        userTestAccessRepository
+            .findByUserId(guest.getId())
+            .orElseThrow(() -> new IllegalArgumentException());
+
+    userTestAccessRepository.delete(access);
+    userRepository.delete(guest);
 
     return "redirect:/admin/";
   }

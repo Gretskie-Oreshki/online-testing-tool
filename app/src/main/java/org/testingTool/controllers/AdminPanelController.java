@@ -92,4 +92,37 @@ public class AdminPanelController {
 
     return "redirect:/admin/";
   }
+
+  @GetMapping("/edit-guest/{uid}")
+  public String editGuestPage(@PathVariable String uid, Model model) {
+    UserEntity guest =
+        userRepository.findByUid(uid).orElseThrow(() -> new IllegalArgumentException());
+    Iterable<TestEntity> tests = testRepository.findAll();
+
+    model.addAttribute("uid", uid);
+    model.addAttribute("guest", guest);
+    model.addAttribute("tests", tests);
+    return "edit_guest";
+  }
+
+  @PostMapping("/edit-guest/{uid}")
+  public String editGuest(@PathVariable String uid, @ModelAttribute UserFormDto formDto) {
+    UserEntity guest =
+        userRepository.findByUid(uid).orElseThrow(() -> new IllegalArgumentException());
+    guest.setPassword(formDto.getPassword());
+    userService.saveUser(guest);
+
+    UserTestAccessEntity access =
+        userTestAccessRepository
+            .findByUserId(guest.getId())
+            .orElseThrow(() -> new IllegalArgumentException());
+    TestEntity test =
+        testRepository
+            .findById(formDto.getTestId())
+            .orElseThrow(() -> new IllegalArgumentException());
+    access.setTest(test);
+    userTestAccessRepository.save(access);
+
+    return "redirect:/admin/";
+  }
 }

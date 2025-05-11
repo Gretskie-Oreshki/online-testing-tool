@@ -143,7 +143,7 @@
                         th:value="${_csrf.token}"
                       />
                       <a
-                        href="#"
+                        th:href="@{'/admin/edit-guest/' + ${access.getUser().getUid()}}"
                         class="block flex size-7 cursor-pointer rounded-md bg-blue-600 px-1.5 py-1.5 text-white transition hover:bg-blue-700"
                       >
                         <i class="fa-solid fa-pen-to-square m-auto"></i>

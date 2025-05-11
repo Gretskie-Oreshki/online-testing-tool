@@ -43,6 +43,11 @@ public class UserService {
     userRepository.save(user);
   }
 
+  @Transactional
+  public void updateGuest(String uid, UserEntity user) {
+    userRepository.save(user);
+  }
+
   private String generateUid() {
     String uid = String.format("%04d-%04d", random.nextInt(10000), random.nextInt(10000));
     while (userRepository.existsByUid(uid)) {

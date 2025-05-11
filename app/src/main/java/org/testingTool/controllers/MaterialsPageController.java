@@ -2,9 +2,7 @@ package org.testingTool.controllers;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -53,20 +51,22 @@ public class MaterialsPageController {
     Optional<MaterialEntity> optionalMaterial = materialRepository.findById(id);
     if (optionalMaterial.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
-        .body("Файл с ID " + id + " не найден в базе данных.");
+          .body("Файл с ID " + id + " не найден в базе данных.");
     }
 
     MaterialEntity material = optionalMaterial.get();
     File file = new File(uploadDir + "/" + material.getFilePath());
     if (!file.exists()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
-        .body("Файл " + material.getFileName() + " не найден на сервере.");
+          .body("Файл " + material.getFileName() + " не найден на сервере.");
     }
 
     Resource resource = new FileSystemResource(file);
 
     return ResponseEntity.ok()
-      .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + material.getFileName() + "\"")
-      .body(resource);
+        .header(
+            HttpHeaders.CONTENT_DISPOSITION,
+            "attachment; filename=\"" + material.getFileName() + "\"")
+        .body(resource);
   }
 }

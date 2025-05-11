@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html
+        lang="ru"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout.html}"
+>
 <head>
     <meta charset="UTF-8">
-    <title>Файлы</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Материалы</title>
 </head>
 
-<body class="min-h-screen flex flex-col">
+<body layout:fragment="content" class="min-h-screen flex flex-col">
 <!--Header-->
-<header class="flex justify-between items-center px-6 py-4 bg-gray-100">
-    <div class="font-bold text-lg">Logo</div>
+<header class="flex justify-center items-center px-6 py-4 bg-gray-100">
     <nav class="space-x-4">
-        <a href="/" class="text-gray-600 hover:text-black">Home</a>
+        <a href="/admin" class="text-gray-600 hover:text-black">Панель</a>
     </nav>
-    <a href="/logout" class="px-4 py-1 border border-gray-300 rounded hover:bg-gray-200 inline-block text-center">
-        Log out
-    </a>
 </header>
 
 <!--Main-->
@@ -145,14 +144,10 @@
 </main>
 
 <!--Footer-->
-<footer class="flex justify-between items-center px-6 py-4 bg-gray-100">
-    <div class="font-bold">Logo</div>
+<footer class="flex justify-center items-center px-6 py-4 bg-gray-100">
     <nav class="space-x-4">
-        <a href="/" class="text-gray-600 hover:text-black">Home</a>
+        <a href="/admin" class="text-gray-600 hover:text-black">Панель</a>
     </nav>
-    <select class="border border-gray-300 rounded px-2 py-1">
-        <option>Dropdown</option>
-    </select>
 </footer>
 </body>
 

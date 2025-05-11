@@ -28,8 +28,8 @@ public class SecurityConfig {
     return http.csrf(csrf -> csrf.ignoringRequestMatchers("/app-controller/**"))
         .authorizeHttpRequests(
             auth ->
-                auth.requestMatchers("/**")
-                    .permitAll()
+                auth.requestMatchers("/tests/**")
+                    .authenticated()
                     .requestMatchers("/app-controller/**")
                     .permitAll()
                     .requestMatchers("/materials/**")

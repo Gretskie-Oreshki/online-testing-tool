@@ -1,12 +1,16 @@
 package org.testingTool.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,21 +44,29 @@ public class MaterialsPageController {
 
   @PostMapping("/upload")
   public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-
     materialService.saveMaterial(file);
     return "redirect:/materials";
   }
 
   @GetMapping("/download/{id}")
-  public ResponseEntity<Resource> serveFile(@PathVariable Long id) {
-    MaterialEntity material = materialRepository.findById(id).get();
-    Resource res =
-        new FileSystemResource(Objects.requireNonNull(uploadDir + "/" + material.getFilePath()));
+  public ResponseEntity<?> serveFile(@PathVariable Long id) {
+    Optional<MaterialEntity> optionalMaterial = materialRepository.findById(id);
+    if (optionalMaterial.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        .body("Файл с ID " + id + " не найден в базе данных.");
+    }
+
+    MaterialEntity material = optionalMaterial.get();
+    File file = new File(uploadDir + "/" + material.getFilePath());
+    if (!file.exists()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        .body("Файл " + material.getFileName() + " не найден на сервере.");
+    }
+
+    Resource resource = new FileSystemResource(file);
 
     return ResponseEntity.ok()
-        .header(
-            HttpHeaders.CONTENT_DISPOSITION,
-            "attachment; filename=\"" + material.getFileName() + "\"")
-        .body(res);
+      .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + material.getFileName() + "\"")
+      .body(resource);
   }
 }

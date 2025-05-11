@@ -7,7 +7,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.testingTool.dto.UserFormDto;
 import org.testingTool.model.Role;
 import org.testingTool.model.TestEntity;
 import org.testingTool.model.UserEntity;
@@ -15,6 +18,8 @@ import org.testingTool.model.UserTestAccessEntity;
 import org.testingTool.repository.TestRepository;
 import org.testingTool.repository.UserRepository;
 import org.testingTool.repository.UserTestAccessRepository;
+import org.testingTool.services.UserService;
+import org.testingTool.services.UserTestAccessService;
 
 @Controller
 @RequestMapping("/admin")
@@ -24,6 +29,9 @@ public class AdminPanelController {
   private final UserRepository userRepository;
   private final TestRepository testRepository;
   private final UserTestAccessRepository userTestAccessRepository;
+
+  private final UserService userService;
+  private final UserTestAccessService userTestAccessService;
 
   @GetMapping("/")
   public String admin(Model model) {
@@ -42,5 +50,30 @@ public class AdminPanelController {
     model.addAttribute("tests", tests);
     model.addAttribute("accesses", accesses);
     return "admin_panel_index";
+  }
+
+  @GetMapping("/add-guest")
+  public String addGuestPage(Model model) {
+    Iterable<TestEntity> tests = testRepository.findAll();
+
+    model.addAttribute("tests", tests);
+    return "add_guest";
+  }
+
+  @PostMapping("/add-guest")
+  public String addGuest(@ModelAttribute UserFormDto formDto) {
+    UserEntity guest = userService.newGuestEntity(formDto.getPassword());
+    TestEntity test =
+        testRepository
+            .findById(formDto.getTestId())
+            .orElseThrow(() -> new IllegalArgumentException());
+
+    userService.saveUser(guest);
+    guest =
+        userRepository.findByUid(guest.getUid()).orElseThrow(() -> new IllegalArgumentException());
+
+    userTestAccessService.grantAccess(guest, test);
+
+    return "redirect:/admin/";
   }
 }

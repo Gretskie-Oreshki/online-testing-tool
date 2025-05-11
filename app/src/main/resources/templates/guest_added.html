@@ -5,14 +5,14 @@
   layout:decorate="~{layout.html}"
 >
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Гость добавлен</title>
   </head>
+
   <body>
-    <h1>Гость успешно добавлен!</h1>
-    <p>Вы успешно добавили нового гостя в систему.</p>
-    <a href="/">Вернуться на главную</a>
+    <section layout:fragment="content">
+      <h1>Гость успешно добавлен!</h1>
+      <p>Вы успешно добавили нового гостя в систему.</p>
+      <a href="/admin/">Вернуться на главную</a>
+    </section>
   </body>
 </html>

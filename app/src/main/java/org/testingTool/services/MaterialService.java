@@ -28,17 +28,11 @@ public class MaterialService {
 
   public Page<MaterialEntity> getPageableMaterials(int page, int size, String query) {
     Pageable pageable = PageRequest.of(page, size);
-    if (query != null && !query.isBlank()) {
-      return findMaterialsByQuery(query, pageable);
-    }
-    return findAllPageableMaterials(pageable);
-  }
-
-  private Page<MaterialEntity> findMaterialsByQuery(String query, Pageable pageable) {
     return materialRepository.findByFileNameContainingIgnoreCase(query, pageable);
   }
 
-  private Page<MaterialEntity> findAllPageableMaterials(Pageable pageable) {
+  public Page<MaterialEntity> getPageableMaterials(int page, int size) {
+    Pageable pageable = PageRequest.of(page, size);
     return materialRepository.findAll(pageable);
   }
 

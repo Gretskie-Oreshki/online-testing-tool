@@ -35,7 +35,11 @@ public class MaterialsPageController {
       @RequestParam(defaultValue = "10") int size,
       @RequestParam(required = false) String query,
       Model model) {
-    model.addAttribute("materialsPage", materialService.getPageableMaterials(page, size, query));
+    if (query != null && !query.isBlank()) {
+      model.addAttribute("materialsPage", materialService.getPageableMaterials(page, size, query));
+    } else {
+      model.addAttribute("materialsPage", materialService.getPageableMaterials(page, size));
+    }
     model.addAttribute("query", query);
     return "materials";
   }

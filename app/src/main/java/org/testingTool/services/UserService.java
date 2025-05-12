@@ -1,10 +1,10 @@
 package org.testingTool.services;
 
-import jakarta.transaction.Transactional;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.testingTool.model.Role;
 import org.testingTool.model.UserEntity;
 import org.testingTool.repository.UserRepository;

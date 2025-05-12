@@ -51,7 +51,7 @@ public class AdminPanelController {
 
     model.addAttribute("tests", tests);
     model.addAttribute("accesses", accesses);
-    return "admin/admin_panel_index";
+    return "admin_panel_index";
   }
 
   @GetMapping("/add-guest")
@@ -59,7 +59,7 @@ public class AdminPanelController {
     Iterable<TestEntity> tests = testRepository.findAll();
 
     model.addAttribute("tests", tests);
-    return "admin/add_guest";
+    return "add_guest";
   }
 
   @PostMapping("/add-guest")
@@ -100,20 +100,20 @@ public class AdminPanelController {
     model.addAttribute("uid", uid);
     model.addAttribute("guest", guest);
     model.addAttribute("tests", tests);
-    return "admin/edit_guest";
+    return "edit_guest";
   }
 
   @PostMapping("/edit-guest/{uid}")
   public String editGuest(@PathVariable String uid, @ModelAttribute UserFormDto formDto) {
     UserEntity guest =
         userRepository.findByUid(uid).orElseThrow(() -> new IllegalArgumentException());
-    UserTestAccessEntity access =
-        userTestAccessRepository
-            .findByUserId(guest.getId())
-            .orElseThrow(() -> new IllegalArgumentException());
     TestEntity test =
         testRepository
             .findById(formDto.getTestId())
+            .orElseThrow(() -> new IllegalArgumentException());
+    UserTestAccessEntity access =
+        userTestAccessRepository
+            .findByUserId(guest.getId())
             .orElseThrow(() -> new IllegalArgumentException());
 
     guest.setPassword(formDto.getPassword());

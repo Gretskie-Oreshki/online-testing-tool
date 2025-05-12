@@ -132,30 +132,21 @@
                     class="left-0 px-3 py-1.5"
                     th:text="${access.getIsPassed()} ? Да : Нет"
                   ></td>
-                  <td>
-                    <form
-                      method="post"
-                      class="flex items-center justify-end gap-x-1.5 px-3 py-1.5"
+                  <td
+                    class="flex items-center justify-end gap-x-1.5 px-3 py-1.5"
+                  >
+                    <a
+                      th:href="@{/admin/edit-guest/{uid}(uid=${access.getUser().getUid()})}"
+                      class="block flex size-7 cursor-pointer rounded-md bg-blue-600 px-1.5 py-1.5 text-white transition hover:bg-blue-700"
                     >
-                      <input
-                        type="hidden"
-                        th:name="${_csrf.parameterName}"
-                        th:value="${_csrf.token}"
-                      />
-                      <a
-                          th:href="@{/admin/edit-guest/{uid}(uid=${access.getUser().getUid()})}"
-                        class="block flex size-7 cursor-pointer rounded-md bg-blue-600 px-1.5 py-1.5 text-white transition hover:bg-blue-700"
-                      >
-                        <i class="fa-solid fa-pen-to-square m-auto"></i>
-                      </a>
-                      <button
-                          th:formaction="@{/admin/delete-guest/{uid}(uid=${access.getUser().getUid()})}"
-                        type="submit"
-                        class="block flex size-7 cursor-pointer rounded-md bg-red-600 px-1.5 py-1.5 text-white transition hover:bg-red-700"
-                      >
-                        <i class="fa-solid fa-trash-can m-auto"></i>
-                      </button>
-                    </form>
+                      <i class="fa-solid fa-pen-to-square m-auto"></i>
+                    </a>
+                    <a
+                      th:href="@{/admin/delete-guest/{uid}(uid=${access.getUser().getUid()})}"
+                      class="block flex size-7 cursor-pointer rounded-md bg-red-600 px-1.5 py-1.5 text-white transition hover:bg-red-700"
+                    >
+                      <i class="fa-solid fa-trash-can m-auto"></i>
+                    </a>
                   </td>
                 </tr>
               </tbody>

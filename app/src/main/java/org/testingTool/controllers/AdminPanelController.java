@@ -76,6 +76,12 @@ public class AdminPanelController {
     return "redirect:/admin/";
   }
 
+  @GetMapping("/delete-guest/{uid}")
+  public String deleteGuestPage(@PathVariable String uid, Model model) {
+    model.addAttribute("uid", uid);
+    return "admin/delete_guest";
+  }
+
   @PostMapping("/delete-guest/{uid}")
   public String deleteGuest(@PathVariable String uid) {
     UserEntity guest =

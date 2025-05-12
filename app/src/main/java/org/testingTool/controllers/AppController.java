@@ -21,20 +21,20 @@ public class AppController {
   @GetMapping("/")
   public String index(Model model) {
     // model.addAttribute("message", "this is /app-controller/index");
-    return "index";
+    return "";
   }
 
   @Deprecated
   @PostMapping("/user")
   public String addUser(@RequestBody UserEntity user) {
     // userService.addUser(user, Role.GUEST);
-    return "guest_added"; // TODO: rename html
+    return ""; // TODO: rename html
   }
 
   @Deprecated
   @PostMapping("/admin")
   public String addAdmin(@RequestBody UserEntity user) {
     // userService.addUser(user, Role.ADMIN);
-    return "admin_added"; // TODO: rename html
+    return ""; // TODO: rename html
   }
 }

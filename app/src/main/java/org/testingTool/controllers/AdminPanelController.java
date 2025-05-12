@@ -51,7 +51,7 @@ public class AdminPanelController {
 
     model.addAttribute("tests", tests);
     model.addAttribute("accesses", accesses);
-    return "admin_panel_index";
+    return "admin/admin_panel_index";
   }
 
   @GetMapping("/add-guest")
@@ -59,7 +59,7 @@ public class AdminPanelController {
     Iterable<TestEntity> tests = testRepository.findAll();
 
     model.addAttribute("tests", tests);
-    return "add_guest";
+    return "admin/add_guest";
   }
 
   @PostMapping("/add-guest")
@@ -100,7 +100,7 @@ public class AdminPanelController {
     model.addAttribute("uid", uid);
     model.addAttribute("guest", guest);
     model.addAttribute("tests", tests);
-    return "edit_guest";
+    return "admin/edit_guest";
   }
 
   @PostMapping("/edit-guest/{uid}")

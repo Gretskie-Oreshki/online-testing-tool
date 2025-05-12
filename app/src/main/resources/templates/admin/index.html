@@ -143,13 +143,13 @@
                         th:value="${_csrf.token}"
                       />
                       <a
-                        th:href="@{'/admin/edit-guest/' + ${access.getUser().getUid()}}"
+                          th:href="@{/admin/edit-guest/{uid}(uid=${access.getUser().getUid()})}"
                         class="block flex size-7 cursor-pointer rounded-md bg-blue-600 px-1.5 py-1.5 text-white transition hover:bg-blue-700"
                       >
                         <i class="fa-solid fa-pen-to-square m-auto"></i>
                       </a>
                       <button
-                        th:formaction="@{'/admin/delete-guest/' + ${access.getUser().getUid()}}"
+                          th:formaction="@{/admin/delete-guest/{uid}(uid=${access.getUser().getUid()})}"
                         type="submit"
                         class="block flex size-7 cursor-pointer rounded-md bg-red-600 px-1.5 py-1.5 text-white transition hover:bg-red-700"
                       >

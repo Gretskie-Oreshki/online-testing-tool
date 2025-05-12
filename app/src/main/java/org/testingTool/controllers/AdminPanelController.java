@@ -39,6 +39,7 @@ public class AdminPanelController {
     Iterable<TestEntity> tests = testRepository.findAll();
     List<UserEntity> users =
         userRepository.findAll().stream().filter(user -> user.getRole() == Role.GUEST).toList();
+
     List<UserTestAccessEntity> accesses = new ArrayList<>();
     for (UserEntity user : users) {
       UserTestAccessEntity access =
@@ -69,10 +70,7 @@ public class AdminPanelController {
             .findById(formDto.getTestId())
             .orElseThrow(() -> new IllegalArgumentException());
 
-    userService.saveUser(guest);
-    guest =
-        userRepository.findByUid(guest.getUid()).orElseThrow(() -> new IllegalArgumentException());
-
+    guest = userService.saveUser(guest);
     userTestAccessService.grantAccess(guest, test);
 
     return "redirect:/admin/";
@@ -109,9 +107,6 @@ public class AdminPanelController {
   public String editGuest(@PathVariable String uid, @ModelAttribute UserFormDto formDto) {
     UserEntity guest =
         userRepository.findByUid(uid).orElseThrow(() -> new IllegalArgumentException());
-    guest.setPassword(formDto.getPassword());
-    userService.saveUser(guest);
-
     UserTestAccessEntity access =
         userTestAccessRepository
             .findByUserId(guest.getId())
@@ -120,7 +115,11 @@ public class AdminPanelController {
         testRepository
             .findById(formDto.getTestId())
             .orElseThrow(() -> new IllegalArgumentException());
+
+    guest.setPassword(formDto.getPassword());
     access.setTest(test);
+
+    userService.saveUser(guest);
     userTestAccessRepository.save(access);
 
     return "redirect:/admin/";

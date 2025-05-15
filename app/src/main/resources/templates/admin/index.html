@@ -9,11 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Панель администратора</title>
   </head>
-  <section
-    layout:fragment="content"
-    class="flex min-h-screen w-full flex-col items-start"
-  >
-    <body>
+  <body>
+    <section
+      layout:fragment="content"
+      class="flex min-h-screen w-full flex-col items-start"
+    >
       <header
         class="flex w-full flex-row items-center justify-between bg-gray-200 px-6 py-4"
       >
@@ -51,7 +51,6 @@
             <table class="h-full w-full table-auto text-left">
               <thead class="bg-gray-200 text-base font-bold text-gray-900">
                 <tr>
-                  <th scope="col" class="px-3 py-1.5">ID</th>
                   <th scope="col" class="px-3 py-1.5">Название</th>
                   <th scope="col" class="px-3 py-1.5">
                     <span class="sr-only">Действия</span>
@@ -63,15 +62,8 @@
                   class="border-b border-gray-200 hover:bg-gray-100"
                   th:each="test : ${tests}"
                 >
-                  <td class="px-3 py-1.5" th:text="${test.getId()}"></td>
                   <td class="px-3 py-1.5" th:text="${test.getName()}"></td>
                   <td class="flex justify-end gap-x-1.5 px-3 py-1.5">
-                    <a
-                      href="#"
-                      class="block flex size-7 cursor-pointer rounded-md bg-blue-600 px-1.5 py-1.5 text-white transition hover:bg-blue-700"
-                    >
-                      <i class="fa-solid fa-pen-to-square m-auto"></i>
-                    </a>
                     <a
                       href="#"
                       class="block flex size-7 cursor-pointer rounded-md bg-red-600 px-1.5 py-1.5 text-white transition hover:bg-red-700"
@@ -108,8 +100,8 @@
               <thead class="bg-gray-200 text-base font-semibold text-gray-900">
                 <tr>
                   <th scope="col" class="px-3 py-1.5">ID</th>
-                  <th scope="col" class="px-3 py-1.5">ID Теста</th>
-                  <th scope="col" class="px-3 py-1.5">Пройдено?</th>
+                  <th scope="col" class="px-3 py-1.5">Тест</th>
+                  <th scope="col" class="px-3 py-1.5">Пройден?</th>
                   <th scope="col" class="px-3 py-1.5">
                     <span class="sr-only">Действия</span>
                   </th>
@@ -126,7 +118,7 @@
                   ></td>
                   <td
                     class="left-0 px-3 py-1.5"
-                    th:text="${access.getTest().getId()}"
+                    th:text="${access.getTest().getName()}"
                   ></td>
                   <td
                     class="left-0 px-3 py-1.5"
@@ -154,6 +146,6 @@
           </div>
         </div>
       </div>
-    </body>
-  </section>
+    </section>
+  </body>
 </html>

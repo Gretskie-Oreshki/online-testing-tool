@@ -32,6 +32,8 @@ public class SecurityConfig {
                     .authenticated()
                     .requestMatchers("/app-controller/**")
                     .permitAll()
+                    .requestMatchers("/materials/**")
+                    .permitAll()
                     .requestMatchers("/guest/**")
                     .hasRole("USER")
                     .requestMatchers("/admin/**")

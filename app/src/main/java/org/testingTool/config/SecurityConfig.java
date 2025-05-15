@@ -35,7 +35,7 @@ public class SecurityConfig {
                     .requestMatchers("/materials/**")
                     .permitAll()
                     .requestMatchers("/guest/**")
-                    .hasRole("USER")
+                    .hasRole("GUEST")
                     .requestMatchers("/admin/**")
                     .hasRole("ADMIN")
                     .anyRequest()

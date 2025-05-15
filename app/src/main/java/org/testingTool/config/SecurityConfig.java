@@ -40,10 +40,8 @@ public class SecurityConfig {
                     .hasRole("ADMIN")
                     .anyRequest()
                     .authenticated())
-        .formLogin(login -> login
-            .loginPage("/login")
-            .defaultSuccessUrl("/guest/", true)
-            .permitAll())
+        .formLogin(
+            login -> login.loginPage("/login").defaultSuccessUrl("/guest/", true).permitAll())
         .build();
   }
 

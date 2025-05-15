@@ -1,7 +1,8 @@
 package org.testingTool.controllers;
 
+import java.security.Principal;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,9 +11,6 @@ import org.testingTool.model.UserEntity;
 import org.testingTool.model.UserTestAccessEntity;
 import org.testingTool.repository.UserRepository;
 import org.testingTool.repository.UserTestAccessRepository;
-
-import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/guest")

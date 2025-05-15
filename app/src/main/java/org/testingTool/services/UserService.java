@@ -1,5 +1,6 @@
 package org.testingTool.services;
 
+import java.util.List;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,6 +35,34 @@ public class UserService {
     user.setEmail(email);
 
     return user;
+  }
+
+  public UserEntity findGuestOrThrow(Long id) {
+    UserEntity guest =
+        userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
+    if (guest.getRole() != Role.GUEST) {
+      throw new IllegalStateException("");
+    }
+
+    return guest;
+  }
+
+  public UserEntity findGuestOrThrow(String uid) {
+    UserEntity guest =
+        userRepository.findByUid(uid).orElseThrow(() -> new IllegalArgumentException());
+    if (guest.getRole() != Role.GUEST) {
+      throw new IllegalStateException("");
+    }
+
+    return guest;
+  }
+
+  public List<UserEntity> findAllGuests() {
+    return userRepository.findAll().stream().filter(user -> user.getRole() == Role.GUEST).toList();
+  }
+
+  public List<UserEntity> findAllAdmins() {
+    return userRepository.findAll().stream().filter(user -> user.getRole() == Role.ADMIN).toList();
   }
 
   @Transactional

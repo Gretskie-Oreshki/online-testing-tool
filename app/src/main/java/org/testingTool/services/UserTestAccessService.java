@@ -12,13 +12,22 @@ import org.testingTool.repository.UserTestAccessRepository;
 public class UserTestAccessService {
   private final UserTestAccessRepository userTestAccessRepository;
 
-  public void grantAccess(UserEntity user, TestEntity test) {
+  public UserTestAccessEntity grantAccess(UserEntity user, TestEntity test) {
     UserTestAccessEntity access = new UserTestAccessEntity();
     access.setUser(user);
     access.setTest(test);
     access.setIsPassed(false);
 
-    userTestAccessRepository.save(access);
+    return userTestAccessRepository.save(access);
+  }
+
+  public UserTestAccessEntity findAccessOrThrow(Long userId) {
+    UserTestAccessEntity access =
+        userTestAccessRepository
+            .findByUserId(userId)
+            .orElseThrow(() -> new IllegalArgumentException("Нет доступа к тесту"));
+
+    return access;
   }
 
   public UserTestAccessEntity getAccessOrThrow(Long userId, TestEntity test) {

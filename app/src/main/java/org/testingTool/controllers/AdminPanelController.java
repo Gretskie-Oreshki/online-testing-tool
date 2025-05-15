@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.testingTool.dto.UserFormDto;
-import org.testingTool.model.Role;
 import org.testingTool.model.TestEntity;
 import org.testingTool.model.UserEntity;
 import org.testingTool.model.UserTestAccessEntity;
 import org.testingTool.repository.TestRepository;
 import org.testingTool.repository.UserRepository;
 import org.testingTool.repository.UserTestAccessRepository;
+import org.testingTool.services.TestService;
 import org.testingTool.services.UserService;
 import org.testingTool.services.UserTestAccessService;
 
@@ -32,20 +32,17 @@ public class AdminPanelController {
   private final UserTestAccessRepository userTestAccessRepository;
 
   private final UserService userService;
+  private final TestService testService;
   private final UserTestAccessService userTestAccessService;
 
   @GetMapping("/")
   public String admin(Model model) {
     Iterable<TestEntity> tests = testRepository.findAll();
-    List<UserEntity> users =
-        userRepository.findAll().stream().filter(user -> user.getRole() == Role.GUEST).toList();
+    List<UserEntity> guests = userService.findAllGuests();
 
     List<UserTestAccessEntity> accesses = new ArrayList<>();
-    for (UserEntity user : users) {
-      UserTestAccessEntity access =
-          userTestAccessRepository
-              .findByUserId(user.getId())
-              .orElseThrow(() -> new IllegalArgumentException());
+    for (UserEntity guest : guests) {
+      UserTestAccessEntity access = userTestAccessService.findAccessOrThrow(guest.getId());
       accesses.add(access);
     }
 
@@ -65,10 +62,7 @@ public class AdminPanelController {
   @PostMapping("/add-guest")
   public String addGuest(@ModelAttribute UserFormDto formDto) {
     UserEntity guest = userService.newGuestEntity(formDto.getPassword());
-    TestEntity test =
-        testRepository
-            .findById(formDto.getTestId())
-            .orElseThrow(() -> new IllegalArgumentException());
+    TestEntity test = testService.getTestById(formDto.getTestId());
 
     guest = userService.saveUser(guest);
     userTestAccessService.grantAccess(guest, test);
@@ -84,12 +78,8 @@ public class AdminPanelController {
 
   @PostMapping("/delete-guest/{uid}")
   public String deleteGuest(@PathVariable String uid) {
-    UserEntity guest =
-        userRepository.findByUid(uid).orElseThrow(() -> new IllegalArgumentException());
-    UserTestAccessEntity access =
-        userTestAccessRepository
-            .findByUserId(guest.getId())
-            .orElseThrow(() -> new IllegalArgumentException());
+    UserEntity guest = userService.findGuestOrThrow(uid);
+    UserTestAccessEntity access = userTestAccessService.findAccessOrThrow(guest.getId());
 
     userTestAccessRepository.delete(access);
     userRepository.delete(guest);
@@ -99,8 +89,7 @@ public class AdminPanelController {
 
   @GetMapping("/edit-guest/{uid}")
   public String editGuestPage(@PathVariable String uid, Model model) {
-    UserEntity guest =
-        userRepository.findByUid(uid).orElseThrow(() -> new IllegalArgumentException());
+    UserEntity guest = userService.findGuestOrThrow(uid);
     Iterable<TestEntity> tests = testRepository.findAll();
 
     model.addAttribute("uid", uid);
@@ -111,16 +100,9 @@ public class AdminPanelController {
 
   @PostMapping("/edit-guest/{uid}")
   public String editGuest(@PathVariable String uid, @ModelAttribute UserFormDto formDto) {
-    UserEntity guest =
-        userRepository.findByUid(uid).orElseThrow(() -> new IllegalArgumentException());
-    TestEntity test =
-        testRepository
-            .findById(formDto.getTestId())
-            .orElseThrow(() -> new IllegalArgumentException());
-    UserTestAccessEntity access =
-        userTestAccessRepository
-            .findByUserId(guest.getId())
-            .orElseThrow(() -> new IllegalArgumentException());
+    UserEntity guest = userService.findGuestOrThrow(uid);
+    TestEntity test = testService.getTestById(formDto.getTestId());
+    UserTestAccessEntity access = userTestAccessService.findAccessOrThrow(guest.getId());
 
     guest.setPassword(formDto.getPassword());
     access.setTest(test);

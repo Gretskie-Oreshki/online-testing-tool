@@ -51,6 +51,28 @@ public class AdminPanelController {
     return "admin/index";
   }
 
+  @GetMapping("/delete-test/{id}")
+  public String deleteTestPage(@PathVariable Long id, Model model) {
+    TestEntity test = testService.getTestById(id);
+
+    model.addAttribute("test", test);
+    return "admin/delete_test";
+  }
+
+  @PostMapping("/delete-test/{id}")
+  public String deleteTest(@PathVariable Long id) {
+    TestEntity test = testService.getTestById(id);
+
+    testRepository.delete(test);
+    List<UserTestAccessEntity> accesses = userTestAccessRepository.findAllByTest(test);
+    userTestAccessRepository.deleteAll(accesses);
+    for (UserTestAccessEntity access : accesses) {
+      userRepository.delete(access.getUser());
+    }
+
+    return "redirect:/admin/";
+  }
+
   @GetMapping("/add-guest")
   public String addGuestPage(Model model) {
     Iterable<TestEntity> tests = testRepository.findAll();

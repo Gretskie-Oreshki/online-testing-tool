@@ -65,7 +65,7 @@
                   <td class="px-3 py-1.5" th:text="${test.getName()}"></td>
                   <td class="flex justify-end gap-x-1.5 px-3 py-1.5">
                     <a
-                      href="#"
+                      th:href="@{/admin/delete-test/{id}(id=${test.getId()})}"
                       class="block flex size-7 cursor-pointer rounded-md bg-red-600 px-1.5 py-1.5 text-white transition hover:bg-red-700"
                     >
                       <i class="fa-solid fa-trash-can m-auto"></i>

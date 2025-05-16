@@ -66,9 +66,9 @@
                   <td class="flex justify-end gap-x-1.5 px-3 py-1.5">
                     <a
                       th:href="@{/admin/delete-test/{id}(id=${test.getId()})}"
-                      class="block flex size-7 cursor-pointer rounded-md bg-red-600 px-1.5 py-1.5 text-white transition hover:bg-red-700"
+                      class="flex size-7 cursor-pointer items-center justify-center rounded-md bg-red-600 px-1.5 py-1.5 text-white transition hover:bg-red-700"
                     >
-                      <i class="fa-solid fa-trash-can m-auto"></i>
+                      <i data-lucide="trash-2"></i>
                     </a>
                   </td>
                 </tr>
@@ -129,15 +129,15 @@
                   >
                     <a
                       th:href="@{/admin/edit-guest/{uid}(uid=${access.getUser().getUid()})}"
-                      class="block flex size-7 cursor-pointer rounded-md bg-blue-600 px-1.5 py-1.5 text-white transition hover:bg-blue-700"
+                      class="flex size-7 cursor-pointer items-center justify-center rounded-md bg-blue-600 px-1.5 py-1.5 text-white transition hover:bg-blue-700"
                     >
-                      <i class="fa-solid fa-pen-to-square m-auto"></i>
+                      <i data-lucide="file-pen-line"></i>
                     </a>
                     <a
                       th:href="@{/admin/delete-guest/{uid}(uid=${access.getUser().getUid()})}"
-                      class="block flex size-7 cursor-pointer rounded-md bg-red-600 px-1.5 py-1.5 text-white transition hover:bg-red-700"
+                      class="flex size-7 cursor-pointer items-center justify-center rounded-md bg-red-600 px-1.5 py-1.5 text-white transition hover:bg-red-700"
                     >
-                      <i class="fa-solid fa-trash-can m-auto"></i>
+                      <i data-lucide="trash-2"></i>
                     </a>
                   </td>
                 </tr>
@@ -146,6 +146,10 @@
           </div>
         </div>
       </div>
+
+      <script>
+        lucide.createIcons();
+      </script>
     </section>
   </body>
 </html>

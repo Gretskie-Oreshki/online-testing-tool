@@ -1,11 +1,11 @@
 package org.testingTool.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.testingTool.model.Role;
 import org.testingTool.model.UserEntity;
 import org.testingTool.repository.UserRepository;
@@ -39,9 +39,14 @@ public class UserService {
 
   public UserEntity findGuestOrThrow(Long id) {
     UserEntity guest =
-        userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
+        userRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new EntityNotFoundException(
+                        String.format("User with ID %d does not exist", id)));
     if (guest.getRole() != Role.GUEST) {
-      throw new IllegalStateException("");
+      throw new IllegalStateException(String.format("User with ID %d is not GUEST", id));
     }
 
     return guest;
@@ -49,9 +54,14 @@ public class UserService {
 
   public UserEntity findGuestOrThrow(String uid) {
     UserEntity guest =
-        userRepository.findByUid(uid).orElseThrow(() -> new IllegalArgumentException());
+        userRepository
+            .findByUid(uid)
+            .orElseThrow(
+                () ->
+                    new EntityNotFoundException(
+                        String.format("User with UID %s does not exist", uid)));
     if (guest.getRole() != Role.GUEST) {
-      throw new IllegalStateException("");
+      throw new IllegalStateException(String.format("User with UID %s is not GUEST", uid));
     }
 
     return guest;
@@ -65,12 +75,11 @@ public class UserService {
     return userRepository.findAll().stream().filter(user -> user.getRole() == Role.ADMIN).toList();
   }
 
-  @Transactional
-  public UserEntity saveUser(UserEntity user) {
+  public UserEntity encodeUser(UserEntity user) {
     String encodedPassword = passwordEncoder.encode(user.getPassword());
     user.setPassword(encodedPassword);
 
-    return userRepository.save(user);
+    return user;
   }
 
   private String generateUid() {

@@ -1,5 +1,6 @@
 package org.testingTool.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.testingTool.model.TestEntity;
@@ -12,22 +13,19 @@ import org.testingTool.repository.UserTestAccessRepository;
 public class UserTestAccessService {
   private final UserTestAccessRepository userTestAccessRepository;
 
-  public UserTestAccessEntity grantAccess(UserEntity user, TestEntity test) {
+  public UserTestAccessEntity newAccessEntity(UserEntity user, TestEntity test) {
     UserTestAccessEntity access = new UserTestAccessEntity();
     access.setUser(user);
     access.setTest(test);
     access.setIsPassed(false);
 
-    return userTestAccessRepository.save(access);
+    return access;
   }
 
   public UserTestAccessEntity findAccessOrThrow(Long userId) {
-    UserTestAccessEntity access =
-        userTestAccessRepository
-            .findByUserId(userId)
-            .orElseThrow(() -> new IllegalArgumentException("Нет доступа к тесту"));
-
-    return access;
+    return userTestAccessRepository
+        .findByUserId(userId)
+        .orElseThrow(() -> new EntityNotFoundException("Нет доступа к тесту"));
   }
 
   public UserTestAccessEntity getAccessOrThrow(Long userId, TestEntity test) {

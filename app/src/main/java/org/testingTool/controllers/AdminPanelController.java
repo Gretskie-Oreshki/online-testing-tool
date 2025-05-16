@@ -65,10 +65,10 @@ public class AdminPanelController {
 
     testRepository.delete(test);
     List<UserTestAccessEntity> accesses = userTestAccessRepository.findAllByTest(test);
-    userTestAccessRepository.deleteAll(accesses);
     for (UserTestAccessEntity access : accesses) {
       userRepository.delete(access.getUser());
     }
+    userTestAccessRepository.deleteAll(accesses);
 
     return "redirect:/admin/";
   }
@@ -86,8 +86,10 @@ public class AdminPanelController {
     UserEntity guest = userService.newGuestEntity(formDto.getPassword());
     TestEntity test = testService.getTestById(formDto.getTestId());
 
-    guest = userService.saveUser(guest);
-    userTestAccessService.grantAccess(guest, test);
+    guest = userService.encodeUser(guest);
+    guest = userRepository.save(guest);
+    UserTestAccessEntity access = userTestAccessService.newAccessEntity(guest, test);
+    userTestAccessRepository.save(access);
 
     return "redirect:/admin/";
   }
@@ -127,9 +129,10 @@ public class AdminPanelController {
     UserTestAccessEntity access = userTestAccessService.findAccessOrThrow(guest.getId());
 
     guest.setPassword(formDto.getPassword());
+    guest = userService.encodeUser(guest);
     access.setTest(test);
 
-    userService.saveUser(guest);
+    userRepository.save(guest);
     userTestAccessRepository.save(access);
 
     return "redirect:/admin/";

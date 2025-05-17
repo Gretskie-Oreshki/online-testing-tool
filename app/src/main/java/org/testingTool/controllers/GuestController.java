@@ -24,10 +24,6 @@ public class GuestController {
   public String guests(Model model, Principal principal) {
     UserEntity user = userRepository.findByUid(principal.getName()).orElseThrow();
     List<UserTestAccessEntity> accesses = accessRepository.findAllByUser(user);
-
-    System.out.println(user.getUid());
-    System.out.println(accesses);
-
     model.addAttribute("accesses", accesses);
     return "guest_index";
   }

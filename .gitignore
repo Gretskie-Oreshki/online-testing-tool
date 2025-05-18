@@ -17,3 +17,6 @@ app/bin/
 # Ignore IntelliJIDEA folder
 .idea
 *.db
+
+# Ignore materials folder
+app/src/main/resources/additionalMaterials/

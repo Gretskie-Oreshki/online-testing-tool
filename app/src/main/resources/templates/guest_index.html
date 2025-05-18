@@ -1,19 +1,114 @@
 <!doctype html>
 <html
-  lang="ru"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout.html}"
+        lang="ru"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout.html}"
 >
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Guest Details</title>
-  </head>
-  <body>
-    <h1>Guest Details</h1>
-
-    <div>
-      <p>This page can see only guests!.</p>
+<head>
+  <meta charset="UTF-8" />
+  <title>Профиль пользователя</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+<section layout:fragment="content" class="min-h-screen bg-gray-100 px-6 py-12 flex justify-center">
+  <div class="w-full max-w-3xl bg-white p-10 rounded-3xl border border-gray-200">
+    <div class="flex items-center gap-5 mb-12">
+      <div class="flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+        <i data-lucide="user" class="w-9 h-9 text-blue-700"></i>
+      </div>
+      <div>
+        <h1 class="text-3xl font-semibold text-gray-900 select-text">Пользователь <span th:text="${#authentication.name}">UID</span></h1>
+        <p class="text-md text-gray-600 mt-1">Список тестов</p>
+      </div>
     </div>
-  </body>
+
+    <section>
+      <h2 class="text-2xl font-semibold text-gray-900 mb-6">Доступные тесты</h2>
+      <div class="space-y-6" th:if="${accesses.?[!isPassed].size() > 0}">
+        <div
+                th:each="access : ${accesses.?[!isPassed]}"
+                class="flex flex-col rounded-xl px-7 py-5 bg-white border border-gray-300"
+        >
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-6">
+              <div class="flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100">
+                <i data-lucide="clock" class="w-7 h-7 text-yellow-700"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-medium text-gray-900" th:text="${access.test.name}">Название теста</h3>
+                <p class="text-sm text-gray-500">Ожидает прохождения</p>
+              </div>
+            </div>
+
+            <a
+                    th:href="@{'/tests/' + ${access.test.id}}"
+                    class="inline-flex items-center rounded-lg bg-blue-600 text-white text-sm font-semibold px-6 py-3"
+            >
+              Перейти
+            </a>
+          </div>
+
+          <ul class="ml-16 text-gray-600 text-sm space-y-1" th:if="${access.test.materials != null and !access.test.materials.isEmpty()}">
+            <li th:each="material : ${access.test.materials}" class="flex items-center gap-2">
+              <i data-lucide="file-text" class="w-4 h-4 text-blue-500 flex-shrink-0"></i>
+              <a
+                      th:href="@{/materials/download/{id}(id=${material.getId()})}"
+                      th:text="${material.fileName}"
+                      class="hover:underline text-blue-600"
+                      download
+              >
+                Название материала
+              </a>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+      <p class="text-center text-gray-400 text-sm" th:if="${accesses.?[!isPassed].size() == 0}">
+        Нет доступных тестов.
+      </p>
+    </section>
+
+    <section class="mt-16" th:if="${accesses.?[isPassed].size() > 0}">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-6">Завершенные тесты</h2>
+      <div class="space-y-6">
+        <div
+                th:each="access : ${accesses.?[isPassed]}"
+                class="flex flex-col rounded-xl px-7 py-5 bg-white border border-gray-300"
+        >
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-6">
+              <div class="flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                <i data-lucide="check-circle" class="w-7 h-7 text-green-700"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-medium text-gray-900" th:text="${access.test.name}">Название теста</h3>
+                <p class="text-sm text-gray-500">Пройден</p>
+              </div>
+            </div>
+          </div>
+
+          <ul class="ml-16 list-disc list-inside text-gray-600 text-sm" th:if="${access.test.materials != null and !access.test.materials.isEmpty()}">
+            <li th:each="material : ${access.test.materials}">
+              <a
+                      th:text="${material.fileName}"
+                      th:href="@{/materials/download/{id}(id=${material.id})}"
+                      class="text-blue-600 hover:underline"
+              >
+                Название материала
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</section>
+</body>
 </html>

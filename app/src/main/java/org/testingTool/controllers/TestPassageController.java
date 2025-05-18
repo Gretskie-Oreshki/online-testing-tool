@@ -1,6 +1,7 @@
 package org.testingTool.controllers;
 
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,8 +22,6 @@ import org.testingTool.repository.UserRepository;
 import org.testingTool.services.EmailService;
 import org.testingTool.services.TestService;
 import org.testingTool.services.UserAnswerService;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -54,11 +53,13 @@ public class TestPassageController {
             .orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
     List<UserAnswerEntity> userAnswers = userAnswerService.saveAnswers(formDto, user.getId());
 
-    UserEntity admin = userRepository
-            .findByRole(Role.ADMIN)
-            .stream()
+    UserEntity admin =
+        userRepository.findByRole(Role.ADMIN).stream()
             .findFirst()
-            .orElseThrow(() -> new EntityNotFoundException("Администратор не найден")); // Будем считать, что админ у нас пока один
+            .orElseThrow(
+                () ->
+                    new EntityNotFoundException(
+                        "Администратор не найден")); // Будем считать, что админ у нас пока один
 
     //  String toEmail, String userUid, String testName, List<UserAnswerEntity> userAnswers
     String testName = testService.getTestById(id).getName();

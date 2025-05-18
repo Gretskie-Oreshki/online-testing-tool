@@ -28,17 +28,20 @@ public class SecurityConfig {
     return http.csrf(csrf -> csrf.ignoringRequestMatchers("/app-controller/**"))
         .authorizeHttpRequests(
             auth ->
-                auth.requestMatchers("/**")
-                    .permitAll()
+                auth.requestMatchers("/tests/**")
+                    .authenticated()
                     .requestMatchers("/app-controller/**")
                     .permitAll()
+                    .requestMatchers("/materials/**")
+                    .permitAll()
                     .requestMatchers("/guest/**")
-                    .hasRole("USER")
+                    .hasRole("GUEST")
                     .requestMatchers("/admin/**")
                     .hasRole("ADMIN")
                     .anyRequest()
                     .authenticated())
-        .formLogin(login -> login.loginPage("/login").permitAll())
+        .formLogin(
+            login -> login.loginPage("/login").defaultSuccessUrl("/guest/", true).permitAll())
         .build();
   }
 

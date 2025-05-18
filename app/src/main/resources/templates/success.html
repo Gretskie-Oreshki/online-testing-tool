@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <title>Конструктор теста</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-white text-gray-900">
+<html
+        lang="ru"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout.html}"
+>
+<header class="flex justify-center items-center px-6 py-4 bg-gray-100">
+    <nav class="space-x-4">
+        <a href="/admin/" class="text-gray-600 hover:text-black">Панель</a>
+    </nav>
+</header>
+<body layout:fragment="content" class="bg-white text-gray-900">
 <header class="flex justify-between items-center px-6 py-4 bg-gray-100">
     <div class="font-bold text-lg">Logo</div>
     <nav class="space-x-4">
@@ -22,14 +26,10 @@
     </div>
 </main>
 
-<footer class="flex justify-between items-center px-6 py-4 bg-gray-100 mt-12">
-    <div class="font-bold">Logo</div>
+<footer class="flex justify-center items-center px-6 py-4 bg-gray-100">
     <nav class="space-x-4">
-        <a href="/" class="text-gray-600 hover:text-black">Home</a>
+        <a href="/admin" class="text-gray-600 hover:text-black">Панель</a>
     </nav>
-    <select class="border border-gray-300 rounded px-2 py-1">
-        <option>Dropdown</option>
-    </select>
 </footer>
 
 </body>

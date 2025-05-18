@@ -1,28 +1,27 @@
 package org.testingTool.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.testingTool.dto.AnswerDTO;
-import org.testingTool.dto.QuestionDTO;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.testingTool.dto.TestDTO;
-import org.testingTool.model.AnswerEntity;
-import org.testingTool.model.MaterialEntity;
-import org.testingTool.model.QuestionEntity;
-import org.testingTool.model.TestEntity;
 import org.testingTool.repository.MaterialRepository;
-import org.testingTool.repository.TestRepository;
+import org.testingTool.services.TestService;
 
 @Controller
 @RequestMapping("/test/constructor")
-// @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@RequiredArgsConstructor()
 public class TestCreationController {
 
-  @Autowired private TestRepository testRepository;
-  @Autowired private MaterialRepository materialRepository;
+  private final TestService testService;
+  private final MaterialRepository materialRepository;
 
   @GetMapping
   public String showConstructor(Model model) {
@@ -32,39 +31,10 @@ public class TestCreationController {
   }
 
   @PostMapping
-  public String saveTest(@ModelAttribute("test") TestDTO testDTO,
-                         @RequestParam("materialIds") List<Long> materialsIds
-  ) {
-    TestEntity testEntity = new TestEntity();
-    testEntity.setName(testDTO.getTestName());
-
-    List<QuestionEntity> questions = new ArrayList<>();
-
-    for (QuestionDTO qDTO : testDTO.getQuestions()) {
-      QuestionEntity questionEntity = new QuestionEntity();
-      questionEntity.setName(qDTO.getQuestionName());
-      int rightAnswer = qDTO.getRightAnswer();
-
-      List<AnswerEntity> answers = new ArrayList<>();
-      for (AnswerDTO aDTO : qDTO.getAnswers()) {
-        AnswerEntity answer = new AnswerEntity();
-        answer.setValue(aDTO.getValue());
-        answer.setRight(false);
-        answer.setQuestion(questionEntity);
-        answers.add(answer);
-      }
-      answers.get(rightAnswer).setRight(true);
-      questionEntity.setAnswers(answers);
-      questionEntity.setTest(testEntity);
-      questions.add(questionEntity);
-    }
-    testEntity.setQuestions(questions);
-    List<MaterialEntity> materials = new ArrayList<>();
-    for (Long materialId : materialsIds) {
-      materials.add(materialRepository.findById(materialId).get());
-    }
-    testEntity.setMaterials(materials);
-    testRepository.save(testEntity);
+  public String saveTest(
+      @ModelAttribute("test") TestDTO testDTO,
+      @RequestParam("materialIds") List<Long> materialsIds) {
+    testService.saveTestFromForm(testDTO, materialsIds);
     return "redirect:/test/constructor/success";
   }
 

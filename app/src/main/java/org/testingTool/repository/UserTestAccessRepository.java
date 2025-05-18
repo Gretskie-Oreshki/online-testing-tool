@@ -19,10 +19,9 @@ public interface UserTestAccessRepository extends CrudRepository<UserTestAccessE
 
   Optional<UserTestAccessEntity> findByUser_IdAndTest_Id(Long userId, Long testId);
 
-
   Optional<UserTestAccessEntity> findByUserId(Long userId);
 
   List<UserTestAccessEntity> findAllByTest(TestEntity test);
-  
+
   List<UserTestAccessEntity> findAllByUser(UserEntity user);
 }

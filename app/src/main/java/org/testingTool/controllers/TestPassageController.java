@@ -61,7 +61,6 @@ public class TestPassageController {
                     new EntityNotFoundException(
                         "Администратор не найден")); // Будем считать, что админ у нас пока один
 
-    //  String toEmail, String userUid, String testName, List<UserAnswerEntity> userAnswers
     String testName = testService.getTestById(id).getName();
     emailService.sendUserResultsToMail(admin.getEmail(), user.getUid(), testName, userAnswers);
 

@@ -17,6 +17,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
   Optional<UserEntity> findByUid(String uid);
 
+  List<UserEntity> findByRole(Role role);
+
   @Query("SELECT u FROM UserEntity u WHERE u.role = :role AND u.createdAt < :expirationDate")
   List<UserEntity> findExpired(
       @Param("role") Role role, @Param("expirationDate") LocalDateTime expirationDate);

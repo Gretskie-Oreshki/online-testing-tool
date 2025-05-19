@@ -2,6 +2,7 @@ package org.testingTool.services;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,7 +12,7 @@ import org.testingTool.model.UserAnswerEntity;
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-  private JavaMailSender mailSender;
+  @Autowired private JavaMailSender mailSender;
 
   @Value("${EMAIL_ADDRESS}")
   private String senderEmailAddress;

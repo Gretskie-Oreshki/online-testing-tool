@@ -2,6 +2,7 @@ package org.testingTool.services;
 
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +31,7 @@ public class UserAnswerService {
   private final UserTestAccessService userTestAccessService;
 
   @Transactional
-  public void saveAnswers(UserAnswerFormDto formDto, Long userId) {
+  public List<UserAnswerEntity> saveAnswers(UserAnswerFormDto formDto, Long userId) {
     TestEntity test = testService.getTestById(formDto.getTestId());
     UserTestAccessEntity access = userTestAccessService.getAccessOrThrow(userId, test);
 
@@ -45,12 +46,15 @@ public class UserAnswerService {
           answer.setTestId(testId);
         });
 
-    List<UserAnswerEntity> entities = userAnswerMapper.toEntityList(answers);
-    userAnswerRepository.saveAll(entities);
-
     access.setIsPassed(true);
     access.setDatePassed(LocalDateTime.now());
     userTestAccessRepository.save(access);
+
+    List<UserAnswerEntity> entities = userAnswerMapper.toEntityList(answers);
+    Iterable<UserAnswerEntity> savedEntities = userAnswerRepository.saveAll(entities);
+    List<UserAnswerEntity> result = new ArrayList<>();
+    savedEntities.forEach(result::add);
+    return result;
   }
 
   private void validateAnswersAgainstTest(TestEntity test, List<UserAnswerDto> answers) {

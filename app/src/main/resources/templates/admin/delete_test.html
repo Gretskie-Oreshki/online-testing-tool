@@ -1,0 +1,56 @@
+<!doctype html>
+<html
+  lang="ru"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout.html}"
+>
+  <head>
+    <title>Удаление теста</title>
+  </head>
+
+  <body>
+    <section
+      layout:fragment="content"
+      class="flex min-h-screen w-full items-center"
+    >
+      <div class="mx-auto h-max w-full max-w-md">
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+          <h2
+            class="text-center text-2xl/9 font-bold tracking-tight text-gray-900"
+          >
+            Вы уверены?
+          </h2>
+          <p
+            class="mt-6 text-center"
+            th:text="'Вы собираетесь удалить тест '+${test.getName()}+'.'"
+          ></p>
+          <form
+            class="mt-10 space-y-6"
+            th:action="@{/admin/delete-test/{id}(id=${test.getId()})}"
+            method="POST"
+          >
+            <input
+              type="hidden"
+              th:name="${_csrf.parameterName}"
+              th:value="${_csrf.token}"
+            />
+            <div class="flex flex-row items-center gap-x-3">
+              <button
+                type="submit"
+                class="shadow-xs flex w-full cursor-pointer justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm/6 font-semibold text-white transition hover:bg-red-700"
+              >
+                Да
+              </button>
+              <a
+                href="/admin/"
+                class="shadow-xs flex w-full cursor-pointer justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm/6 font-semibold text-white transition hover:bg-blue-700"
+              >
+                Нет
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

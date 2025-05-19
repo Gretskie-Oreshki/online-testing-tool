@@ -5,7 +5,7 @@
   layout:decorate="~{layout.html}"
 >
   <head>
-    <title>Вход в систему</title>
+    <title>Новый гость</title>
   </head>
 
   <body>
@@ -18,36 +18,18 @@
           <h2
             class="text-center text-2xl/9 font-bold tracking-tight text-gray-900"
           >
-            Авторизация
+            Создание нового гостя
           </h2>
-        </div>
-
-        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form class="space-y-6" th:action="@{/login}" method="POST">
+          <form
+            class="mt-10 space-y-6"
+            th:action="@{/admin/add-guest}"
+            method="POST"
+          >
             <input
               type="hidden"
               th:name="${_csrf.parameterName}"
               th:value="${_csrf.token}"
             />
-
-            <div>
-              <label
-                for="username"
-                class="block text-sm/6 font-medium text-gray-900"
-                >Идентификатор</label
-              >
-              <div class="mt-2">
-                <input
-                  type="text"
-                  name="username"
-                  id="username"
-                  placeholder="123456"
-                  required
-                  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 sm:text-sm/6"
-                />
-              </div>
-            </div>
-
             <div>
               <div class="flex items-center justify-between">
                 <label
@@ -58,7 +40,6 @@
               </div>
               <div class="mt-2">
                 <input
-                  type="password"
                   name="password"
                   id="password"
                   placeholder="Введите пароль"
@@ -67,14 +48,43 @@
                 />
               </div>
             </div>
-
             <div>
+              <div class="flex items-center justify-between">
+                <label
+                  for="testId"
+                  class="block text-sm/6 font-medium text-gray-900"
+                  >Тест</label
+                >
+              </div>
+              <div class="mt-2">
+                <select
+                  name="testId"
+                  id="testId"
+                  placeholder="Выберите тест"
+                  required
+                  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 sm:text-sm/6"
+                >
+                  <option
+                    th:each="test : ${tests}"
+                    th:value="${test.getId()}"
+                    th:text="${test.getName()}"
+                  ></option>
+                </select>
+              </div>
+            </div>
+            <div class="flex flex-row gap-x-3">
               <button
                 type="submit"
                 class="shadow-xs flex w-full cursor-pointer justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm/6 font-semibold text-white transition hover:bg-blue-700"
               >
-                Войти
+                Создать
               </button>
+              <a
+                href="/admin/"
+                class="shadow-xs flex w-full cursor-pointer justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm/6 font-semibold text-white transition hover:bg-blue-700"
+              >
+                Назад
+              </a>
             </div>
           </form>
         </div>

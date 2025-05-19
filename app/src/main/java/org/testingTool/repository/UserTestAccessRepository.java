@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.testingTool.model.TestEntity;
 import org.testingTool.model.UserEntity;
 import org.testingTool.model.UserTestAccessEntity;
 
@@ -17,6 +18,10 @@ public interface UserTestAccessRepository extends CrudRepository<UserTestAccessE
   boolean hasAccess(@Param("userId") Long userId, @Param("testId") Long testId);
 
   Optional<UserTestAccessEntity> findByUser_IdAndTest_Id(Long userId, Long testId);
+
+  Optional<UserTestAccessEntity> findByUserId(Long userId);
+
+  List<UserTestAccessEntity> findAllByTest(TestEntity test);
 
   List<UserTestAccessEntity> findAllByUser(UserEntity user);
 }

@@ -136,11 +136,26 @@
     </div>
 <!--    Add material button-->
     <div id="load-material-button" class="my-8 text-center">
-        <button type="button" onclick="addMaterialLoadField()" class="bg-gray-200 px-6 py-2 rounded hover:bg-gray-300">
+        <button type="button" onclick="showLoadMaterial()" class="bg-gray-200 px-6 py-2 rounded hover:bg-gray-300">
             Добавить материал
         </button>
     </div>
-    <div id="load-additional-material" class="my-4"></div>
+    <div id="load-additional-material" class="my-4 hidden">
+        <div class="border p-4 rounded" id="load-file-section">
+            <div class="flex items-center justify-center">
+                <form method="post" enctype="multipart/form-data" action="/materials/upload" class="flex flex-col items-center upload-form">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <input type="file" name="file" accept=".pdf" class="hidden file-input" required>
+                    <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 text-center transition drop-area cursor-pointer">
+                        <p><span class="text-blue-600 font-semibold">Upload a file</span> or drag and drop</p>
+                    </div>
+                    <button class="mt-4 bg-gray-200 px-6 py-2 rounded hover:bg-gray-300" type="submit">
+                        Загрузить
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 
 <!--Footer-->
@@ -151,60 +166,45 @@
 </footer>
 
 <script>
-    function addMaterialLoadField() {
-        const mDiv = document.createElement("div");
-        mDiv.className = "border p-4 rounded";
-        mDiv.id = "load-file-section";
-        mDiv.innerHTML = `
-        <div class="flex items-center justify-center">
-            <form method="post" enctype="multipart/form-data" action="/materials/upload" class="flex flex-col items-center upload-form">
-                <input type="file" name="file" accept=".pdf" class="hidden file-input" required>
-                <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 text-center transition drop-area cursor-pointer">
-                    <p><span class="text-blue-600 font-semibold">Upload a file</span> or drag and drop</p>
-                </div>
-                <button class="mt-4 bg-gray-200 px-6 py-2 rounded hover:bg-gray-300" type="submit">
-                    Загрузить
-                </button>
-            </form>
-        </div>
-    `;
-        document.getElementById("load-additional-material").appendChild(mDiv);
+    function showLoadMaterial() {
+        document.getElementById("load-additional-material").classList.toggle('hidden')
+    }
 
-        const newDropArea = mDiv.querySelector('.drop-area');
-        const fileInput = mDiv.querySelector('.file-input');
-        const form = mDiv.querySelector('form');
+    const mDiv = document.getElementById("load-file-section");
+    const newDropArea = mDiv.querySelector('.drop-area');
+    const fileInput = mDiv.querySelector('.file-input');
+    const form = mDiv.querySelector('form');
 
-        ['dragenter', 'dragover'].forEach(eventName => {
-            newDropArea.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                newDropArea.classList.add('border-blue-500', 'bg-blue-50');
-            });
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            newDropArea.addEventListener(eventName, (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                newDropArea.classList.remove('border-blue-500', 'bg-blue-50');
-            });
-        });
-
-        newDropArea.addEventListener('drop', (e) => {
+    ['dragenter', 'dragover'].forEach(eventName => {
+        newDropArea.addEventListener(eventName, (e) => {
             e.preventDefault();
             e.stopPropagation();
-
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                fileInput.files = files;
-                form.submit();
-            }
+            newDropArea.classList.add('border-blue-500', 'bg-blue-50');
         });
+    });
 
-        newDropArea.addEventListener('click', () => {
-            fileInput.click();
+    ['dragleave', 'drop'].forEach(eventName => {
+        newDropArea.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            newDropArea.classList.remove('border-blue-500', 'bg-blue-50');
         });
-    }
+    });
+
+    newDropArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            form.submit();
+        }
+    });
+
+    newDropArea.addEventListener('click', () => {
+        fileInput.click();
+    });
 
     function toggleDivider(dividerId, button) {
         const divider = document.getElementById(dividerId);

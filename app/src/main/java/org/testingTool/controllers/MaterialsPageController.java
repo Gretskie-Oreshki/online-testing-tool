@@ -47,7 +47,7 @@ public class MaterialsPageController {
   @PostMapping("/upload")
   public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
     materialService.saveMaterial(file);
-    return "redirect:/materials";
+    return "redirect:/materials/";
   }
 
   @GetMapping("/download/{id}")

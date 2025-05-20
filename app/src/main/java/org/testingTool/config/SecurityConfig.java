@@ -33,7 +33,7 @@ public class SecurityConfig {
                     .requestMatchers("/app-controller/**")
                     .permitAll()
                     .requestMatchers("/materials/**")
-                    .permitAll()
+                    .hasRole("ADMIN")
                     .requestMatchers("/guest/**")
                     .hasRole("GUEST")
                     .requestMatchers("/admin/**")

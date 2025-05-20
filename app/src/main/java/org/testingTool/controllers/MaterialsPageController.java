@@ -29,7 +29,7 @@ public class MaterialsPageController {
   private final MaterialRepository materialRepository;
   private final MaterialService materialService;
 
-  @GetMapping()
+  @GetMapping("/")
   public String listMaterials(
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size,

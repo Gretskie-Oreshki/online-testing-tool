@@ -1,6 +1,5 @@
 package org.testingTool.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -69,10 +68,11 @@ public class MaterialsPageController {
       Resource resource = new InputStreamResource(Files.newInputStream(filePath));
 
       return ResponseEntity.ok()
-              .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(filePath))
-              .header(HttpHeaders.CONTENT_DISPOSITION,
-                      "attachment; filename=\"" + material.getFileName() + "\"")
-              .body(resource);
+          .header(HttpHeaders.CONTENT_TYPE, Files.probeContentType(filePath))
+          .header(
+              HttpHeaders.CONTENT_DISPOSITION,
+              "attachment; filename=\"" + material.getFileName() + "\"")
+          .body(resource);
     } catch (IOException e) {
       return ResponseEntity.internalServerError().build();
     }

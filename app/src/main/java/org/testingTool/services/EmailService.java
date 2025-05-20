@@ -11,7 +11,7 @@ import org.testingTool.model.UserAnswerEntity;
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-  @Autowired private JavaMailSender mailSender;
+  private final JavaMailSender mailSender;
 
   @Value("${EMAIL_ADDRESS}")
   private String senderEmailAddress;

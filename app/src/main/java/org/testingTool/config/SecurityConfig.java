@@ -38,6 +38,8 @@ public class SecurityConfig {
                     .hasRole("GUEST")
                     .requestMatchers("/admin/**")
                     .hasRole("ADMIN")
+                    .requestMatchers("/test/**")
+                    .hasRole("ADMIN")
                     .anyRequest()
                     .authenticated())
         .formLogin(

@@ -17,7 +17,7 @@ import org.testingTool.services.TestService;
 @Controller
 @RequestMapping("/test/constructor")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-@RequiredArgsConstructor()
+@RequiredArgsConstructor
 public class TestCreationController {
 
   private final TestService testService;

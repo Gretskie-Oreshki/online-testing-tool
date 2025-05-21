@@ -1,0 +1,18 @@
+<!doctype html>
+<html
+  lang="ru"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout.html}"
+>
+  <head>
+    <title>OTT - Homepage</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+
+  <body>
+    <h1>Welcome!</h1>
+    <p th:if="${name != null}">this is index controller</p>
+    <p th:if="${name == null}">this is app-controller</p>
+  </body>
+</html>

@@ -3,7 +3,20 @@
 # Ignore Gradle project-specific cache directory
 .gradle
 
+# Ignore our secrets :)
+.env
+
 # Ignore Gradle build output directory
 build
 
 .settings
+
+# Ignore java binaries files
+app/bin/
+
+# Ignore IntelliJIDEA folder
+.idea
+*.db
+
+# Ignore materials folder
+app/src/main/resources/additionalMaterials/

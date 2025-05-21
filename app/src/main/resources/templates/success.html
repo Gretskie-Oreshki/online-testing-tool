@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html
+        lang="ru"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout.html}"
+>
+<header class="flex justify-center items-center px-6 py-4 bg-gray-100">
+    <nav class="space-x-4">
+        <a href="/admin/" class="text-gray-600 hover:text-black">Панель</a>
+    </nav>
+</header>
+<body layout:fragment="content" class="bg-white text-gray-900">
+<header class="flex justify-between items-center px-6 py-4 bg-gray-100">
+    <div class="font-bold text-lg">Logo</div>
+    <nav class="space-x-4">
+        <a href="/" class="text-gray-600 hover:text-black">Home</a>
+    </nav>
+    <a href="/logout" class="px-4 py-1 border border-gray-300 rounded hover:bg-gray-200 inline-block text-center">
+        LOG OUT
+    </a>
+</header>
+
+<main class="max-w-4xl mx-auto py-8 px-4">
+    <div class="text-center mb-6">
+        <h2 class="text-3xl font-bold text-center">Тест добавлен!</h2>
+    </div>
+</main>
+
+<footer class="flex justify-center items-center px-6 py-4 bg-gray-100">
+    <nav class="space-x-4">
+        <a href="/admin/" class="text-gray-600 hover:text-black">Панель</a>
+    </nav>
+</footer>
+
+</body>
+</html>

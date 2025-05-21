@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html
+        lang="ru"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Материалы</title>
+</head>
+
+<body layout:fragment="content" class="min-h-screen flex flex-col">
+<!--Header-->
+<header class="flex justify-center items-center px-6 py-4 bg-gray-100">
+    <nav class="space-x-4">
+        <a href="/admin/" class="text-gray-600 hover:text-black">Панель</a>
+    </nav>
+</header>
+
+<!--Main-->
+<main class="flex-grow max-w-4xl mx-auto py-8 px-4">
+    <div id="page-name" class="text-center mb-6">
+        <a class="text-3xl font-bold text-center border-b-2">
+            Список доступного теоретического материала
+        </a>
+    </div>
+<!--    Search field-->
+    <form th:action="@{/materials}" method="get" class="mb-4 flex gap-2">
+        <input type="text" name="query" th:value="${query}" placeholder="Поиск материалов"
+               class="w-full rounded-md border border-gray-200 px-3 py-2 shadow-sm sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        <button type="submit"
+                class="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 text-sm">Поиск</button>
+    </form>
+<!--    List with materials and pages-->
+    <div class="mx-auto max-w-none">
+        <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg border border-gray-200">
+            <ul id="material-list" role="list" class="divide-y divide-gray-200">
+                <li th:each="material, iter: ${materialsPage.getContent}">
+                    <div class="flex items-center justify-stretch py-4 pr-5 pl-4 text-sm/6">
+                        <div class="flex w-0 flex-1 items-center">
+                            <svg class="size-5 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 0 0-4.242 0l-7 7a3 3 0 0 0 4.241 4.243h.001l.497-.5a.75.75 0 0 1 1.064 1.057l-.498.501-.002.002a4.5 4.5 0 0 1-6.364-6.364l7-7a4.5 4.5 0 0 1 6.368 6.36l-3.455 3.553A2.625 2.625 0 1 1 9.52 9.52l3.45-3.451a.75.75 0 1 1 1.061 1.06l-3.45 3.451a1.125 1.125 0 0 0 1.587 1.595l3.454-3.553a3 3 0 0 0 0-4.242Z" clip-rule="evenodd"></path>
+                            </svg>
+                            <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                <a th:text="${material.getFileName()}" class="truncate font-medium"></a>
+                            </div>
+                        </div>
+                        <div class="ml-4 shrink-0">
+                            <button type="button"
+                                    th:onclick="|toggleDivider('divider-${iter.index}', this)|"
+                                    class="font-medium text-indigo-600 hover:text-indigo-500">
+                                Показать детали
+                            </button>
+                        </div>
+                        <div class="ml-4 shrink-0">
+                            <a th:href="@{/materials/download/{id}(id=${material.getId()})}" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
+                        </div>
+                    </div>
+                    <div th:id="'divider-' + ${iter.index}" class="border-t border-gray-200 mx-4 hidden"></div>
+                    <div th:id="'details-' +${iter.index}" class="flex flex-row justify-between items-start py-4 pr-5 pl-4 text-sm/6 hidden">
+                        <div class="flex flex-col flex-1 text-center">
+                            <p class="text-gray-500 mb-2">Прикреплен к тестам:</p>
+                            <ul role="list">
+                                <li th:each="test : ${material.getTests()}">
+                                    <a th:text="${test.getName()}" class="text-gray-500"></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="flex flex-1 items-center justify-center text-center">
+                            <span class="text-gray-500" th:text="'Файл добавлен ' + ${material.getAddedAt()}"></span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+                <div class="flex flex-1 justify-between sm:hidden">
+                    <a th:if="${materialsPage.hasPrevious()}"
+                       th:href="@{/materials(page=${materialsPage.number - 1})}"
+                       class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Назад</a>
+                    <a th:if="${materialsPage.hasNext()}"
+                       th:href="@{/materials(page=${materialsPage.number + 1})}"
+                       class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Вперёд</a>
+                </div>
+                <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-700">
+                            Показаны
+                            <span class="font-medium" th:text="${materialsPage.number * materialsPage.size + 1}"></span>
+                            —
+                            <span class="font-medium"
+                                  th:text="${(materialsPage.number + 1) * materialsPage.size > materialsPage.totalElements ? materialsPage.totalElements : (materialsPage.number + 1) * materialsPage.size}">
+                            </span>
+                            из <span class="font-medium" th:text="${materialsPage.totalElements}"></span> файлов
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+                            <!-- Prev -->
+                            <a th:if="${materialsPage.hasPrevious()}"
+                               th:href="@{/materials(page=${materialsPage.number - 1})}"
+                               class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                                <span class="sr-only">Назад</span>
+                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M12.707 15.707a1 1 0 0 1-1.414 0l-5-5a1 1 0 0 1 0-1.414l5-5a1 1 0 0 1 1.414 1.414L8.414 10l4.293 4.293a1 1 0 0 1 0 1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+
+                            <!-- Page numbers -->
+                            <span th:each="i : ${#numbers.sequence(0, materialsPage.totalPages - 1)}">
+                                <span th:if="${i == 1 and materialsPage.number > 2}"
+                                    class="relative inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-300">...</span>
+                                <span th:if="${i == materialsPage.totalPages - 2 and materialsPage.number < materialsPage.totalPages - 3}"
+                                    class="relative inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-300">...</span>
+                                <a th:if="${i == 0 or i == materialsPage.totalPages - 1 or (i >= materialsPage.number - 1 and i <= materialsPage.number + 1)}"
+                                    th:href="@{/materials(page=${i})}"
+                                    th:text="${i + 1}"
+                                    th:classappend="${i == materialsPage.number} ? 'bg-indigo-600 text-white' : 'text-gray-700 hover:bg-gray-50'"
+                                    class="relative inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-300">
+                                </a>
+                            </span>
+
+                            <!-- Next Page -->
+                            <a th:if="${materialsPage.hasNext()}"
+                               th:href="@{/materials(page=${materialsPage.number + 1})}"
+                               class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                                <span class="sr-only">Вперёд</span>
+                                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M7.293 15.707a1 1 0 0 0 1.414 0l5-5a1 1 0 0 0 0-1.414l-5-5a1 1 0 0 0-1.414 1.414L11.586 10l-4.293 4.293a1 1 0 0 0 0 1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    Add material button-->
+    <div id="load-material-button" class="my-8 text-center">
+        <button type="button" onclick="showLoadMaterial()" class="bg-gray-200 px-6 py-2 rounded hover:bg-gray-300">
+            Добавить материал
+        </button>
+    </div>
+    <div id="load-additional-material" class="my-4 hidden">
+        <div class="border p-4 rounded" id="load-file-section">
+            <div class="flex items-center justify-center">
+                <form method="post" enctype="multipart/form-data" action="/materials/upload" class="flex flex-col items-center upload-form">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <input type="file" name="file" accept=".pdf" class="hidden file-input" required>
+                    <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 text-center transition drop-area cursor-pointer">
+                        <p><span class="text-blue-600 font-semibold">Upload a file</span> or drag and drop</p>
+                    </div>
+                    <button class="mt-4 bg-gray-200 px-6 py-2 rounded hover:bg-gray-300" type="submit">
+                        Загрузить
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!--Footer-->
+<footer class="flex justify-center items-center px-6 py-4 bg-gray-100">
+    <nav class="space-x-4">
+        <a href="/admin/" class="text-gray-600 hover:text-black">Панель</a>
+    </nav>
+</footer>
+
+<script>
+    function showLoadMaterial() {
+        document.getElementById("load-additional-material").classList.toggle('hidden')
+    }
+
+    const mDiv = document.getElementById("load-file-section");
+    const newDropArea = mDiv.querySelector('.drop-area');
+    const fileInput = mDiv.querySelector('.file-input');
+    const form = mDiv.querySelector('form');
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        newDropArea.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            newDropArea.classList.add('border-blue-500', 'bg-blue-50');
+        });
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        newDropArea.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            newDropArea.classList.remove('border-blue-500', 'bg-blue-50');
+        });
+    });
+
+    newDropArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            form.submit();
+        }
+    });
+
+    newDropArea.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    function toggleDivider(dividerId, button) {
+        const divider = document.getElementById(dividerId);
+        const details = divider.nextElementSibling;
+
+        divider.classList.toggle("hidden");
+        details.classList.toggle("hidden");
+
+        button.textContent = divider.classList.contains("hidden") ? "Показать детали" : "Скрыть детали";
+    }
+</script>
+</body>
+</html>

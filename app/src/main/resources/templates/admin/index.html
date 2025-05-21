@@ -1,0 +1,155 @@
+<!doctype html>
+<html
+  lang="ru"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout.html}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Панель администратора</title>
+  </head>
+  <body>
+    <section
+      layout:fragment="content"
+      class="flex min-h-screen w-full flex-col items-start"
+    >
+      <header
+        class="flex w-full flex-row items-center justify-between bg-gray-200 px-6 py-4"
+      >
+        <nav class="space-x-4">
+          <a href="/admin/" class="text-gray-900">Панель</a>
+          <a href="/materials/" class="text-gray-900">Материалы</a>
+        </nav>
+      </header>
+      <div class="mx-auto h-screen w-full max-w-3xl shadow-md">
+        <div class="mx-auto h-max w-full max-w-2xl">
+          <div class="mb-5 mt-5">
+            <h1
+              class="text-left text-3xl font-bold tracking-tight text-gray-900"
+            >
+              Панель администратора
+            </h1>
+          </div>
+          <div class="relative mt-5 overflow-x-auto rounded-md p-3 shadow-md">
+            <div class="flex items-center justify-between p-3">
+              <div>
+                <h2 class="text-2xl/9 font-bold tracking-tight text-gray-900">
+                  Тесты
+                </h2>
+                <p class="text-sm/6">Список всех созданных вами тестов</p>
+              </div>
+              <div>
+                <a
+                  href="/test/constructor/"
+                  class="block w-full cursor-pointer rounded-md bg-blue-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-md transition hover:bg-blue-700"
+                >
+                  Добавить
+                </a>
+              </div>
+            </div>
+            <table class="h-full w-full table-auto text-left">
+              <thead class="bg-gray-200 text-base font-bold text-gray-900">
+                <tr>
+                  <th scope="col" class="px-3 py-1.5">Название</th>
+                  <th scope="col" class="px-3 py-1.5">
+                    <span class="sr-only">Действия</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="text-sm font-medium text-gray-900">
+                <tr
+                  class="border-b border-gray-200 hover:bg-gray-100"
+                  th:each="test : ${tests}"
+                >
+                  <td class="px-3 py-1.5" th:text="${test.getName()}"></td>
+                  <td class="flex justify-end gap-x-1.5 px-3 py-1.5">
+                    <a
+                      th:href="@{/admin/delete-test/{id}(id=${test.getId()})}"
+                      class="flex size-7 cursor-pointer items-center justify-center rounded-md bg-red-600 px-1.5 py-1.5 text-white transition hover:bg-red-700"
+                    >
+                      <i data-lucide="trash-2"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-10 overflow-x-auto rounded-md p-3 shadow-md">
+            <div class="flex items-center justify-between p-3">
+              <div>
+                <h2
+                  class="text-2xl/9 font-semibold tracking-tight text-gray-900"
+                >
+                  Пользователи
+                </h2>
+                <p class="text-sm/6">
+                  Список всех пользователей и закреплённых за ними тестов
+                </p>
+              </div>
+              <div>
+                <a
+                  href="/admin/add-guest"
+                  class="block w-full cursor-pointer rounded-md bg-blue-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-md transition hover:bg-blue-700"
+                >
+                  Добавить
+                </a>
+              </div>
+            </div>
+            <table class="h-full w-full table-auto text-left">
+              <thead class="bg-gray-200 text-base font-semibold text-gray-900">
+                <tr>
+                  <th scope="col" class="px-3 py-1.5">ID</th>
+                  <th scope="col" class="px-3 py-1.5">Тест</th>
+                  <th scope="col" class="px-3 py-1.5">Пройден?</th>
+                  <th scope="col" class="px-3 py-1.5">
+                    <span class="sr-only">Действия</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="text-sm font-medium text-gray-900">
+                <tr
+                  class="border-b border-gray-200 hover:bg-gray-100"
+                  th:each="access : ${accesses}"
+                >
+                  <td
+                    class="left-0 px-3 py-1.5"
+                    th:text="${access.getUser().getUid()}"
+                  ></td>
+                  <td
+                    class="left-0 px-3 py-1.5"
+                    th:text="${access.getTest().getName()}"
+                  ></td>
+                  <td
+                    class="left-0 px-3 py-1.5"
+                    th:text="${access.getIsPassed()} ? Да : Нет"
+                  ></td>
+                  <td
+                    class="flex items-center justify-end gap-x-1.5 px-3 py-1.5"
+                  >
+                    <a
+                      th:href="@{/admin/edit-guest/{uid}(uid=${access.getUser().getUid()})}"
+                      class="flex size-7 cursor-pointer items-center justify-center rounded-md bg-blue-600 px-1.5 py-1.5 text-white transition hover:bg-blue-700"
+                    >
+                      <i data-lucide="file-pen-line"></i>
+                    </a>
+                    <a
+                      th:href="@{/admin/delete-guest/{uid}(uid=${access.getUser().getUid()})}"
+                      class="flex size-7 cursor-pointer items-center justify-center rounded-md bg-red-600 px-1.5 py-1.5 text-white transition hover:bg-red-700"
+                    >
+                      <i data-lucide="trash-2"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        lucide.createIcons();
+      </script>
+    </section>
+  </body>
+</html>

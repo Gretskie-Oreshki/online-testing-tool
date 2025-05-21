@@ -33,7 +33,7 @@ public class SecurityConfig {
                     .requestMatchers("/app-controller/**")
                     .permitAll()
                     .requestMatchers("/materials/download/**")
-                    .permitAll()
+                    .hasAnyRole("GUEST", "ADMIN")
                     .requestMatchers("/materials/upload")
                     .hasRole("ADMIN")
                     .requestMatchers("/guest/**")

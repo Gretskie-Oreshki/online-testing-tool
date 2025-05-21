@@ -23,14 +23,14 @@ public class TestCreationController {
   private final TestService testService;
   private final MaterialRepository materialRepository;
 
-  @GetMapping
+  @GetMapping("/")
   public String showConstructor(Model model) {
     model.addAttribute("test", new TestDTO());
     model.addAttribute("materials", materialRepository.findAll());
     return "create_test";
   }
 
-  @PostMapping
+  @PostMapping("/")
   public String saveTest(
       @ModelAttribute("test") TestDTO testDTO,
       @RequestParam("materialIds") List<Long> materialsIds) {
